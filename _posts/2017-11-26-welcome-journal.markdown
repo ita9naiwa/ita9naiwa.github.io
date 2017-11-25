@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "오늘의 일기"
-date:   2017-11-25 17:22:34 +0900
 tag: 일기
 category: 일기
 ---

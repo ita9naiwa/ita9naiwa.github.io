@@ -17,10 +17,8 @@ key: page-about
 
 
 ### Interests | >_<
-Recommender Systems, Information Retrieval, and Machine Learning
-<!-- more --!>
-
-
+Recommender Systems, Information Retrieval, and Machine Learning.
+<!--more-->
 
 ## Some Links
 - [Paper review slides](https://www.slideshare.net/ita9naiwa)

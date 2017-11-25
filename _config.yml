@@ -1,6 +1,6 @@
 #url: https://tianqi.name #the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl: /
-title: 수원혼모노이현성블로그데뎃
+title: 아프지 않음
 description: > #this means to ignore newlines until "nav_lists:"
     ita9naiwa...
 nav_lists:
@@ -26,10 +26,9 @@ timezone: Asia/Seoul
 
 ## Author & social ##
 author:
-  name: "Hyunsung Lee??"
+  name: "Hyunsung Lee"
   email: ita9naiwa@gmail.com
-  # facebook:  #your Facebook username
-  #twitter: kitian616
+  facebook:  mendou12@naver.com
   github:  ita9naiwa
   # linkedin:  #your Linkedin username
 
@@ -46,10 +45,10 @@ leancloud:
   app_key: Mzf5m9skSwYVWVXhGiYMNyXs
   app_class: ThomasBlog
 
-# mathjax: true
+mathjax: true
 
 ## Paginate ##
-paginate: 7
+paginate: 10
 paginate_path: /blog/page:num
 
 ## Post excerpts ##
@@ -90,4 +89,4 @@ gems:
 #server_url: "0.0.0.0"
 
 ## Development ##
-isdebug: true
+#isdebug: true
