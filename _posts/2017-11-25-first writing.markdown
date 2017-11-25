@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "안뇽하세요...."
-category: journal
+category: 일기
 tag: 일기
 mathjax: true
 ---
