@@ -3,6 +3,7 @@ layout: post
 title:  "How to tensorflow in C++!"
 date:   2017-11-26 17:02:34 +0900
 categories: tensorflow
+tag : tensorflow
 ---
 
 
