@@ -1,14 +1,10 @@
 ---
 layout: post
-title:  "How to tensorflow in C++!"
+title:  "Tensorflow C++ 동적 링크드 라이브러리(stanalone C++ project) 만들기"
 date:   2017-11-26 17:02:34 +0900
 categories: tensorflow
 tag : tensorflow
 ---
-
-
-
-# Tensorflow C++ 동적 링크드 라이브러리(stanalone C++ project) 만들기
 
 
 개요
@@ -18,8 +14,8 @@ tag : tensorflow
 
 컨텐츠
 
-[TOC]
-
+* TOC
+{:toc}
 
 ## Overview
 이하 설치 명령어 등은 우분투 17.04 x86_64 machine, Python 3.6, CUDA 8.0에서 CPU, GPU 환경에서 실험을 진행하고, 작동을 확인했다.
@@ -31,7 +27,7 @@ sudo apt-get update
 ```
 다음으로 linux 환경에서 C++ 프로그램을 빌드하기 위한 기본적인 프로그램을 설치한다.
 
-Bazel (구글에서 나리하는 소프트웨어 설치 도구. 텐서플로우를 설치하는 데 사용한다) 의존성
+Bazel (구글에서 관리하는 소프트웨어 설치 도구. 텐서플로우를 설치하는 데 사용한다) 의존성
 ```
 sudo apt-get install pkg-config zip g++ zlib1g-dev unzip default-jdk autoconf automake libtool
 ```
@@ -183,3 +179,8 @@ g++ -std=c++11 -Wl,-rpath='$ORIGIN/lib' -Iinclude -Llib test.cpp -ltensorflow_cc
 ./exec
 ```
 작동이 잘 된다면, 성공한 것이다.
+
+
+### References
+[](http://tuatini.me/building-tensorflow-as-a-standalone-project/)
+- 사실 여기 있는 글을 그대로 번역한 것이다. 으음 부끄러워;;
