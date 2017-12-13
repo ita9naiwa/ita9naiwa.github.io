@@ -185,3 +185,4 @@ _site/
 .jekyll-metadata
 
 *.bat
+pushall.sh
