@@ -93,6 +93,7 @@ $$
 	u_i^T = (\sum_{}{R_{ui}v_i^T})(\sum_{}{v_iv_i^T})^{-1}
 	u_i = (\sum_{}{v_iv_i^T})(\sum_{}{R_{ui}v_i})
 \end{eqnarray}
+$$
 
 
 와... 글쓰는거 진짜 어렵네
