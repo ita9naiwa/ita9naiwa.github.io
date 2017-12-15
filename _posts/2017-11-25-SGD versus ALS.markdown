@@ -90,19 +90,44 @@ $$
 \begin{eqnarray}
 	\sum_{}{(R_{ui} - u_u^Tv_i)}(-v_i) \\
 	u_u^T(\sum_{}{v_iv_i^T} = \sum_{}{R_{ui}v_i^T})  \\
-	u_i^T = (\sum_{}{R_{ui}v_i^T})(\sum_{}{v_iv_i^T})^{-1}
-	u_i = (\sum_{}{v_iv_i^T})(\sum_{}{R_{ui}v_i})
+	u_u^T = (\sum_{}{R_{ui}v_i^T})(\sum_{}{v_iv_i^T})^{-1} \\
+	u_u = (\sum_{}{v_iv_i^T})^{-1}(\sum_{}{R_{ui}v_i})
+	\text{or} \\
+	(\sum_{}{v_iv_i^T})u_i = (\sum_{}{R_{ui}v_i})
 \end{eqnarray}
 $$
 
 대학교에서 선형대수를 들었던 사람이라면 paramter $u_u$의 update는 $$Ax=b$$ 꼴의 linear equation을 푸는 것과 같다는 것을 눈치챘을 것이다. (실제로도 같다.)
 또한, parameter $u_{u1}$을 업데이트하는 것과 parameter$u_{u2}$의 업데이트는 서로 겹치지 않으므로, parallelize 또한 쉽다는 사실을 알아챌 수 있을 것이다.
 빅데이터 시대에 딱 어울리는 알고리즘이얏....
-와... 글쓰는거 진짜 어렵네
-진짜 어렵다.
 
-진짜진짜 어렵다;;ㄹㅇ루...으음...
-존나마지데무즈카시이노!
+마찬가지로 아이템의 vector representation $v_i$의 업데이트 또한 같은 방법으로 구할 수 있다.
+
+$$
+	v_i = (\sum_{}{u_uu_u^T})^{-1}(\sum_{}{R_{ui}u_u})
+	\text{or} \\
+	(\sum_{}{u_uu_u^T})v_i = (\sum_{}{R_{ui}u_u})
+$$
+
+예상 평점을 실제로 구할때는 단순히 $$\hat{R_{ui}} = u_u^Tv_i$$가 아니라 
+
+$$
+\begin{eqnarray}
+	\hat{R_{ui}} = u_u^Tv_i + b_u + b_i + mu \\
+	\text{where}
+	b_u \text{is bias for user } u, b_i \text{is bias for item } i,\text{and } \mu \text{global mean rating (in the training dataset)}.  
+\end{eqnarray}
+$$
+
+으로 예상 평점을 예측한다.
+implcit feedback의 경우에는 유저와 아이템의 bias를 잘 사용하지 않는다. 다만, negative feedback의 importance를 고려해 objective function을 
+
+$$
+	L := \sum_{u,i}{c_{ui}(y_{ui} - u_u^Tv_i)^2}
+$$
+
+$$y_{ui}$$가 1보다 큰 값일 때의 $$c_{ui}보다 $$y_{ui}$$가 0일 때의 $$c_{ui}$$를 더 크게 하는 modification이 있다.
 
 
-- 실제 구현된 두 모델의 비교 결과와 코드 : [github](https://github.com/ita9naiwa/BiasedMF-SGD-ALS-Example)
+
+- 실제 구현된 biasedMF 모델의 두 implemetnation의 비교 결과와 코드 : [github](https://github.com/ita9naiwa/BiasedMF-SGD-ALS-Example)
