@@ -1,23 +1,137 @@
+
 ---
 layout: "post"
-title: "오랜만에 일기"
-category: "recommender systems"
-tag: "rlrP"
-date: "2017-12-13 22:12"
+title: "EM 알고리즘이 무엇일까."
+category: "통계"
+tag: "통계"
+date: "2018-03-21 22:12"
 ---
 
-일하면서 너무 멍청해진 것 같다. 놀기만 하고 일도 하나도 안하면서, 공부 또한 안하니 배운 걸 다 다시 까먹는다.
-그래도 고딩들 수능 문제는 잘만 풀어대는 걸 보면 많이 연습한건 잘 까먹지 않는 경향이 있는 것 같은데, 기계학습을 할거야! 하고 통계니 뭐니 했던 건 죄다 란스가 다음 시리즈 나올때마다 레벨 떡락하는 느낌으로 까먹어버린 것 같다.
-애초에 아는게 하나도 없었는데 뭔가 배운 느낌만 들었던 거고, 왠지 난 다시 아무것도 모른다는 사실을 기억해낸 걸 지도 모르겠다.
+#### 잡담
+일하면서 너무 멍청해진 것 같다. 놀기만 하고 일도 하나도 안하면서, 공부 또한 안하니 배운 걸 다 다시 까먹는다. 그래도 고딩들 수능 문제는 잘만 풀어대는 걸 보면 많이 연습한건 잘 까먹지 않는 경향이 있는 것 같은데, 기계학습을 할거야! 하고 통계니 뭐니 했던 건 죄다 란스가 다음 시리즈 나올때마다 레벨 떡락하는 느낌으로 까먹어버린 것 같다. 애초에 아는게 하나도 없었는데 뭔가 배운 느낌만 들었던 거고, 왠지 난 다시 아무것도 모른다는 사실을 기억해낸 걸 지도 모르겠다.
+
+**EM 알고리즘**을 어디서 많이 들어는 봤고, 수많은 기계 학습 모델이 이걸 사용한다는데(그래서 유명하다는 것 같은데) 아무리 찾아봐도 쉬운 설명을 찾을 수가 없었다. 사실 요즘 인터넷엔 뉴럴넷, 그것도 CNN, RNN, 아니면 GAN에 관한 글 밖에 없는 것 같다. 
+Machine Learning 책에 있는 EM 설명은 너무 어렵고, 나는 게다가 수학도 너무너무 못한다. 암튼 고민하다가  내가 적당히 쉽게 설명을 만든 다음 외워버리면 되지 않을까 생각해서 쓰는 글이다. (사실 나도 잘 이해를 못 한것 같기도...)
+
+----- 
+
+#### EM 알고리즘이 뭘까 (수식 없이 설명)
+EM 알고리즘은 우리가 본 적이 없는 데이터가 있는 데이터셋에 대한 MLE를 Approximate하는 방법 중 하나이다. 본 적이 없는 데이터는 모르니까 그럴싸한 값을 집어넣고(**E step**), 본 적이 없는 데이터를 그럴싸한 값으로 채웠으면 본 적이 없는 데이터를 없애고, 완전한 데이터를 얻은 셈이니 이 data에 대해 likelihood를 maximize하는 paramter를 찾는다(**M step**). 이렇게 찾은 parameter를 이용해 모르는 값을 그럴싸한 값으로 채우고(E step) 다시 likelihood를 maximize(M step)을 반복하는 과정이다. 
+다른 분야에서는 다른 목적으로 EM을 사용할지도 모르겠는데, 통계적 모델링에서 EM을 사용하면 대체로 이런 느낌으로 사용한다고 한다. K-means나, MoG같은 경우, data의 category를 missing data라고 가정한다.(당연히 모르는 데이터니까) 다른 예로는, 실제로 몇 개의 데이터의 일부분을 잊어먹은 경우이다. 
+#### 특징들
+1.  EM은 Iterative한 방법이다.
+2. missing data가 있어서 계산하기 어려운 likelihood의 계산을 쉽게 바꾼다.
+3. missing data의 approximate를 점점 잘 해서 괜찮은 해를 얻는다.
+
+마침 EM 알고리즘을 설명하기에 짱짱킹 좋은 예시(통계학입문 교재에서)를 찾았으므로 이를 기반으로 설명을 하면 좋을 것 같다.
+
+#### 예제 1: Filling missing data
+
+| 키 | 몸무게 |
+|--|--|
+| 172 | 62 |
+| 170 | 61 |
+| 152 | 44 |
+| 168 | a |
+| 165 | b |
+| c | 70 |
+
+이러한 데이터가, $\text{Normal}(\mu, \Sigma)$(다변수 정규분포)를 따른다고 가정하고, 이에 대한 MLE를 구한다고 생각해보자. 우리가 추정해야 하는 parameter는 $\mu$와, $\Sigma$이다. 처음부터 그리 정확한 $\mu, \Sigma$를 알 필요는 없으므로(점점 좋게 만들면 된다) missing value가 있는 row는 내버려두고, 
+
+우리가 추정해야 할 parameter는 $$\\mu$$와, $$\\Sigma$$이다. 일단 missing value가 있는 row는 내버려두고, 값이 완전히 차 있는 세 row에 대해서만 mu와 sigma를 추정하면 다음과 같다. (그냥 세 변수의 평균과 Covariance를 구하면 된다)
+
+$$\mu = [164.66,55.66]$$
+$$\Sigma = \begin{bmatrix}121.3 & 111.3 \\ 111.3 & 102.3 \end{bmatrix}$$
+$$ = \begin{bmatrix}\sigma_1^2  & \rho\sigma_1\sigma_1 \\ \rho\sigma_1\sigma_1 & \sigma^2 \end{bmatrix}$$
+
+(사실 이현성은 멍청해서 MVN 공식도 기억나지 않으니 wiki에서 가져온다)
+변수가 2개인 정규분포의 *pdf*는 다음과 같다.
+$$f(x) = \frac{1}{2\pi|\Sigma|}(- \frac{1}{2}exp(-\frac{1}{2}(x-\mu)^T\Sigma^{-1}(x-\mu))$$
+
+4번째 row $[168,a]$을 보자. EM 알고리즘의 key point는 다음과 같다.
+1. 우리는 키와 몸무게의 joint probability distribution을 알고 있다.(비록 부정확하지만)
+2. 따라서 그 사람의 키를 안다면, 키를 어느 정도 예측할 수 있다.
+
+즉, 우리는 $E[a|168]$를 계산할 수 있다. dimension이 2인 Gaussian distribution에서, $\text{E}[X_2|x_1]$은 다음과 같다.
+$$E[X_2|x_1] = \mu_2 + \frac{\Sigma_{1,2}}{\Sigma_{2,2}}(x_1 - \mu_1)$$으로 나타낼 수 있다.
+이 식을 이용해, $E[a|x_1 = 68]$을 구해보자.
+$$\hat a = E[a| x_1 = 168] = 55.66 +  \frac{111.3}{102.3}(168-164.66) = 59.29 $$
+
+비슷한 방법으로, $\hat b$와 $\hat c$도 계산할 수 있다.
+
+$$\hat b = E[b| x_1 = 165] = 55.66 + \frac{111.3}{102.3}(165-164.66) = 56.02$$
+$$\hat c = E[c|x_2 = 70] = 164.66 + \frac{111.3}{121.3}(70 - 55.66) = 177.82$$
+
+새롭게 구한 근사치로, 키-몸무게 테이블을 채우면 다음과 같다.
+| 키 | 몸무게 |
+|--|--|
+| 172 | 62 |
+| 170 | 61 |
+| 152 | 44 |
+| 168 | 59.29 |
+| 165 | 56.02 |
+| 177.82 | 70 |
+
+이렇게 구한 $a,b,c$가 그다지 정확한 값이 아닐 수도 있지만, 어쨌건 나름대로 합리적이게 missing data를 채웠다. 이렇게 채운 전체 데이터를 이용해 $\mu$와 $\Sigma$를 다시 갱신하는 것이 M step이다.
+$$\mu = [167.47, 58.71]$$
+$$\Sigma = \begin{bmatrix}75.94 & 74.41 \\ 74.41 & 73.49 \end{bmatrix}$$
+이런 방법을 계속 반복하는 것이 EM algorithm이다.
+
+#### 다시 한 번 강조
+1.  EM은 Iterative한 방법이다.
+2. missing data를 적당히 approximate해서 계산할 수 있는 형태로 바꿔준다.
+3. missing data의 approximate를 점점 잘 해서 괜찮은 해를 얻는다.
+
+아무튼 일반적으로 EM algorithm의 intuition은 여기까지만 알아도 충분한 것 같다. 여기까지만 공부하면 어디서 EM 알고리즘 얘기 나왔을 때 엣헴엣헴 할 수 있지 않을까 하는 생각이 드니 여기까지만 봐도 될 것 같다. 사실 다음 유도는 조금 괜히 어렵다.
 
 
-EM 알고리즘은 우리가 본 적이 없는 데이터가 있는 데이터셋에 대한 MLE를 Approximate하는 방법 중 하나이다.
-본 적이 없는 데이터는 모르니까 그럴싸한 값을 집어넣고(E step), 본 적이 없는 데이터를 그럴싸한 값으로 채웠으면 missing data가 없어진 셈이니 이 data에 대해 likelihood를 maximize하는 paramter를 찾는다(M step).
-이렇게 찾은 parameter를 이용해 모르는 값을 그럴싸한 값으로 채우고(E step) 다시 likelihood를 maximize(M step)을 반복하는 과정이다.
-아마, 다른 분야에서는 다른 목적으로 EM을 사용할지도 모르겠는데, 기본적으로 통계적 모델링에서 EM을 사용하면 대체로 이런 느낌으로 사용한다고 한다.
-설명만 보면 당연히 이해가 되지 않을 것이 분명하고, 마침 EM 알고리즘을 설명하기에 짱짱킹 좋은 예시(통계학입문 교재에서)를 찾았으므로 이를 기반으로 설명을 하면 좋을 것 같다.
+#### 몰라도 되는 background
+이 부분은 주로, Machine Learning, Probabilistic Perspective chapter 11.4를 가져온 것입니다;
+
+$x_i$가 관측 가능한 변수이며, $z_i$가 관측 불가능한 변수라고 하자.
+관측된 데이터에 대한   log-likelihood는 다음과 같이 정의할 수 있다.
+$$ll(D_N,\theta) = \sum_{i=1}^{N}\log p(x_i | \theta) =  \sum_{i=1}^{N}\log \sum_zp(x_i,z_i | \theta) $$
+편의상 $Q(\theta, \hat \theta)$라는 걸 정의해보자.
+
+$$ll(D_N,\theta) =  \sum_{i=1}^{N}\log \sum_zp(x_i,z_i | \theta) =\sum_{i=1}^{N}\log (\sum_z q(z_i) \frac{p(x_i,z_i | \theta)}{q(z_i)})$$
+
+#### Jensen's Inequality
+에 대해서는 [Jensen's inequality](https://en.wikipedia.org/wiki/Jensen%27s_inequality)을 참고.
+Jensen's inequality를 확률분포에 적용하면 다음과 같다.
+1. $f(x)$가 convex function이고, $p(x)$는 pdf, 혹은 pmf일 때,
+2. $E[f(x)] \geq  f(E[x])$이다.
+3. 비슷한 식으로 f(x)가 concave function일때,
+4. $E[f(x)] \leq  f(E[x])$이다.
+
+그럼, $\log (\sum_z q(z_i) \frac{p(x_i,z_i | \theta)}{q(z_i)})$에 Jensen's inequality를 적용해 보자.
+$$\log (\sum_z q(z_i) \frac{p(x_i,z_i | \theta)}{q(z_i)}) = \log E_z[\frac{p(x_i,z_i | \theta)}{q(z_i)}] \geq E_z[log\frac{p(x_i,z_i | \theta)}{q(z_i)}]$$가 된다.
+-- 기호 $E_Z[*]$는 * 내의 식의 z에 대한 기대값이라는 얘기
+
+$$\sum_{i=1}^{N}E_{q_i}[log\frac{p(x_i,z_i | \theta)}{q(z_i)}] =\sum_{i=1}^{N} \sum_z q(z_i) \log \frac{p(x_i,z_i | \theta)}{q(z_i)}$$
+이며, 이를 편의상 $Q(\theta)$ 이라 하자. 즉, 
+##### E step
+$$Q(\theta) = \sum_{i=1}^{N} \sum_z q(z_i) \log \frac{p(x_i,z_i | \theta)}{q(z_i)}$$
+$$ = \sum_{i=1}^{N} \sum_z q(z_i) [\log\frac{p(z_i |x_i, \theta)}{q(z_i)} + \log\frac{p(x_i| \theta)}{q(z_i)} ] $$
+$$ = \sum_i^N [E_{q_i}[\log p(x_i,z_i|\theta)] -\textbf{KL}(q_i(z_i)||p(z_i|x_i,\theta)]$$
+그럼 $q_i(z_i) = p(z_i|x_i,\theta)$라고 정의하면,  식 내의 KL divergence는 0이 된다. (이 때 \theta는 M  step에서 결정한 $\theta$). 즉, 
+
+$Q(\theta) = \sum_i^N [E_{q_i}[\log p(x_i|\theta)]$가 되며, $q_i$는 $p(x_i|\theta)$와 독립이므로, $Q(\theta) =\sum_i^N \log p(x_i|\theta)$가 된다.
+
+이번엔 M step으로 돌아가 보자. 
+##### M step
+$$Q(\theta) = \sum_{i=1}^{N} \sum_z q(z_i) \log \frac{p(x_i,z_i | \theta)}{q(z_i)} = \sum_i^N E_{q_i}[\log p(x_i,z_i|\theta)] - E_{q_i}[q_i(z)]$$ 
+$- E_{q_i}[q_i(z)]$는 $q_i(z)$의 entropy이다.
+이제 $Q(\theta)$를  보면, $q_i$에 대한 기대값과 상관없는($\theta$완 영 관계가 없는) 항으로 이루어져 있는데, 그러므로 $Q(\theta)$를 최대화시키는 건
+$$\sum_i^N E_{q_i}[\log p(x_i,z_i|\theta)] $$
+을 최대화시키는 것과 같다. 
+근데 아까, $Q(\theta) = log(p(x_i|\theta))$라고 했으니, 위의 식을 최대화시키면, log-likelihood  $\sum_i^N p(x_i|\theta)$를 maximize하는 것과 같다.
+^^;..
+
+#### 조금 조금 더 어려운 설명 
+
+####  Mixture of Gaussians : 조금 더 어울리는 쉬운 example 
+## 
+TODO: Mixture of Gaussians에 대한 설명도 추가.
 
 
-$$
-R  \simeq UV^T \text{, where }R_{ui} \neq 0
-$$
+
