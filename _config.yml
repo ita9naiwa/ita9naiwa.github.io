@@ -45,7 +45,7 @@ leancloud:
   app_key: Mzf5m9skSwYVWVXhGiYMNyXs
   app_class: ThomasBlog
 
-mathjax: true
+#mathjax: true
 
 ## Paginate ##
 paginate: 10

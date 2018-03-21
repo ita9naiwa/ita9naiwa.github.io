@@ -2,6 +2,9 @@
 {% include snippets/get-lang.html %}
 <html lang="{{ __return }}">
   <head>
+    {% if page.use_math %}
+      {% include mathjax_support.html %}
+    {% endif %}
     {% include common-head.html %}
     {% include head-icons-rel.html %}
     {% assign __path = '/assets/css/blog.css' %}

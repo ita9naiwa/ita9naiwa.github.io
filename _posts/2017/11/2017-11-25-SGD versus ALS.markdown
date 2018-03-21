@@ -3,7 +3,8 @@ layout: post
 title: "SGD vs. ALS on solving BiasedMF(SVD)"
 category: "recommender systems"
 tag: "recommender systems"
-mathjax: true
+#mathjax: true
+use_math: true
 ---
 
 
