@@ -113,7 +113,7 @@ $$
 \begin{eqnarray}
 	\hat{R_{ui}} = u_u^Tv_i + b_u + b_i + mu \\
 	\text{where}
-	b_u \text{is bias for user } u, b_i \text{is bias for item } i,\text{and } \mu \text{global mean rating (in the training dataset)}.  
+	b_u \text{is bias for user } u, b_i \text{is bias for item } i,\text{and } \mu \text{global mean rating (in the training dataset)}.
 \end{eqnarray}
 $$
 
