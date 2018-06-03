@@ -15,7 +15,7 @@ tag : tensorflow
 [원본](https://tuatini.me/building-tensorflow-as-a-standalone-project/)에서는 Raspberry Pi에서의 설정까지 다루고 있지만, 제가 라즈베리 파이를 갖고 있지 않아서 실제로 실행을 못해보기 때문에 Ubuntu 환경에서 build하는 방법만 정리합니다. 또한, 원본 글에서는 Tensorflow **1.3.0** 버전을 사용하지만, 이 글에서는 Tensorflow **1.5.0** 버전을 사용합니다. 따라서, 사용하는 dependency가 조금 바뀝니다.
 
 **Ubuntu 17.04, GCC 6.3.0에서 테스트했습니다.**
-**원본 글은 Raspberry Pi, tensorflow 1.3.0 버전에서 테스트했지만, 저는 ubuntu 17.04 버전,tensorflow 1.5.0에서 테스트했습니다.** 
+**원본 글은 Raspberry Pi, tensorflow 1.3.0 버전에서 테스트했지만, 저는 ubuntu 17.04 버전,tensorflow 1.5.0에서 테스트했습니다.**
 
 --------
 
@@ -63,11 +63,9 @@ sudo apt-get install tensorflow
 ```
 ## 텐서플로우 빌드
 github에서 tensorflow source code를 가져온다.
-현재 텐서플로우가 1.5.0버전까지 나온 걸로 알고 있지만, (내가 1.3.0) 버전을 사용하고 있고, 원본 글도 1.3.0 버전에 맞춰 설정되어 있기 때문에 1.3.0버전으로 진행한다.
-(1.5.0에서 작동하는지는 테스트해보지 않았어요.)
 
 ```
-git clone --recurse-submodules -b v1.3.0 https://github.com/tensorflow/tensorflow.git tensorflow
+git clone --recurse-submodules -b v1.5.0 https://github.com/tensorflow/tensorflow.git tensorflow
 cd tensorflow
 ```
 
