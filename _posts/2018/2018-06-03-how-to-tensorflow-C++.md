@@ -22,9 +22,6 @@ tag : tensorflow
 개요
 이 문서는 Tensorflow를 리눅스 환경(ubuntu)에서 빌드하고, C++ interface를 사용하는 방법에 대해 다룬다.
 
-
-컨텐츠
-
 ## Overview
 이하 설치 명령어 등은 다음과 같은 환경에서 테스트되었습니다. (본문과 살짝 다릅니다!)
 
@@ -95,7 +92,6 @@ Please note that each additional compute capability significantly increases your
 [Default is: "3.5,5.2"]: 3.0
 Do you wish to build TensorFlow with MPI support? [y/N]
 ```
-
 
 MKL 옵션은 intel CPU에서 부동소수점 빠른 연산을 지원하며,
 OpenCl, CUDA 등은 GPU 연산을 지원하는 옵션이다.
@@ -171,7 +167,6 @@ cp -r third_party ../tf_test/include
 cp -r /tmp/proto/include/* ../tf_test/include
 cp -r /tmp/eigen/include/eigen3/* ../tf_test/include
 cp -r /tmp/nsync/include/* ../tf_test/include
-
 
 ```
 설치 완료. 다음의 테스트 코드를 만들어 실행해본다.
