@@ -41,11 +41,11 @@ Gradient Descent 방법의 가장 큰 장점은, 임의의 `미분 가능한` �
 다만, Matrix Factorization이나, 여러 Convex Optimization에 사용되는 특별한 form을 제외하면, 일반해를 간단하게 구하는 방법이 그리 많지 않기 때문에 특히 **딥 러닝**에서 자주 사용되는 방법이다.
 
 
-### Alternating Least Squares (ALS) 
+### Alternating Least Squares (ALS)
 
 위에서 언급했듯이 Gradient Descent 방법은 일반적으로 상당히 느리다. 몇몇 특수한 형태(주로 Convex)의 문제는, 더욱 간단한 방법으로 문제를 해결할 수 있다. Matrix Factorization problem에서도 간단하게 문제를 Solving하는 방법이 존재한다.
 
-Matrix Factorization 방법에서 최소값을 찾고자 하는 값은 비교적 간단하고, 아름답다. 
+Matrix Factorization 방법에서 최소값을 찾고자 하는 값은 비교적 간단하고, 아름답다.
 
 주어진 로스 함수는 user vector  $$u$$와 item vector $$v$$ 의 Quadratic form으로 나타낼 수 있다.
 고등학교 수학 시간에 배웠던 것 같은데, 2차함수는 항상 최소값을 갖는다. 2차함수 $$ f(x) $$ 의 최소값은 $$ x' $$ 가 $$ f(x') \text{where }f(x')'= 0 $$ 을 만족시키는 값에서이다.
