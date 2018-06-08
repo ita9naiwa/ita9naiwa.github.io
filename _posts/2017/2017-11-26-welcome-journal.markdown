@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title:  "오늘의 일기"
 tag: 일기
 category: 일기

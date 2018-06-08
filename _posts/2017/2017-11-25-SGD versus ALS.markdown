@@ -1,9 +1,9 @@
 ---
-layout: post
+layout: article
 title: "SGD vs. ALS on solving BiasedMF(SVD)"
 category: "recommender systems"
 tag: "recommender systems"
-use_math: true
+mathjax: true
 ---
 
 

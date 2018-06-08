@@ -11,18 +11,17 @@ key: page-about
 현재 [Rye&Catchers](http://http://bibly.kr/)에서 Data Scientist로 일하고 있습니다.
 
 이 블로그는 공부하는 걸 정리하기 위해 만들었습니다.
-학교에서 벗어나게 된 이후로 공부를 점점 하지 않게 되는 것 같아 좀 강제로 공부를 하기 위해서 만들었습니다. 
+학교에서 벗어나게 된 이후로 공부를 점점 하지 않게 되는 것 같아 좀 강제로 공부를 하기 위해서 만들었습니다.
 주로 공부한 걸 정리한 내용을 올리려고 합니다.
 잘 하고 싶네요;;
 
 
 ### Interests | >_<
-Recommender Systems, Information Retrieval, and Machine Learning.
+Recommender Systems, Information Retrieval.
 <!--more-->
-
 ## Some Links
 - [Paper review slides](https://www.slideshare.net/ita9naiwa)
 - [About this blog](/blog/2015/10/14/about-this-blog.html)
 - [Site Log](/blog/site-log.html)
-- [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme) 
+- [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme)
 

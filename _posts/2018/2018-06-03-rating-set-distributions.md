@@ -1,8 +1,9 @@
 ---
-layout: post
+layout: article
 title: "페이스북에서 '싫어요'를 누를 수 없는 이유"
 category: "recommender systems"
 tag: "recommender systems"
+mathjax: true
 ---
 
 # 페이스북에서 '싫어요'를 누를 수 없는 이유

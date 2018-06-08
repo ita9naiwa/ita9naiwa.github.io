@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title:  "Tensorflow C++ 동적 링크드 라이브러리(stanalone C++ project) 만들기"
 date:   2017-11-26 17:02:34 +0900
 categories: tensorflow

@@ -1,5 +1,5 @@
 ---
-layout: "post"
+layout: article
 title: "How to make a pull request"
 date: "2017-12-19 04:29"
 ---

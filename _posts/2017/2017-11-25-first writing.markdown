@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: article
 title: "안뇽하세요...."
 category: 일기
 tag: 일기
