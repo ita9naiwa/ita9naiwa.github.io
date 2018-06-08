@@ -6,8 +6,6 @@ tag: "recommender systems"
 mathjax: true
 ---
 
-# 페이스북에서 '싫어요'를 누를 수 없는 이유
-
 [원본 글](https://www.benfrederickson.com/rating-set-distributions/)
 [Ben Fredrickson](https://github.com/benfred)이라는 아조씨가 2013년에 남긴 글인데, 음... 추천 시스템의 실제 적용에 관한 많은 Insight을 주는 것 같아서 번역해봤어요.
 
