@@ -105,7 +105,7 @@ bazel build -c opt --verbose_failures //tensorflow::libtensorflow_cc.so
 ```
 
 ## Protobuf, Eigen, Nsync 설치
-텐서플로우를 독립적으로 실행하기 위해서는 추가적으로 두개의 라이브러리를 더 설치해야 한다.
+텐서플로우를 독립적으로 실행하기 위해서는 추가적으로 3개의 라이브러리를 더 설치해야 한다.
 
 Protobuf  빌드
 ```
