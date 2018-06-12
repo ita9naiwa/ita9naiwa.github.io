@@ -1,0 +1,38 @@
+---
+layout: article
+title: "Implicit Negative Feedback In Factor Based Recommendation Algorithms"
+category: "recommender systems"
+tag: "recommender systems"
+mathjax: true
+
+---
+
+State-of-the-art Collaborative Filtering 기술은 대부분 implicit feedback을 이용하는 것이 최근의 추세이다(Personalized Ranking, One-class collaborative filtering과 같은 다양한 이름을 갖고 있다). 즉, 유저가 자신이 좋아한 혹은 interaction한 정보만을 이용해 유저에게 아이템을 추천한다. 유저가 추천받지 않을 아이템을 선택할 수 있긴 하지만, 이는 모델 자체가 갖는 정보가 아닌 모델이 추천을 생성한 결과를 post-processing하는 것이다. (e.g. Evaluation 시 유저가 이미 본 아이템을 필터링하는 것도 이와 같은 post-processing 과정 중 일부라 볼 수 있다.)
+
+하지만, 클릭 데이터의 본질적인 특성인 Sparsity 때문에, 추천 엔진을 만드는 사람들은 매번 "조금이라도 더 많은 데이터를 이용해 추천을 생성할 수 있지 않을까?"라는 생각을 하며 살고 있을 것이다. [네거티브 피드백](https://ita9naiwa.github.io/recommender%20systems/2018/05/29/Why.html) 이 글에서 언급했듯, 많은 웹사이트에서 컨텐츠에 대해 '좋아요' 뿐만 아니라, '싫어요'를 Explicit하게 클릭하는 기능을 제공하고 있다. 다만, 이런 기능이 버려지고 있는 것에 대해 조금 아쉽다고 생각한다. (그리고 이를 아쉽다고 생각하는 사람이 나 혼자는 아니었던 것 같다.)[#1](https://github.com/benfred/implicit/issues/114), [#2](https://gite.lirmm.fr/yagoubi/spark/commit/9e63f80e75bb6d9bbe6df268908c3219de6852d9).
+
+현재 One-class collaborative filtering 알고리즘 중, 아니 전체 추천 시스템 알고리즘 중 가장 많이 사용되는(모델 자체의 성능도 우수하고, 상당히 Scaling-friendly한 알고리즘이기 때문에) Weighted Matrix Factorization(also called Alternating Least Squares, ALS)라고 불리기도 하는 알고리즘에 Negative feedback을 적용하려는 시도가 몇번인가 있었던 것 같다.
+
+근데 이게 왜 논문이 아니라, open-source project에 issue로 먼저 제기되었는지 모르겠다.(관련 논문이 있을지도 모르겠지만, 음... 일단 찾지 못했음) 뭔가 실용적인 이슈가 있어서 그런 걸까...
+
+There may be needs about this function, but... hmm...
+아무튼 WMF 모델을 Negative feedback을 고려하게 바꾸는 것은 간단하다.
+현재 모델은, 유저의 interaction이 없는 item들을 negative하다고 간주하지만, 이를 neutral하다고 생각해 보자.
+
+ implcit feedback을 고려하는 ALS 모델에서는, input values는 error function의 error로 간주된다. ALS 논문 자체는 input이 positive하다고 간주하며, 즉, 음, weight는 따라서 당연히 positive하다고 가정한다.
+ 다만, 입력은 Positive할 수도 있지만, (user clicked it, purchased it, watched it). 하지만, 자연스럽게, "Don't-like-it"한 signal에서도 올 수 있다. [TODO: add img of negative signal on the web]
+
+ALS 알고리즘을 자연스럽게 확장하는 것은,
+
+(1)
+
+여기서부터는 검증되지 않은 부분인데, 그냥, 음... 이 부분이 making sense한지 확인하고 싶어졌다.  some big dataset에서 test를 해봐야 할 듯...
+
+WMF 모델이 비슷한 식으로 확장될 수 있다면, BPR 모델도 같은 방법으로 확장할 수 있지 않을까? 하는생각을 해봤다. 효과가 좋을지는 당연히 모르겠다. 많은 데이터셋에서 해볼 수 있을까?...음...으ㅡ...너무 부끄럽네... 지우고싶다.......시발 죽고싶다...
+
+The goal of BPR is to maximize `dot(v_u, v_i) - dot(v_u, v_j) ` where item *i* is an item that user have interacted(e.g. clicked) and *j* is an item that user have not. In other words, It makes scores of clicked(preferred) items higher than scores of items that are not clicked by the
+user. `
+
+I think this scheme can be extended to **explicitly denoted negative items** by
+
+maximizing `dot(v_u, v_i) - dot(v_u, v_j)` **where item *i* is an item that the user didn't say "I hate it" and item *j* is an item that the user explicitly "doesn't like it"**
