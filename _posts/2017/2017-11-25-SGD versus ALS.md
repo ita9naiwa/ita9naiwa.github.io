@@ -137,7 +137,4 @@ $$y_{ui}$$가 1보다 큰 값일 때의 $$c_{ui}보다 $$y_{ui}$$가 0일 때의
 
 
 
-- 실제 구현된 biasedMF 모델의 두 implemetnation의 비교 결과와 코드 : [github](https://github.com/ita9naiwa/BiasedMF-SGD-ALS-Example)
-
-
-
+- 실제 구현된 biasedMF 모델의 두 implemetnation의 비교 결과 구현 : [github](https://github.com/ita9naiwa/recsys-factor-model-experiments/blob/master/BiasedMF-SGD%20vs%20ALS.ipynb)
