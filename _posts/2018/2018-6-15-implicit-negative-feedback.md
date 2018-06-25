@@ -6,10 +6,18 @@ tag: "recommender systems"
 mathjax: true
 
 ---
+#### 잡담
+이거 진짜 내 일이랑은 하나도 상관 없는 것 아닐까?
+이런 글 쓰는 동안에 딥러닝 공부를 조금 더 하는게 도움이 더 되는 것 아닐까? 생각했지만...
+역시 관심도 없는 거 하는 것보다는, 별로 도움이 안 되더라도 관심가는 걸 공부해야겠지 하는 생각이 들었다.
+Negative Feedback의 활용에 대해서는, 예전부터 관심이 많았으니까.
+그리고, interaction matrix의 Sparsity를 고려한다면, 점점 더 다양한 종류의 데이터를 활용하는 것이 중요해질 것 같다고 생각한다.
+(적어도 작은 스타트업에서 추천 시스템을 관리하는 입장에서는) 그렇게 변화할 거라는 확신이 든다.
+모든 기업이 엄청 복잡한 CNN/RNN 모델을 돌릴 수는 없는 노릇이니까.
 
 ## Introduction
-
-State-of-the-art Collaborative Filtering 기술은 대부분 implicit feedback을 이용하는 것이 최근의 추세이다(Implcit CF, Personalized Ranking, One-class CF와 같은 다양한 이름을 갖고 있다).
+State-of-the-art Collaborative Filtering 기술은 대부분 implicit feedback을 이용하는 것이 최근의 추세이다.
+(Implcit CF, Personalized Ranking, One-class CF와 같은 다양한 이름을 갖고 있다)
 즉, 유저가 자신이 좋아한 혹은 interaction한 정보만을 이용해 유저에게 아이템을 추천한다.
 유저가 추천받지 않을 아이템을 선택할 수 있긴 하지만, 이는 모델 자체가 갖는 정보가 아닌 모델이 추천을 생성한 결과를 post-processing하는 것이다.
 (e.g. Evaluation 시 유저가 이미 본 아이템을 필터링하는 것도 이와 같은 post-processing 과정 중 일부라 볼 수 있다.)
@@ -29,6 +37,10 @@ State-of-the-art Collaborative Filtering 기술은 대부분 implicit feedback�
 2. Bayesian Personalized Ranking 모델이 negative feedback을 이용할 수 있게 확장하기
 
 *이 글에서는 당신이 추천 시스템에 관해, 또한 자주 사용되는 모델에 대한 전반적인 지식이 있다고 가정한다.*
+
+결론을 미리 얘기하자면, Explicit Negative feedback은 계륵같은 점이 있는 것 같다.
+CF 모델에서, implicit feedback만을 이용하는 것이 아니라, 다른 데이터를 가져와서 이용하고자 하는 노력이 지금까지 있었고(그야 interaction은 본질적으로 sparse하니까.), 앞으로도 계속 이어질 것이라는 점이다.
+나도 계속 이 부분을 공부하고 싶다.
 
 > **Note:**
 > 글에서 적는 내용 중 일부는 exhaustive하게 테스트되지 않은 내용이 일부 포함되어 있습니다.
