@@ -103,8 +103,8 @@ $$
 
 $$
 \begin{cases}
-c_{u,i} > 1 } & \text{user } u \text{ interacted item } i        \\
-c_{u,i} = 1 &\text{otherwise}
+c_{u,i} > 1 & \text{user } u \text{ interacted item } i        \\
+c_{u,i} = 1 & \text{otherwise}
 \end{cases}
 $$
 
@@ -126,8 +126,8 @@ $$
 
 $$
 \begin{cases}
-c_{u,i} > 1 } & \text{user } u \text{ interacted item } i        \\
-c_{u,i} = 1 &\text{otherwise}
+c_{u,i} > 1 & \text{user } u \text{ interacted item } i        \\
+c_{u,i} = 1 & \text{otherwise}
 \end{cases}
 $$
 
