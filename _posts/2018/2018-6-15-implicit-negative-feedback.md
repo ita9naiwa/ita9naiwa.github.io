@@ -9,8 +9,10 @@ mathjax: true
 
 ## Introduction
 
-State-of-the-art Collaborative Filtering 기술은 대부분 implicit feedback을 이용하는 것이 최근의 추세이다(Implcit CF,Personalized Ranking, One-class CF와 같은 다양한 이름을 갖고 있다).
-즉, 유저가 자신이 좋아한 혹은 interaction한 정보만을 이용해 유저에게 아이템을 추천한다. 유저가 추천받지 않을 아이템을 선택할 수 있긴 하지만, 이는 모델 자체가 갖는 정보가 아닌 모델이 추천을 생성한 결과를 post-processing하는 것이다.(e.g. Evaluation 시 유저가 이미 본 아이템을 필터링하는 것도 이와 같은 post-processing 과정 중 일부라 볼 수 있다.)
+State-of-the-art Collaborative Filtering 기술은 대부분 implicit feedback을 이용하는 것이 최근의 추세이다(Implcit CF, Personalized Ranking, One-class CF와 같은 다양한 이름을 갖고 있다).
+즉, 유저가 자신이 좋아한 혹은 interaction한 정보만을 이용해 유저에게 아이템을 추천한다.
+유저가 추천받지 않을 아이템을 선택할 수 있긴 하지만, 이는 모델 자체가 갖는 정보가 아닌 모델이 추천을 생성한 결과를 post-processing하는 것이다.
+(e.g. Evaluation 시 유저가 이미 본 아이템을 필터링하는 것도 이와 같은 post-processing 과정 중 일부라 볼 수 있다.)
 
 위 제안된 방법의 한계 중 하나는 유저가 남긴 positive feedback만을 모델의 input으로 사용하고 있다는 점이다.
 
@@ -75,7 +77,7 @@ $$
 
 $$
 \begin{cases}
-c_{u,i} > 1 } & \text{user } u \text{ clicked item } i        \\
+c_{u,i} > 1 & \text{user } u \text{ clicked item } i        \\
 c_{u,i} = 1 &\text{otherwise}
 \end{cases}
 $$
