@@ -4,6 +4,7 @@ title:  "Tensorflow C++ 동적 링크드 라이브러리(stanalone C++ project) 
 date:   2017-11-26 17:02:34 +0900
 categories: tensorflow
 tag : tensorflow
+comment: true
 key: tfcpp
 ---
 

@@ -4,6 +4,7 @@ title: "Implicit Negative Feedback In Factor Based Recommendation Algorithms"
 category: "recommender systems"
 tag: "recommender systems"
 mathjax: true
+comment: true
 key: nfimf
 ---
 #### 잡담
