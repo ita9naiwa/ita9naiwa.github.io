@@ -4,6 +4,7 @@ title: "페이스북에서 '싫어요'를 누를 수 없는 이유"
 category: "recommender systems"
 tag: "recommender systems"
 mathjax: true
+key: ratingsetdist
 ---
 
 [원본 글](https://www.benfrederickson.com/rating-set-distributions/)
