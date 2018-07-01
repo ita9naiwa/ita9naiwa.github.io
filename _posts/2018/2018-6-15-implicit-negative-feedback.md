@@ -12,9 +12,19 @@ key: nfimf
 이런 글 쓰는 동안에 딥러닝 공부를 조금 더 하는게 도움이 더 되는 것 아닐까? 생각했지만...
 역시 관심도 없는 거 하는 것보다는, 별로 도움이 안 되더라도 관심가는 걸 공부해야겠지 하는 생각이 들었다.
 Negative Feedback의 활용에 대해서는, 예전부터 관심이 많았으니까.
+
 그리고, interaction matrix의 Sparsity를 고려한다면, 점점 더 다양한 종류의 데이터를 활용하는 것이 중요해질 것 같다고 생각한다.
-(적어도 작은 스타트업에서 추천 시스템을 관리하는 입장에서는) 그렇게 변화할 거라는 확신이 든다.
-모든 기업이 엄청 복잡한 CNN/RNN 모델을 돌릴 수는 없는 노릇이니까.
+
+그렇게 생각하는 이유는 다음과 같다.
+
+1. 항상 CNN/RNN 모델을 돌릴 수는 없고, 여전히 CF 모델의 성능이 content based method보다 성능이 좋다.
+2. user와 item의 interaction의 종류가 **같은 서비스 내에서** 증가하고 있다.
+  - Youtube를 예로 들자면, 유저가 한 동영상에 대해 취할 수 있는 action은 "클릭", "시청하기(몇분 동안?)" "좋아요", "싫어요", "플레이리스트에 추가하기", 그리고 "공유"로 상당히 많다.
+  다양한 Interaction을 다양한 방법으로 해석할 수 있고, 다양한 해석을 통해 더 좋은 CF 모델을 만드는 것이 가능하다고 생각한다.
+
+
+
+
 
 ## Introduction
 State-of-the-art Collaborative Filtering 기술은 대부분 implicit feedback을 이용하는 것이 최근의 추세이다.
@@ -186,13 +196,188 @@ WMF와 마찬가지로, BPR 모델은 interaction을 "좋아한다"와 "싫어�
 
 설명이 그리 어렵지 않았던 만큼, 구현도 그리 어렵지는 않다(naive한 구현의 경우). 실제로, WMF 모델을 이렇게 바꾸는 일은 training 속도에 거의 영향을 미치지 않는다. 다만, BPR 모델의 경우 속도에 엄청나게 큰 영향을 끼칠 수 있을 것 같다. 하지만, efficient한 추천 모델의 구현은 이 포스트의 목적이 아니니, 간단하게 실험해보고 넘어가도록 하자.
 
-> 구현에 대해 자세히 설명하지는 않겠다.
+> 구현에 대해 자세히 설명하지는 않겠다. 코드의 readability를 위해 efficiency를 희생했다. (사실 내가 빠르게 구현할 능력도 없는 것 같다.)
 > 위 글을(어려운 내용은 없었지만) 이해할 수 있다면 코드를 봤을 때 이해가 가지 않을 부분은 없을 것이라 생각한다.
 >> (오히려 코드에 문제가 있을 지도 몰라요...! 혹시 오류를 발견한다면 ita9naiwa@gmail.com으로 연락 부탁드립니다...!)
 
+```python
+def get_nonzero_indices(sparse_matrix, row):
+    indices = sparse_matrix[row].nonzero()
+    values = sparse_matrix[row][indices]
+    try:
+        return np.array(values)[0], indices[1]
+    except:
+        return [], []
 
-:TODO 구현체 추가하기.
+def _solve_wmf_precalculate(X, U, V, lamb):
+    n_users, n_factors = U.shape  
+    VTV = np.dot(V.T, V)
+
+    for j in range(n_users):
+
+        # calculate A with precalculated VTV
+        # calculate B as same way
+
+        A = VTV + lamb * np.eye(n_factors)
+        b = np.zeros(shape = (n_factors,))
+        try:
+            scores, nonzeros = get_nonzero_indices(X, j)
+        except:
+            pass
+
+        for confidence, i in zip(scores, nonzeros):
+            item_factor = V[i]
+            if confidence > 0:
+                b += confidence * item_factor
+            else:
+                confidence = -confidence
+            A += (confidence - 1) * np.outer(item_factor, item_factor)            
+        U[j] = np.linalg.solve(A, b)
+
+def solve_wmf(X, n_factors, lamb, n_iters,
+    solver=_solve_wmf_precalculate):
+    n_users, n_items = X.shape
+    XT = X.T
+    U = np.random.normal(0, 0.01, size = (n_users, n_factors))
+    V = np.random.normal(0, 0.01, size = (n_items, n_factors))
+    for _ in range(n_iters):
+        print("[iter : %d]" % _)
+        solver(X, U, V, lamb)
+        solver(XT, V, U, lamb)
+
+    return U, V
+
+```
+
+
+```python
+# there's  some problem at the number of training sample and iteration.
+# I ignored that (it may not be harmful...?)
+
+def sigmoid(x):
+    exp_neg = np.exp(-x)
+    return exp_neg / (1.0 + exp_neg)
+
+def solve_bpr(X, n_factors, lamb, n_iters, learning_rate=0.03,
+             tr=None, te=None):
+
+    n_users, n_items = X.shape
+
+    U = np.random.normal(0, 0.01, size = (n_users, n_factors))
+    V = np.random.normal(0, 0.01, size = (n_items, n_factors))
+
+    _X = X.tocoo()
+    row, col, val = _X.row, _X.col, _X.data
+
+    pos_interactions, neg_interactions = [], []
+
+    for u, i, y in  zip(row, col, val):
+        if y > 0:
+            pos_interactions.append((u,i))
+        else:
+            neg_interactions.append((u,i))
+    set_pos_interactions = set(pos_interactions)
+    set_neg_interactions = set(neg_interactions)
+    del _X, row, col, val
+
+    def _grad_single_point(u, i, j):
+        V_diff = V[i] - V[j]
+        x_uij = np.dot(U[u], V_diff)
+        grad = sigmoid(x_uij) * learning_rate
+        U[u] += grad * (V_diff - lamb * U[u])
+        V[i] += grad * (U[u] - lamb * V[i])
+        V[j] -= grad * (U[u] + lamb * V[j])
+
+    def _input_interaction_builder(n_sample=50000, fraction=0.05, np_size=1024):
+
+        cnt = 0
+        ret = []
+        n_pos_sample = int(len(pos_interactions) * fraction)
+        n_neg_sample = int(len(neg_interactions) * fraction)
+        while cnt < n_sample:
+            if n_pos_sample > 0:
+                sampled_pos = random.sample(pos_interactions, n_pos_sample)
+                for u, i in sampled_pos:
+                    js = np.random.choice(n_items, np_size)
+                    for j in js:
+                        if cnt >= n_sample:
+                            break
+                        if (u, j) not in set_pos_interactions:
+                            ret.append((u, i, j))
+                            cnt += 1
+
+            if n_neg_sample > 0:
+                sampled_neg = random.sample(neg_interactions, n_neg_sample)
+                for u, i in sampled_neg:
+                    js = np.random.choice(n_items, np_size)
+                    for j in js:
+                        if cnt >= n_sample:
+                            break
+                        if (u, j) not in set_neg_interactions:
+                            ret.append((u, j, i))
+                            cnt += 1
+
+            if cnt >= n_sample:
+                break
+        np.random.shuffle(ret)
+        return ret
+
+    for _ in range(n_iters):
+        print("[iter : %d]" % _)
+        picked_inputs = _input_interaction_builder(n_sample=X.nnz)
+        for u, i, j in picked_inputs:
+            _grad_single_point(u, i, j)
+    return U, V
+```
+
 
 ## Experiments
+다음의 간단한 실험을 진행해봤습니다.
+다만, Parameter tuning을 열심히 진행하지는 않고, 그냥 대충 좋을 것 같은 수치를 집어넣었습니다.
+[가장 우수한 구현체의 benchmark](https://www.librec.net/release/v1.3/example.html)보다는 성능이 상당히 떨어집니다.
+이 글의 목적은, 단지 위의 가설을 조금 더 스터디해볼 가치가 있는가?에 대한 대답이기 때문에, 구현을 엄청 성실하게 하지는 않았어요.
 
-:TODO ml-1m 데이터, 혹은 비블리 데이터셋에서의 간단한 실험 추가하기.
+
+
+### I will use two evaluation metrics.
+1. Precision
+2. [False Discovery Rate](https://en.wikipedia.org/wiki/Type_I_and_type_II_errors#False_positive_and_false_negative_rates)
+
+slightly modified version of False Negative Rate is that
+
+$$
+\text{PR@}k = \frac{\text{# of true positive items in recommendation}}{\text{k}}
+$$
+$$
+\text{FDR@}k = \frac{\text{# of true negative items  in recommendation }}{\text{k}}
+$$
+
+Actually, $$FDR+PR=1$$ for normal case, but it is not true here.
+there's three kinds of items.
+1. The user interacted with the item with higher rating(3, 4, or  5)(True Positive)
+2. The user interacted with the item with lower rating(1 or 2) (True Negative)
+3. The user have no interaction with the item.
+
+thus $FDR+PR$ does not sums up to 1 and we can use these two metric as omplementary metrics
+
+
+Lower FNR means that the recommender are better at avoding recommending items that the user will not like.
+
+#### WMF
+WMF 모델의 구현 : [노트북 링크](https://github.com/ita9naiwa/recsys-factor-model-experiments/blob/master/Exploiting%20Negative%20Feedback%20for%20WMF.ipynb)
+
+#### BPR
+> [BPR] 모델에서 트레이닝 샘플 수와, 트레이닝 수에 조금 문제가 있습니다.
+> 지금 다루려는 문제와 관련이 없어, 일단은 수정하지 않고 두었습니다.
+> 또한, adaptive learning rate를 사용하지 않는 BPR의 경우 성능이 그리 좋지 않습니다. 다만 이 이슈는 무시하겠습니다.
+
+
+
+BPR 모델의 구현 : [노트북 링크](https://github.com/ita9naiwa/recsys-factor-model-experiments/blob/master/Exploiting%20Negative%20Feedback%20for%20BPR.ipynb)
+
+#### 엄청 짧은 디스커션
+Implcit negative feedback은 *ml-100k* 데이터에서 "더 낮은 Precision"과, "더 낮은 FDR"을 가져온다.
+적어도 ml-100k dataset에서는 더 좋은 fdr score가 더 낮은 pr을 보상할 만큼 좋지 않다고 생각한다. 다만,
+다른 사내 데이터셋([bibly](http.bibly.kr))에서는 pr에 거의 변화를 주지 않은 채, 훨씬 낮은 FDR score를 만든다.
+
+유저가 좋아할 만한 top-k개의 item을 selection하는 데에는 별 도움이 되지 않을수도 있지만, input itemset중 유저가 좋아할 만한 아이템, 싫어할 만한 아이템을 분류하는 Ranker 용도로 추천 모델을 사용할 시에는 도움이 되는 것 같다. (현재 비블리에서 Negative Feedback을 이런 용도로 활용하고 있다.) 이는 모델이 전반적으로 "유저가 좋아할 만한 item"을 "유저가 싫어할 만한 아이템"보다 높은 score를 준다. 이는, 기존의 WMF, BPR이 할 수 없는 행동이며, negative feedback을 직접적으로 모델이 이용할 수 있게 확장한 결과이기 때문이라 생각한다.
