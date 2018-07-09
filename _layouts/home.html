@@ -12,9 +12,6 @@ show_title: true
         {%- include snippets/prepend-baseurl.html -%}
         {%- assign href = __return -%}
         <h1><a href="{{ href }}">{{ post.title }}</a></h1>
-        <!-- TODO:
-        Show some previews (first few lines of posting...)
-        -->
 
         <div class="article-content">
           {%- assign _excerpt_type = site.excerpt_type | default: site.data.variables.default.excerpt_type  -%}

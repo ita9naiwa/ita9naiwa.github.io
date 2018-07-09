@@ -1,0 +1,112 @@
+---
+layout: article
+---
+
+
+<!DOCTYPE html>
+<html>
+    <link href="https://static.benfrederickson.com/bootstrap-3.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+<head>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <style>
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {background-color: #ddd;}
+
+    .dropdown:hover .dropdown-content {display: block;}
+
+    .dropdown:hover .dropbtn {background-color: #3e8e41;}
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="cosinelist well">
+    asdfasfasdfasdfaasdfasfasdfasdfa\n\n
+
+    <div class="row">
+
+        <div class="dropdown">
+          <button class="dropbtn">Dropdown</button>
+          <div class="dropdown-content">
+            <a onclick="vava('button 1')">Button 1</a>
+            <a onclick="vava('button 1')">Button 2</a>
+            <a onclick="vava('button 1')">Button 3</a>
+          </div>
+        </div>
+        <input type="text" id="myInput" oninput="ffff()" placeholder="enter an artist name">
+        <input class="form-control typeahead" id="set-artist-name" style="" placeholder="Enter an Artist Name">
+    </div>
+
+</div>
+
+<p id="demo">no input given</p>
+<p>
+
+
+</body>
+</html>
+
+
+<script>
+    function vava(arg){
+        document.getElementById("demo").innerHTML = "You clicked!: " + arg;
+    }
+
+
+    function ffff(){
+
+        var items = ["rlagmdrnr", "dlaudqkr", "shangus"];
+        var _items = [];
+        var x = document.getElementById("myInput").value;
+        if(x.length > 0){
+            for(i in items){
+                var item = items[i];
+                if(item.includes(x)){
+                    _items.push(item);
+                }
+            }
+            document.getElementById("demo").innerHTML = "Matched\n" + _items.join('\n');
+        }
+        else{
+            document.getElementById("demo").innerHTML = "no input given";
+        }
+
+    }
+
+    function myFunction() {
+        var x = document.getElementById("myInput").value;
+        document.getElementById("demo").innerHTML = "You wrote: " + x;
+    }
+</script>

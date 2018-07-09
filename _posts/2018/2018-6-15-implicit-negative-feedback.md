@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "Implicit Negative Feedback In Factor Based Recommendation Algorithms"
+title: "Implicit Negative Feedback In Bayesian Personalized Ranking"
 category: "recommender systems"
 tag: "recommender systems"
 mathjax: true
@@ -54,14 +54,15 @@ CF 모델에서, implicit feedback만을 이용하는 것이 아니라, 다른 �
 나도 계속 이 부분을 공부하고 싶다.
 
 > **Note:**
-> 글에서 적는 내용 중 일부는 exhaustive하게 테스트되지 않은 내용이 일부 포함되어 있습니다.
-> "이 방법 괜찮을까?"라는 개인적인 질문의 개인적인 대답입니다.
-> 하지만 이러한 질문을 갖는 것과, 질문을 해결하기 위해 시도해 본 방법이 이 글을 읽는 분에게 insight을 줄 수 있다고 생각해 이 내용을 공유합니다.
->
-> 확실히 검증되지 않은 단락에는 ***검증되지 않은 내용입니다.*** 라는 글을 적어두었습니다.
+> 글에서 적는 내용 중 일부는 exhaustive하게 테스트되지 않은 내용이 일부 포함되어 있다.
+> "이 방법 괜찮을까?"라는 개인적인 질문의 개인적인 대답이다.
+> 하지만 이러한 질문을 갖는 것과, 질문을 해결하기 위해 시도해 본 방법이 이 글을 읽는 분에게 insight을 줄 수 있다고 생각해 이 내용을 공유한다.
 
 
-## Negative Feddback in WMF
+## Negative Feedback in Factor Based Models
+
+
+
 
 ### 가설
 - 다양한 상황에서 유저 u는 item i와 negative interaction을 가질 수 있다.
@@ -77,6 +78,9 @@ CF 모델에서, implicit feedback만을 이용하는 것이 아니라, 다른 �
 
 즉, 어떤 interaction은 positive한 signal이라 해석할 수 있지만, **어떤 interaction은 negative signal이라 해석할 수 있다.**
 
+
+
+## Negative Feedback in WMF
 ### 모델을 어떻게 확장할까?
 그럼 우선, WMF 모델에서 positive feedback을 어떻게 다루는지 refresh를 해 보자.
 WMF 모델에서는 유저 $$u$$와 item $$i$$ 간의 interaction이 존재하면 input value $$y_{u,i} = 1$$이며,
@@ -160,8 +164,9 @@ user가 어떤 아이템에 대해 (1) "좋아한다"와 (2) "싫어한다" 뿐�
 유저가 실제로 "싫어한다"(negatively interacted)는 행동을 보인 item을 user가 싫어하는 아이템이라 정의하는 방법으로 모델을 확장할 수 있다.
 
 ## Negative Feedback in BPR
-***검증되지 않은 내용입니다.***
-WMF 모델이 비슷한 식으로 확장될 수 있다면, BPR 모델도 같은 방법으로 확장할 수 있지 않을까?
+WMF 모델이 비슷한 식으로 확장될 수 있다면, BPR 모델도 같은 방법으로 확장할 수 있지 않을까? 라는 생각이 들었다.
+이는 간단하게 구현될 수 있고, 비슷한 방법이 아무래도 있지 않나? 하는 생각이 들었는데, **신기하게도 이 방법을 시도해 본 사람이 아직은 아무도 없었다.**
+간단한 실험을 추가해서 첨부한다.
 
 ### 원래 방법
 BPR(*for implicit matrix factorization*)의 가정과, 가정에 따라 모델이 갖는 objective는 다음과 같다.
@@ -193,11 +198,25 @@ WMF와 마찬가지로, BPR 모델은 interaction을 "좋아한다"와 "싫어�
 
 
 #### Implementaiton
+WMF imlementation은 [Implicit](https://github.com/benfred/implicit) 라이브러리를 그대로 사용했다.
+
+BPR implemenation은 [https://github.com/ita9naiwa/implicit](https://github.com/ita9naiwa/implicit) 내의
+implicit/bpr.pyx에 구현했다. 사실 위에서 말한 내용을 그대로 구현하면 되는데, 속도를 조금 빠르게 하는 부분이 조금 불편하다.
+혹시 실험을 재현해보고 싶다면 ita9naiwa@gmail.com으로 메일 부탁드립니다.
+
+
+#### 간단한 실험
+
+**ml-1m dataset에서의 실험 결과**
+
+||||
+|------------------------	|--------	|--------------------------	|
+| metric \ method        	| BPR    	| BPR with negative sample 	|
+| precision@3            	| 0.2744 	| 0.3045 (10% increased)   	|
+| precision@5            	| 0.2485 	| 0.2760 (10% increased)   	|
+| false discovery rate@3 	| 0.0104 	| 0.0045 (131% decresed)   	|
+| false discovery rate@5 	| 0.0106 	| 0.0048 (120% decreased)  	|
+
 
 
 #### 엄청 짧은 디스커션
-Implcit negative feedback은 *ml-100k* 데이터에서 "더 낮은 Precision"과, "더 낮은 FDR"을 가져온다.
-적어도 ml-100k dataset에서는 더 좋은 fdr score가 더 낮은 pr을 보상할 만큼 좋지 않다고 생각한다. 다만,
-다른 사내 데이터셋([bibly](http.bibly.kr))에서는 pr에 거의 변화를 주지 않은 채, 훨씬 낮은 FDR score를 만든다.
-
-유저가 좋아할 만한 top-k개의 item을 selection하는 데에는 별 도움이 되지 않을수도 있지만, input itemset중 유저가 좋아할 만한 아이템, 싫어할 만한 아이템을 분류하는 Ranker 용도로 추천 모델을 사용할 시에는 도움이 되는 것 같다. (현재 비블리에서 Negative Feedback을 이런 용도로 활용하고 있다.) 이는 모델이 전반적으로 "유저가 좋아할 만한 item"을 "유저가 싫어할 만한 아이템"보다 높은 score를 준다. 이는, 기존의 WMF, BPR이 할 수 없는 행동이며, negative feedback을 직접적으로 모델이 이용할 수 있게 확장한 결과이기 때문이라 생각한다.
