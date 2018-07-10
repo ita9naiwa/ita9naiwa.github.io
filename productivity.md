@@ -7,14 +7,9 @@ show_title: false
 
 ### Productivity boost as one of life-hacks
 
-Recently I'm practicing some life-hacks to boost my performance(in works, house, or anywhere).
-I wrote this post in either Korean, or English to share someone else.
-
-Posts on productivitiy helps at least two points.
-
-1. I'm obliged to write/practice something practical.
-2. hmm... not well.
-
+최근 소위 life-hack이라 하는, 생산성을 높이기 위한 방법을 연습하고 있습니다.
+일할 때이건, 집에서던, 혹은 어디에서던, 어디서든 조금 더 효율적으로 일하고, 남는 시간을 조금 더 알차게 보내기 위해서입니다.
+생산성 향상에 관한 포스트를 올리고, 같이 음... 활용해보면 좋을 것 같아요.
 
 -----
 
