@@ -73,5 +73,11 @@ Accuracy에만 집중한 추천 시스템은
 
 -Fleder, Daniel, and Kartik Hosanagar. "Blockbuster culture's next rise or fall: The impact of recommender systems on sales diversity."
 
-#### 추천 시스템에서 사용할 수 있는 Diversity Measures.
-위 포스트는 음...
+### 추천 시스템에서 사용할 수 있는 Diversity Measures.
+추천 시스템에서 다양성이 중요한 이유는 위에서 설명했다. 역시, 측정할 수 없는 것은 개선할 수 없다는 명언을 받들어...
+추천 시스템의 다양성을 평가할 수 있는 간단한 방버에 대해서 알아보자.
+
+
+### 결론
+
+...다음 글은 실제로 추천 시스템의 다양성을 향상시키기 위한 방법에 대해 알아보도록...;합쉬다...;;
