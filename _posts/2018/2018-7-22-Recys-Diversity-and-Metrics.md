@@ -311,5 +311,5 @@ Accuracy 이외에도 고려하면 좋을 지표가 많고, 그 중 하나로 Di
 
 ### References
 -Fleder, Daniel, and Kartik Hosanagar. ["Blockbuster culture's next rise or fall: The impact of recommender systems on sales diversity."](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=955984)
-- Matevz Kunaver, Tmaz Pozrl. ["Diversity in recommender systems – A survey.](https://www.sciencedirect.com/science/article/pii/S0950705117300680)", Knowledge-Based Systems Volume 123, 1 May 2017, Pages 154-162\
+- Matevz Kunaver, Tmaz Pozrl. ["Diversity in recommender systems – A survey.](https://www.sciencedirect.com/science/article/pii/S0950705117300680)", Knowledge-Based Systems Volume 123, 1 May 2017, Pages 154-162
 - Pablo Castells et al. ["Novelty and Diversity Metrics for Recommender Systems: Choice, Discovery and Relevance"](http://ir.ii.uam.es/rim3/publications/ddr11.pdf)
