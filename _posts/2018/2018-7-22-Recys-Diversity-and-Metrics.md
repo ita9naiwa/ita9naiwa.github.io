@@ -16,16 +16,22 @@ mathjax: true
 ### 개요
 
 이제 인터넷 어디에서나 추천 시스템을 찾아볼 수 있다.
-추천 시스템은 보통 이런 일을 한다.
+추천 시스템이라는 말을 들어보지 못한 사람은 많겠지만, 밑의 예시를 보면 ㅇㅎㅇㅎ 하고 바로 알 것 같아서 추천 시스템에 대한 자세한 설명은 하지 않겠다.
 
-1. 쿠팡에서 내가 전에 봤던 아이템과 비슷한 아이템을 추천해준다. (Finding similar items)
-2. 유투브가 내가 좋아할 만한 동영상을 추천해준다. (Recommendation)
-3. 구글 광고가 내가 예전에 봤던 물건과 비슷한 광고를 내게 보여준다(Contextual advertising, Retargeting)
-
+#### 추천 시스템은 보통 이런 일을 한다.
 ![쿠팡 예시]({{ "/assets/images/diversity_in_recsys/coupang.png" | absolute_url }})
+
+쿠팡에서 내가 전에 봤던 아이템과 비슷한 아이템을 추천해준다. (Finding similar items)
+
 ![유투브 예시]({{ "/assets/images/diversity_in_recsys/youtube.png" | absolute_url }})
+
+유투브가 내가 좋아할 만한 동영상을 추천해준다. (Recommendation)
+
 ![구글 광고 예시]({{ "/assets/images/diversity_in_recsys/google-ad.jpg" | absolute_url }})
 
+구글 광고가 내가 예전에 봤던 물건과 비슷한 광고를 내게 보여준다(Contextual advertising, Retargeting)
+
+#### 추천 시스템과, Paradox of Choice
 추천 시스템의 정의는 다양하지만, 내가 가장 좋아하는 추천 시스템의 정의는 다음과 같다.
 > _추천 시스템은 검색 엔진의 검색 결과를 의도적으로 제한하는 방법이다._
 >> 정확한 인용은 아니며, 누가 이 말을 했는지 기억이 나지 않는다.
