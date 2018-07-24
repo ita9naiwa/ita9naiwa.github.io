@@ -260,9 +260,10 @@ Entropy를 기준으로 했을 때, B 모델이 A, C 모델보다 다양성이 �
 다만, 여기서 궁금해지는 점은 다음과 같다.
 실제 유저의 클릭수(아이템의 클릭 분포)보다 더 다양한 아이템을 추천하는 것이, 정말 의미있을까?
 
-위에서 얘기했듯이, ** 유명한 아이템에겐 각각 유명한 이유가 존재한다. **
-다양성이 중요하긴 하지만, [인사이드 아웃](https://movie.naver.com/movie/bi/mi/basic.nhn?code=115622)과
-[오! 인천](https://movie.naver.com/movie/bi/mi/basic.nhn?code=10816)이 비슷한 빈도로 추천되는 것은 분명 이상하다.
+위에서 얘기했듯이, **유명한 아이템에겐 각각 유명한 이유가 존재한다.**
+다양성이 중요하긴 하지만, [인사이드  아웃](https://movie.naver.com/movie/bi/mi/basic.nhn?code=115622)
+과
+[오! 인천](https://movie.naver.com/movie/bi/mi/basic.nhn?code=10816)을 비슷한 빈도로 추천하는 추천 시스템은 분명 좋은 추천 시스템은 아닐 것이라 생각한다.
 
 #### Relative Entropy, or KL divergence
 간단히 생각할 수 있는 아이디어는 다음과 같다. 추천 결과의 아이템 분포는 유저의 아이템 클릭 분포와 비슷해야 하지 않을까?
