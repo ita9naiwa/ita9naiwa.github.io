@@ -163,8 +163,10 @@ defaults:
 
 ## => Plugins
 ##############################
-plugins:
+plugins_dir:
   - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
+
+gems: [jekyll-paginate]
