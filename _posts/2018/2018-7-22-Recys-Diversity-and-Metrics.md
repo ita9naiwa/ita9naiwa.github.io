@@ -4,7 +4,7 @@ title: "추천 시스템에서의 다양성"
 category: "recommender systems"
 tag: "recommender systems"
 comment: true
-key: prod2
+key: recsys-diversity
 mathjax: true
 ---
 ### 잡담
