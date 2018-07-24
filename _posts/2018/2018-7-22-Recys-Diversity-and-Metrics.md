@@ -22,6 +22,9 @@ mathjax: true
 2. 유투브가 내가 좋아할 만한 동영상을 추천해준다. (Recommendation)
 3. 구글 광고가 내가 예전에 봤던 물건과 비슷한 광고를 내게 보여준다(Contextual advertising, Retargeting)
 
+![쿠팡 예시]({{ "/assets/images/diversity_in_recsys/coupang.png" | absolute_url }})
+![유투브 예시]({{ "/assets/images/diversity_in_recsys/youtube.png" | absolute_url }})
+![구글 광고 예시]({{ "/assets/images/diversity_in_recsys/google-ad.jpg" | absolute_url }})
 
 추천 시스템의 정의는 다양하지만, 내가 가장 좋아하는 추천 시스템의 정의는 다음과 같다.
 > _추천 시스템은 검색 엔진의 검색 결과를 의도적으로 제한하는 방법이다._
