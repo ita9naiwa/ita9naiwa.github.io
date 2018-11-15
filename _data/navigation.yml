@@ -1,5 +1,9 @@
 header:
   - titles:
+    en: "Paper Reviews"
+    url: /paper_read.html
+
+  - titles:
       en: Recsys
     url: /recsys.html
   - titles:
