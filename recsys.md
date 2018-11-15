@@ -5,12 +5,6 @@ titles:
 show_title: false
 ---
 
-
-### I love I'm working on recommender systems!
-
------
-
-
 ### My posts on Recommender Systems(click to read full post!)
 <div class="post-list">
   <ul>
