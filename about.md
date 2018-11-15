@@ -13,13 +13,7 @@ Email : ita9naiwa@gmail.com
 
 
 ### Interests | >_<
-Recommender Systems.
-----
-특히,
-  - Matrix Factorization, Nearest Neighbors 이외의 다른 방법으로 user와 item의 interaction 데이터를 활용하는 방법
-  - 다양한 종류의 interaction(클릭, 좋아요, 싫어요, 구매, 재생 시간 등...)을 활용하는 CF 모델
-
-에 관심이 많습니다.
+내가 뭘 잘 하는지, 뭘 해야 하는지도 모르겠어...
 
 <!--more-->
 ## Some Links
