@@ -137,9 +137,9 @@ input stream을 이용한 simulation 환경에서의 RL의 성능을 높일 수 
 좋은 모델(제너럴라이즈를 잘 하는)을 만드려면, 다양한 인풋 시퀀스에 대해 모델을 트레이닝해야 한다. 하지만 job arrival pattern(어떤 시간에 어떤 job이 오는 지)가 reward에 주는 영향이 크다. 근데, 일반적인 RL 모델에서의 Critic, 혹은 Baseline은 이를 입력으로 삼지 않는다. 즉 이를 신경쓰지 않는 보통 critic을 만들면 variance가 왕창 커질 수 있다. 이 논문에서는 **각각의 input sequence당 baseline을 다시 만드는 방법으로 이를 해결했다.** 사실 이 문제 때문에 A3C라던가 PPO라던가 하는 Actor-Critic 방법을 사용하지 않은 것 같기도 하다.
 
 #### 2. Differential Rewards
-(discount==1이라 가정하면) 일반적인 RL 환경이라 생각할 때, 이 환경의 Objective는 $\Epsilon[-\sum_jT(j)]$, ($T(j)$는 j을 수행하는 데에 걸리는 시간)이다. 하지만, job scheduler와 같은 경우, 긴 긴 시간동안 서버 위에 떠 있고, 긴 긴 시간동안 들어오는 job들을 적당히 잘 처리하는 게 목표이다. 
+(discount==1이라 가정하면) 일반적인 RL 환경이라 생각할 때, 이 환경의 Objective는 $E[-\sum_jT(j)]$, ($T(j)$는 j을 수행하는 데에 걸리는 시간)이다. 하지만, job scheduler와 같은 경우, 긴 긴 시간동안 서버 위에 떠 있고, 긴 긴 시간동안 들어오는 job들을 적당히 잘 처리하는 게 목표이다. 
 즉, objective가 
-$$\lim_{n->\inf} \Epsilon[-\frac{\sum_jT(j)}{n}]$$
+$$\lim_{n->\inf} E[-\frac{\sum_jT(j)}{n}]$$
 이라 생각하는 것이 더 합리적일 것이다.
 다행히도, 이렇게 formulation을 바꾸는 일이 그리 어렵지는 않다. Sutton책 10.3 챕터에 이를 간단히 바꾸는 방법을 소개해주고 있다. $\dot r := r_t - \hat r$,  $\hat r :=$ average value of $r$으로 바꿔주기만 하면 된다고 한다. 자세히는 설명하지 않겠지만(사실 나도 잘 모르겠다) 이렇게 reward formulation을 바꿔주는 것이 성능에 많은 영향을 미친다고 한다.
 
