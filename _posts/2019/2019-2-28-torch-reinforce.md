@@ -90,7 +90,6 @@ p.grad /= len(list_of_grads)
 
 근데 이걸 더 잘 하는 방법이 있을 것 같은데..
 
-암튼 결과는 여기에 정리
-https://gist.github.com/ita9naiwa/c4ad65931c8a49499671355351b79bce
+암튼 결과는 [여기에 정리](https://gist.github.com/ita9naiwa/c4ad65931c8a49499671355351b79bce)
 
 Tested on Torch 1.0.0
