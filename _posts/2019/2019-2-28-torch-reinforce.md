@@ -20,7 +20,7 @@ mathjax: true
 
 ### 간단한 해결 방법
 Policy Gradient를 계산하기 위해서는,
-$p(a\bar s)$, Return $R$, Advantage $\delta$가 필요하다.
+$p(a\vert s)$, Return $R$, Advantage $\delta$가 필요하다.
 
 
 개별 rollout worker는 다음과 같이 동작하면 될 것 같다고 생각해서, 일단 이렇게 만들어봤다.
@@ -34,12 +34,12 @@ def rollout(model, env, queue):
 이렇게 하면 되나 싶었는데,  몇가지 문제점이 생긴다. 평상시엔 문제가 안 생길 수도 있지만, 왠지 문제가 생기는 이유는 다음과 같다.
 **지금 환경은, 스테이트가 왕창왕창 짱짱크다.**
 
-### s가 크고, 한번 $p(a\bar s)$을 계산하는 데에 시간이 왕창 걸린다.
+### s가 크고, 한번 $p(a\vert s)$을 계산하는 데에 시간이 왕창 걸린다.
 
 1. **state가 큰 경우, state를 전달하다 에러가 난다.**
 2.  accumulating threads에서 그래디언트 계산을 다시 해 줘야 한다. 근데 별로 그러고 싶지 않다.
 
-굳이 한번 계산한 $p(a\bar s)$를 다시 계산해줘야 하나... 싶어서 고민을 했는데,
+굳이 한번 계산한 $p(a\vert s)$를 다시 계산해줘야 하나... 싶어서 고민을 했는데,
 
 gradient를 직접 전달하면 괜찮은 것이었다!
 
