@@ -56,6 +56,12 @@ Stage 내의 small task를 수행할 수 있다. machine도 수가 많지만, �
 
 #### 1. Job들을 embedding하기.
 
+
+
+![Figure 5: Graph embedding transforms raw information each node of job DAGs into a vector representation. This example shows two steps of local message passing and two levels of summarizations.](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/3dec6f21dfd04fb4207ec6811706a7c9babaa426/5-Figure5-1.png)
+
+
+
 job $i$는 graph $G$로 표현할 수 있고, ${v_1, v_2, ...v_n}$개의 stage(그래프적으로 얘기하자면 노드)를 갖고 있다.
 
 
@@ -65,16 +71,21 @@ $$e_v = g(\sum_{w\in \xi(v)}f(e_w)) + x_v$$
 $x_v$ 는 stage $v$의 input feature vector로, (1) # of tasks, (2) average task duration, (3) # of executors currently working on the stage, (4) # of available executors, (5) whether available executors are local to job으로 정의되어 있다.
 $f, g$는 각각 하나의 neural network이다.
 
-![Figure 5: Graph embedding transforms raw information each node of job DAGs into a vector representation. This example shows two steps of local message passing and two levels of summarizations.](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/3dec6f21dfd04fb4207ec6811706a7c9babaa426/5-Figure5-1.png)
+
 
 Job $i$의 embedding $y_i$는 다음과 같이 정의된다.
 $$y_i = g'(\sum_{v\in G_i}f'(e_v)) $$
 $f', g'$는 각각 하나의 neural network이다.
 
 사실 이 식이 정확한지는 잘 모르겠다. 위와 같은 방법으로 비슷하게 정의할 수 있다고 적어놔서... 아마 크게 다르지는 않을 것이다.
-![Figure 6: For each node v in job i, the node selection network uses the message passing summary eiv , DAG summary yi and global summary z to compute a priority score qiv used to sample a node.](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/3dec6f21dfd04fb4207ec6811706a7c9babaa426/6-Figure6-1.png)
 모든 job의 Global summary $z$는 다음과 같이 정의된다.
-$$z = g''(\sum_{i}f''(y_i)) $$
+$$z = g''(\sum_{i}f''(y_i)) $$ 
+
+위 내용을 다음과 같이 표현할 수 있다.
+
+
+![Figure 6: For each node v in job i, the node selection network uses the message passing summary eiv , DAG summary yi and global summary z to compute a priority score qiv used to sample a node.](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/3dec6f21dfd04fb4207ec6811706a7c9babaa426/6-Figure6-1.png)
+
 
 #### 2.어떤 stage를 스케쥴링하고, 얼마나 많은 Executor를 할당할까?
 
@@ -84,13 +95,20 @@ $p(v)$는 $v$를 포함하는 job $i$를 가리킨다.
 
 
 Exectuor를 할당할 때, Stage 레벨에서  executor를 할당할 수도 있지만, 여기서는 Job 레벨에서 Executor를 할당한다. 사실, job 레벨에서 Executor 수를 정해 놓으면, 그 밑의 단계(stage 단계)에서의 parallelism은 spark scheduler가 알아서 정해주기도 하고(확실하지 않음)...이렇게 처리하는 것이, inference time을 엄청나게 줄여준다고 한다.
+
+
 ![Figure 15: Without the domain-specific conditional probability insight (Â§5.2), Decimaâ€™s inference time grows with cluster size.](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/3dec6f21dfd04fb4207ec6811706a7c9babaa426/12-Figure15-1.png)
+
+세로축이 inference time인데, 위 방법을 적용한 경우 executor의 수가 늘어도 예측 시간에 그리 큰 변화가 생기지 않는다는 사실을 알 수 있다.
+
 job level에서의 얼마나 많은 Executor를 할당할지는 다음과 같이 정의한다.
 $$\Pr[b_t ==N] = \text{MLP}(y_i)$$
 Output이 $[1, 2, ..., N]$인 MLP를 정의해 이를 그대로 사용한다. 모든 Node에 대해 이 MLP를 계산해야 한다면, 확실히 양이 많긴 할 것 같다.
 
 이를 그림으로 나타내면 다음과 같다.
+
 ![Figure 7: Decimaâ€™s policy for jointly sampling a node and parallelism limit is implemented as the product of a node distribution, computed from graph embeddings (Â§5.1), and a limit distribution, computed from the DAG summaries.](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/3dec6f21dfd04fb4207ec6811706a7c9babaa426/7-Figure7-1.png)
+
 
 ### 강화 학습 환경 구성
 
@@ -119,9 +137,9 @@ input stream을 이용한 simulation 환경에서의 RL의 성능을 높일 수 
 좋은 모델(제너럴라이즈를 잘 하는)을 만드려면, 다양한 인풋 시퀀스에 대해 모델을 트레이닝해야 한다. 하지만 job arrival pattern(어떤 시간에 어떤 job이 오는 지)가 reward에 주는 영향이 크다. 근데, 일반적인 RL 모델에서의 Critic, 혹은 Baseline은 이를 입력으로 삼지 않는다. 즉 이를 신경쓰지 않는 보통 critic을 만들면 variance가 왕창 커질 수 있다. 이 논문에서는 **각각의 input sequence당 baseline을 다시 만드는 방법으로 이를 해결했다.** 사실 이 문제 때문에 A3C라던가 PPO라던가 하는 Actor-Critic 방법을 사용하지 않은 것 같기도 하다.
 
 #### 2. Differential Rewards
-(discount==1이라 가정하면) 일반적인 RL 환경이라 생각할 때, 이 환경의 Objective는 $\Epsilon[-\sum_jT(j)]$, ($T(j)$는 j을 수행하는 데에 걸리는 시간)이다. 하지만, job scheduler와 같은 경우, 긴 긴 시간동안 서버 위에 떠 있고, 긴 긴 시간동안 들어오는 job들을 적당히 잘 처리하는 게 목표이다. 
+(discount==1이라 가정하면) 일반적인 RL 환경이라 생각할 때, 이 환경의 Objective는 $E[-\sum_jT(j)]$, ($T(j)$는 j을 수행하는 데에 걸리는 시간)이다. 하지만, job scheduler와 같은 경우, 긴 긴 시간동안 서버 위에 떠 있고, 긴 긴 시간동안 들어오는 job들을 적당히 잘 처리하는 게 목표이다. 
 즉, objective가 
-$$\lim_{n->\inf} \Epsilon[-\frac{\sum_jT(j)}{n}]$$
+$$\lim_{n->\inf} E[-\frac{\sum_jT(j)}{n}]$$
 이라 생각하는 것이 더 합리적일 것이다.
 다행히도, 이렇게 formulation을 바꾸는 일이 그리 어렵지는 않다. Sutton책 10.3 챕터에 이를 간단히 바꾸는 방법을 소개해주고 있다. $\dot r := r_t - \hat r$,  $\hat r :=$ average value of $r$으로 바꿔주기만 하면 된다고 한다. 자세히는 설명하지 않겠지만(사실 나도 잘 모르겠다) 이렇게 reward formulation을 바꿔주는 것이 성능에 많은 영향을 미친다고 한다.
 
