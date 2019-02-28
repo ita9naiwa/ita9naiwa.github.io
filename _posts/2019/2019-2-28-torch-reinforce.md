@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "멀티프로세스 REINFORCE 알고리즘 구현
+title: "멀티프로세스 REINFORCE 알고리즘 구현"
 category: "RL"
 tag: "RL"
 mathjax: true
