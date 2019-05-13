@@ -275,9 +275,9 @@ Board에 최근에 추가된 pin들의 LDA 결과를 입력으로 보드의 Topi
 
 #### Pruning edges
 
-각 pin$p$의 degree $|degree(p)|$ 개 중, $|degree(p)|^\delta$개만을 남기고 제거하는데,
+각 pin$p$의 degree $degree(p)$ 개 중, $degree(p)^\delta$개만을 남기고 제거하는데,
 
-위에서 계산한 보드의 Topic distribution과 각 pin의 topic distribution을 계산한 후, 두 분포간의 cosine similarity가 낮은 $|degree(p)| - |degree(p)|^\delta$개의 board로 이어지는 edge를 제거한다.
+위에서 계산한 보드의 Topic distribution과 각 pin의 topic distribution을 계산한 후, 두 분포간의 cosine similarity가 낮은 $degree(p) - degree(p)^\delta$개의 board로 이어지는 edge를 제거한다.
 
 
 
