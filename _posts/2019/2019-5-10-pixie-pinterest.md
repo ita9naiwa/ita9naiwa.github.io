@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "Pixie: A System for Recommending 3+ Billion Items to 200+ Million Users in Real-Time 리뷰"
+title: "Pixie 리뷰"
 category: "Recommender Systems"
 tag: "Recommender Systems"
 mathjax: true
@@ -185,3 +185,8 @@ Board에 최근에 추가된 pin들의 LDA 결과를 입력으로 보드의 Topi
 추천 시스템의 가장 흔한 사례라고 할 수 있겠지만, Pinterst는 사진이라는 특징을 살려, 유사한 pin을 만드는 더 좋은 heuristic을 적용했다. Random walk의 길이가 길면 조금 더 다양한 pin이 추천될 것이다. 유사한 핀 더 보기에서는 다양한 pin 보다는 쿼리 pin과 비슷한 pin을 보여주는 것이 더 효율적이라고 Pinterest는 생각했고, 실제로도 그렇다고 한다.
 
 이외에도, board recommendation, 그리고 훨씬 더 많은 추천에 Pixie를 이용하고 있다고 한다.
+
+References:
+
+[1  Pixie: A System for Recommending 3+ Billion Items to 200+ Million Users in Real-Time, https://arxiv.org/abs/1711.07601
+[2] An update on Pixie, Pinterest’s recommendation system https://medium.com/pinterest-engineering/an-update-on-pixie-pinterests-recommendation-system-6f273f737e1b
