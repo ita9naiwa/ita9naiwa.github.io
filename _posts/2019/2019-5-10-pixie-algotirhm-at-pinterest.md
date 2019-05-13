@@ -8,20 +8,24 @@ mathjax: true
 ---
 
 ### 잡담
-추천 시스템 연구하는 곳에서 나와서 왜 추천시스템 리뷰... 'ㅅ'... 관련 프로젝트를 하나 진행하기로 해서, 추천 시스템에 대한 공부를 좀 해야 할 필요성을 느끼기도 했고, 음... 더 중요한 것은, **간단한 모델의 Clever한 사용**이 좋은 결과를 만들어내는 경우의 모범적인 케이스라, 공부를 하면 좋을 것 같다고 생각했다. 나는 이런 Work을 할 수 있긴 한걸까. 'ㅅ'..
+추천 시스템 연구하는 곳에서 나와서 왜 추천시스템 리뷰... 'ㅅ'... 관련 프로젝트를 하나 진행하기로 해서, 추천 시스템에 대한 공부를 좀 해야 할 필요성을 느끼기도 했고, 음... 더 중요한 것은, **간단한 모델의 Clever한 사용**이 좋은 결과를 만들어내는 경우의 모범적인 케이스라, 공부를 하면 좋을 것 같다고 생각했다.
+
+
+나도 언젠가 이렇게 멋진 일을 하고 싶다.
 
 ## Introduction
 2억명이 넘는 유저와, 삼십억이 넘는 아이템을 유저에게 리얼타임으로 추천하기 위해, Pinterest에서는 Graph 기반의 새로운 추천, Pixie를 제안했다.
 
-Pinterst는 유저가 좋아하는 아이템(사진)에 Pin을 남기는 방식으로 유저와 아이템이 interaction한다.  유저는 자신이 Pin한 사진들을 Board를 만들어 그곳에 저장할 수 있다. 즉, Board는 비슷한, 혹은 관련이 있는 pin의 집합이라 생각할 수 있다. 예를 들어서, 하츠네 미쿠의 사진을 모아놓은 보드가 있을 수 있고, 보드 안의 각 핀은 하츠네미쿠의 사진들일 것이다. 각각의 보드는 유저가 생성한 큐레이션으로 생각할 수 있고, 하나의 사진은 여러 보드, 즉 큐레이션에 포함될 수 있다. (이로 인해, 아이템 간의 Relevancy를 계산할 수 있게 될 것이다.)
+Pinterst는 유저가 좋아하는 아이템(사진)에 Pin을 남기는 방식으로 유저와 아이템이 interaction한다.  유저는 자신이 Pin한 사진들을 Board를 만들어 그곳에 저장할 수 있다. 즉, Board는 비슷한, 혹은 관련이 있는 pin의 집합이라 생각할 수 있다. 예를 들어서, 하츠네 미쿠의 사진을 모아놓은 보드가 있을 수 있고, 보드 안의 각 핀은 하츠네미쿠의 사진들일 것이다. 각각의 보드는 유저가 생성한 큐레이션으로 생각할 수 있고, 하나의 사진은 여러 보드, 즉 큐레이션에 포함될 수 있다.
+
 ![](https://cdn-images-1.medium.com/max/960/0*g89VXViFjW1ETImN.)
 pin과 board 사이의 biparite graph 관계
 
-그렇다면, Pinterest 내의 보드들과 사진들을, 하나의 그래프로 생각할 수 있다. 특히, 이는 Bipartite Graph로서, 하나는 보드, 하나는 사진, 그리고 각각 보드와 사진을 잇는 에지는 유저가 남긴 pin이 된다. Pixie는 이 Graph를 random walk하는 알고리즘을 이용해, 추천을 할 수 있다고 주장하고 있다.
+Pinterest 내의 보드들과 사진들을, 하나의 그래프로 생각할 수 있다. 특히, 이는 Bipartite Graph로서, 하나는 보드, 하나는 사진, 그리고 각각 보드와 사진을 잇는 에지는 유저가 남긴 pin이 된다. Pixie는 이 Graph를 random walk하는 알고리즘을 이용해, 추천을 할 수 있다고 주장하고 있다.
 
 
 ## Pixie Random walk
-Pixie Random walk 알고리즘은 상당히 쉽다! Deep learning을 사용하는 것도 아니고, 간단한 Random walk on graph 알고리즘에, 여러 Clever한 heuristic을 적용하는 것으로 상당히 우수한 결과를 만들어내고 있다는 점이 놀랍다. 우선, Random walk 알고리즘이 무엇인지 설명한 이후, Pixie에 적용된 여러 heuristic을 살펴보자(논문에서도 이렇게 소개되어 있다).
+Pixie Random walk 알고리즘은 상당히 쉽다! Deep learning을 사용하는 것도 아니고, 간단한 Random walk on graph 알고리즘에, 여러 Clever한 heuristic을 적용하는 것으로 상당히 우수한 결과를 만들어내고 있다는 점이 놀랍다. 우선 Random walk 알고리즘이 무엇인지 후 설명한 Pixie에 적용된 여러 heuristic을 살펴보자(논문에서도 이렇게 소개되어 있다).
 
 ### Basic Random walk
 ![graph random walkì— ëŒ€í•œ ì´ë¯¸ì§€ ê²€ìƒ‰ê²°ê³¼](https://image.slidesharecdn.com/randomwalkongraphs-140205154247-phpapp02/95/random-walk-on-graphs-12-638.jpg?cb=1391615095)
@@ -76,7 +80,7 @@ Pixie는 단순하지만, 우아한 방법을 이용해 이러한 문제를 회�
 Random walk 도중, 다음으로 이동할 Pin 혹은 Board를 선택할 때, 이를 반영하게 만들 수 있다. Pixie는 이 방법을 통해 유저에게 개인화된 추천을 제공한다. 그래프에서 유저에게 관련이 있는 부분을 강조하는 것으로, 추천의 개인화,  퀄리티, 관심사 모든 측면에서 더 좋다고 한다. 각 pin, board, 그리고 유저에게는 토픽이나, 언어와 같은 특징이 존재하는데, 서로 매칭하는 핀으로 이동할 확률을 높여주는 방식이라고 한다. 다만, 구체적인 방법은 나와있지 않은 점이 아쉽다.
 
 ### 유저가 본 여러 핀을 가중치를 이용해 추천에 사용하기
-**유저**에게 추천을 하고 싶은데, 위에서 본 random walk 알고리즘은 개별 pin에 대해 동작한다. 유저가 클릭한 pin은 많을 테니,  유저와 interaction이 있는 pin들을 잘 조합해서, 유저에 대한 추천을 만들 수 있을 것이다.
+**유저**에게 추천을 하고 싶은데, 위에서 본 random walk 알고리즘은 개별 pin에 대해 동작한다. 유저가 클릭한 pin은 많을 테니,  유저와 interaction이 있는 pin들을 잘 조합해서, 유저에 대한 추천을 만든다.
 
 여러 pin을 섞어서 추천을 할 때, Pixie에서 중요하게 여기는 점은 다음과 같다.
 #### Query pin의 가중치
@@ -170,7 +174,6 @@ Board에 최근에 추가된 pin들의 LDA 결과를 입력으로 보드의 Topi
 ![Figure 5: The memory usage and Pixie runtime against different pruned graphs.](https://ai2-s2-public.s3.amazonaws.com/figures/2017-08-08/b120a10310645df329c691b782dea9ceb7dfe786/9-Figure5-1.png)
 
 추천 생성 또한 빠르게 할 수 있게 만든다고 한다.
-
 이 과정을 거치면 또한, 70억개가 넘었던 그래프 노드의 수를, 약 10억개의 board와 20억개의 pin, 100억개가 넘었던 edge들을 약 170억개 이내로 줄일 수 있다고 한다. ~~줄여도 어마무시한 사이즈~~....
 
 ## 실제 추천 사용 사례
@@ -186,7 +189,9 @@ Board에 최근에 추가된 pin들의 LDA 결과를 입력으로 보드의 Topi
 
 이외에도, board recommendation, 그리고 훨씬 더 많은 추천에 Pixie를 이용하고 있다고 한다.
 
-References:
+
+#### References:
 
 [1  Pixie: A System for Recommending 3+ Billion Items to 200+ Million Users in Real-Time, https://arxiv.org/abs/1711.07601
+
 [2] An update on Pixie, Pinterest’s recommendation system https://medium.com/pinterest-engineering/an-update-on-pixie-pinterests-recommendation-system-6f273f737e1b
