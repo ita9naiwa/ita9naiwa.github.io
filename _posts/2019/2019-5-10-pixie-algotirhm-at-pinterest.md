@@ -62,30 +62,18 @@ Pixie Random walk 알고리즘은 상당히 쉽다! Deep learning을 사용하�
 ```python
 
 def  random_walk(query_node q, edges E, visit_count N):
-
-tot_steps =  0
-
-visit_counter =  dict()
-
-while  True:
-
-curr_node = q
-
-step_size =  sample_random_walk_length()
-
-for i in (1,... step_size):
-
-curr_node = E[curr_node].random_neighbor()
-
-visit_counter[curr_node] +=  1
-
-tot_steps += step_size
-
-if tot_steps > N:
-
-break
-
-return visit_counter
+    tot_steps =  0
+    visit_counter =  dict()
+    while  True:
+        curr_node = q
+        step_size =  sample_random_walk_length()
+        for i in (1,... step_size):
+            curr_node = E[curr_node].random_neighbor()
+            visit_counter[curr_node] +=  1
+            tot_steps += step_size
+        if tot_steps > N:
+        break
+    return visit_counter
 
 ```
 
@@ -98,32 +86,19 @@ Pinterest algorithm에서는 board, pin으로 이루어진 bipartite graph이며
 ```python
 
 def  basic_pixie_random_walk(query_pin q, edges E, visit_count N):
-
-tot_steps =  0
-
-visit_counter =  dict()
-
-while  True:
-
-curr_pin = q
-
-step_size =  sample_random_walk_length()
-
-for i in (1,... step_size):
-
-curr_board = E[curr_pin].random_neighbor()
-
-curr_pin = E[curr_board].random_neighbor()
-
-visit_counter[curr_pin] +=  1
-
-tot_steps += step_size
-
-if tot_steps > N:
-
-break
-
-return visit_counter
+    tot_steps =  0
+    visit_counter =  dict()
+    while  True:
+        curr_pin = q
+        step_size =  sample_random_walk_length()
+        for i in (1,... step_size):
+            curr_board = E[curr_pin].random_neighbor()
+            curr_pin = E[curr_board].random_neighbor()
+            visit_counter[curr_pin] +=  1
+        tot_steps += step_size
+        if tot_steps > N:
+            break
+    return visit_counter
 
 ```
 
@@ -249,37 +224,21 @@ where $V_q[p]$ is visit count during random walk from query pin $p$, $V[p]$ is c
 ```python
 
 def  pixie_random_walk(User u, query_pin q, edges E, visit_count N, terminate_step v, terminate_walk p):
-
-num_high_visited_pins =  0
-
-tot_steps =  0
-
-visit_counter =  dict()
-
-while  True:
-
-curr_pin = q
-
-step_size =  sample_random_walk_length()
-
-for i in (1,... step_size):
-
-curr_board = E[curr_pin].personalized_neighbor_wrt(U)
-
-curr_pin = E[curr_board].personalized_neighbor_wrt(U)
-
-visit_counter[curr_pin] +=  1
-
-if visit_counter[curr_pin] == v:
-
-num_high_visited_pins +=  1
-
-tot_steps += step_size
-
-if tot_steps > N or num_high_visited_pins > p:
-
-break
-
+    num_high_visited_pins =  0
+    tot_steps =  0
+    visit_counter =  dict()
+    while  True:
+    curr_pin = q
+    step_size =  sample_random_walk_length()
+        for i in (1,... step_size):
+            curr_board = E[curr_pin].personalized_neighbor_wrt(U)
+            curr_pin = E[curr_board].personalized_neighbor_wrt(U)
+            visit_counter[curr_pin] +=  1
+            if visit_counter[curr_pin] == v:
+                num_high_visited_pins +=  1
+            tot_steps += step_size
+        if tot_steps > N or num_high_visited_pins > p:
+            break
 return visit_counter
 
 ```
@@ -289,17 +248,11 @@ return visit_counter
 ```python
 
 def  pixie_recommendation(query_pins Q, weight W, edges E, user u, default_step_size N):
-
-# v, p = predefined terminate step and terminate walk constant
-
-for q in Q:
-
-N_q =  # (Adjusting random walk size) 부분의 식에 의해 계산됨
-
-V_q =  pixie_random_walk(u, q, E, N_q, v, p)
-
-V =  # V_q들을 (Aggregating each pin's random walk results) 부분의 식을 이용해 합침.
-
+    # v, p = predefined terminate step and terminate walk constant
+    for q in Q:
+        N_q =  # (Adjusting random walk size) 부분의 식에 의해 계산됨
+        V_q =  pixie_random_walk(u, q, E, N_q, v, p)
+    V =  # V_q들을 (Aggregating each pin's random walk results) 부분의 식을 이용해 합침.
 return V
 
 ```
