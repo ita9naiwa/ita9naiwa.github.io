@@ -113,6 +113,11 @@ $$
 $k$는 유저와 아이템의 평균적인 interation 횟수이다.
 또한, $I'$을 만들 때 positive item을 포함하는 이유는, 각 유저 별로 Negative item을 detect해서, 이 안에서 샘플링을 하는 것이 엄청 inefficient하기 때문이다.
 
+#### Loss approximation을 했을 때의 성능 그래프
+
+![chart]({{ "/assets/images/lmf/chart.png" | absolute_url }})
+loss를 approximate하기 위해 사용하는 sample의 비율(positive interaction의 K배 많게 하는 K)를 조정해가면서, Movielens 100k 데이터셋에 대해 트레이닝한 결과이다. K가 적당히 클 때, 전체 데이터를 사용하는 것 만큼이나 효율적임을 알 수 있다.implementation이 그리 efficient하게 되지는 않아서... 속도에 대한 비교는 할 수 없는게 아쉽다.
+
 이를 파이썬으로 구현하면 다음과 같다.
 
 ```python
@@ -154,3 +159,24 @@ $k$는 유저와 아이템의 평균적인 interation 횟수이다.
         deriv = A - (B+C) - self.reg_param * user_vectors[idx]
 
 ```
+
+#### 성능 비교
+
+![chart]({{ "/assets/images/lmf/eval.png" | absolute_url }})
+
+모델이 그리 성능이 좋지 않은 것 같다...
+MovieLens dataset에서만 그런 걸 수도 있겠는데, 이런 정도라면 추천하는데 사용하긴 힘들 것 같다.
+
+다만, 유저 $u$가 특정 아이템 $i$를 좋아할 확률을 모델링 할 수 있다는 점에서,
+
+![chart]({{ "/assets/images/lmf/koko.png" | absolute_url }})
+이런 걸 구현하는 데에 응용하면 좋지 않을까 생각한다.
+
+
+### References
+
+
+
+#### References:
+
+[1] Logistic Matrix Factorization for Implicit Feedback Data, https://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf
