@@ -174,11 +174,18 @@ MovieLens dataset에서만 그런 걸 수도 있겠는데, 이런 정도라면 �
 다만, 유저 $u$가 특정 아이템 $i$를 좋아할 확률을 모델링 할 수 있다는 점에서,
 
 ![chart]({{ "/assets/images/lmf/koko.png" | absolute_url }})
+
 이런 걸 구현하는 데에 응용하면 좋지 않을까 생각한다.
 
 
-### References
 
+### 결론
+
+논문을 읽으면서 엄청 Clever한 아이디어이고, 대단하다고 생각을 했는데, 이를 실제로 (간단하게지만) 구현해보면서 조금 실망했다.
+
+우선 이 모델은 (1)Hyperparameter에 굉장히 민감하고, (2) Adagrad같은 방법을 써서 Gradient step의 크기를 굉장히 작게 하지 않으면 모델을 트레이닝 할 수 없다. 마지막으로, (3) Relevence 관련 성능이 굉장히 좋지 않다. ~~내가 모델 튜닝을 대충 해서야~~
+
+그렇지만, user와 item의 implicit interaction을 확률적으로 묘사하려는 (내가 알기론) 최초의 시도이며, 이를 성공적으로 해냈다는 점이 대단한 점인 것 같다.
 
 
 #### References:
