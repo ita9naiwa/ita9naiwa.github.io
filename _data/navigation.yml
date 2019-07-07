@@ -1,8 +1,10 @@
 header:
   - titles:
-    en: "Paper Reviews"
-    url: /paper_read.html
-
+      en:일기
+    url: /journals.html
+  - titles:
+      en: RL
+    url: /rl.html
   - titles:
       en: Recsys
     url: /recsys.html
