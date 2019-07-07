@@ -70,6 +70,7 @@ $y_i$를 유저 $u$가 아이템 $i$를 좋아하는 정도 $l_{ui}$로 바꿔 l
 $$
     \textbf{L}(D\vert X, Y, B_u, B_i)\prod_{u, i} p(l_{ui})^{c_{ui}}(1-p(l{ui}))
 $$
+
 where $X = [x_1, x_2, \cdots], Y = [y_1, y_2, \cdots], B_u = [b_{u1}, \cdots], B_i = [b_{i1}, \cdots]$
 
 likelihood에 log를 취한 후에, X, Y에  Gaussian prior를 더해주면(혹은, Equivalent하게, L2 regularization을 취하고) 모델의 objective를 유도할 수 있다.
@@ -78,6 +79,7 @@ $$
     \log \textbf{L}(D|X,Y,B_u, B_i) = \\
     \sum_{u,i}c_{ui}(r_{ui}) - (1 + c_{ui})\log(1 + \exp(r_{ui})) - \frac{\sigma_u}{2}2x_u^Tx_u -\frac{\sigma_i}{2}2y_i^Ty_i
 $$
+
 where $r_{ui} =  x_u^Ty_i + b_u+b_i$
 
 $\sigma_u$와 $\sigma_i$를 $\lambda$로 놓고, $x_u$에 대해 gradient를 구하면 다음과 같다.
@@ -85,11 +87,13 @@ $\sigma_u$와 $\sigma_i$를 $\lambda$로 놓고, $x_u$에 대해 gradient를 구
 $$
 \frac{\partial}{\partial x_u} = \sum_i [c_{ui}y_i - \frac{(1+c_{ui})\exp(r_{ui})}{1 + \exp(r_{ui})}y_i -\lambda x_u]
 $$
+
 $b_u$에 대한 gradient도 비슷하다.
 
 $$
 \frac{\partial}{\partial x_b} = \sum_i [c_{ui} - \frac{(1+c_{ui})\exp(r_{ui})}{1 + \exp(r_{ui})}]
 $$
+
 $y_i$, $b_i$에 대한 gradient는 대칭적이므로 생략한다 'ㅅ'...
 
 #### Approximating full loss using negative sampling
