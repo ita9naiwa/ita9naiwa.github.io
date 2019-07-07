@@ -24,17 +24,14 @@ key: lmf
 Logistic Matrix Factorization은 User $u$와 Item $i$가 interaction할 확률을 모델링하는 Matrix Factorization 모델이다. 또한 이를 이용해 user $u$가 item $i$와 interact한다는 사건을 확률적으로 표현할 수 있게 되었다. 즉, 간단히 말해 유저가 어떤 아이템을 좋아할 확률을 다음과 같이 표현하겠다는 얘기이다.
 
 
-유저와 아이템의 interaction을 일반적인 matrix factorization과는 다르게  sigmoid 함수를 이용해 표현하는 점 이 모델의 독특한 점이다.
+유저와 아이템의 interaction을 일반적인 matrix factorization과는 다르게  sigmoid 함수를 이용해 표현하는 점 이 모델의 독특한 점이다. 즉, user $u$가 item $i$와 interaction할 확률은 모델링하며, 이는 다음과 같이 표현된다.
+
+
 $$
     p(l_{ui} \vert x_u^Ty_i + b_u + b_i) = \text{sigmoid}(x_u^Ty_i + b_u + b_i)
 $$
 
-
 where $l_ui$ is the event the user $u$ interacts with the item $i$, $x_u$, $y_i$ are latent representation for user $u$, and item $i$. $b_u$, $b_i$ are usre, item bias, respectively.
-
-|                            	|           WMF           	|                     LMF                     	|
-|:--------------------------:	|:-----------------------:	|:-------------------------------------------:	|
-| user $u$와 item $i$의 표현 	| $x^Ty_i \in \textbf{R}$ 	| $p(l_{ui}\vert x_u^Ty_i + b_u + b_i) \in (0, 1)$ |
 
 
 #### bias term의 해석
@@ -56,12 +53,13 @@ $$
 
 $c_i$는 (WMF에도 존재하는)Confidence Term이다.
 
-이는 $y_i$의 정의도 바꾸게 되는데, 더 이상 $y_i$는 Bernoulli 분포를 따르지 않고, $\text{Beta}(c_i+1, 2)$ 분포를 따르게 된다.
+> 이게 어떤 분포의 likelihood인지 조금 생각을 해 봤는데,
+> $y_i$는 $\text{Beta}(c_i+1, 2)$ 분포를 따르게 되는 것 같다.
+> 베타 분포는 값이 0과 1 사이에 존재하는 분포이다.
 
-베타 분포는 값이 0과 1 사이에 존재하는 분포이다.
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Beta_distribution_pdf.svg/540px-Beta_distribution_pdf.svg.png)
 
-왜 이렇게 정의한지 잘 이해가 가지 않는다. 아무튼 이런 식으로 유저가 아이템을 좋아할 만한 사건을 정의하면, $y_i$는 "유저가 아이템을 좋아한다"는 사건이 아니라, "유저가 아이템을 좋아하는 정도"라는 식으로 해석을 할 수 있다.
+왜 이렇게 정의한지 잘 이해가 가지 않는다. 아무튼 이런 식으로 유저가 아이템을 좋아할 만한 사건을 정의하면, $y_i$는 "유저가 아이템을 좋아한다"는 사건이 아니라, "유저가 아이템을 좋아하는 정도"이며, 이는 0과 1사이의 값을 갖는다는 식으로 생각할 수 있다.
 
 $y_i$를 유저 $u$가 아이템 $i$를 좋아하는 정도 $l_{ui}$로 바꿔 likelihood를 다시 한 번 표현해 보면 다음과 같다.
 
@@ -71,7 +69,7 @@ $$
 
 where $X = [x_1, x_2, \cdots], Y = [y_1, y_2, \cdots], B_u = [b_{u1}, \cdots], B_i = [b_{i1}, \cdots]$
 
-likelihood에 log를 취한 후에, X, Y에  Gaussian prior를 더해주면(혹은, Equivalent하게, L2 regularization을 취하고) 모델의 objective를 유도할 수 있다.
+likelihood에 log를 취한 후에, X, Y에 L2 regularization을 더해 주면 모델의 objective를 유도할 수 있다.
 
 $$
     \log \textbf{L}(D|X,Y,B_u, B_i) = \\
@@ -92,31 +90,44 @@ $$
 \frac{\partial}{\partial x_b} = \sum_i [c_{ui} - \frac{(1+c_{ui})\exp(r_{ui})}{1 + \exp(r_{ui})}]
 $$
 
-$y_i$, $b_i$에 대한 gradient는 대칭적이므로 생략한다 'ㅅ'...
+($y_i$, $b_i$에 대한 gradient는 대칭적이므로 생략한다)
+
+모델의 Objective를 정의하고 gradient를 계산했으면 모델을 실제로 트레이닝할 수 있다. 하지만 이 모델에는 심각한 단점이 하나 있는데, 모델을 학습하는 데에 시간이 무지무지 많이 걸린다는 점이다. total itemset $I$가 커질수록, $\frac{\partial}{\partial x_u}$을 계산하기가 힘들어진다. 이는, $\sum_i$ Term이 모든 아이템에 대해 iteration을 요구하기 때문이다. 이를 해결하기 위해, 논문의 저자는 Itemset $I$의 아이템중 일부만 샘플링 한 뒤 트레이닝하는 방법을 제안했다.
 
 #### Approximating full loss using negative sampling
+Gradient를 Approximate하는 방법에 대해 제대로 설명이 안 되어 있어서 유도해봤다. 논문에서도 언급되어 있듯 모델이 그리 어렵지 않아 근사식을 유도하는 것도 어렵지는 않았다.
 
-total itemset $I$가 커질수록, $\frac{\partial}{\partial x_u}$을 계산하기가 힘들어진다. 이는, $\sum_i$ Term이 모든 아이템에 대해 iteration을 요구하기 때문이다.
-
-전체 아이템에 대해 $\frac{\partial}{\partial x_u}$을 계산하지 않고, 일부 negative item만 선택해서 training을 해도 비교적 좋은 결과를 얻을 수 있다고 저자는 주장하고 있다.
-
-위에서 정의된 Loss 함수는 일부 negative item을 선택하기 위해 딱 맞춰져 있는 것 같다. 이를 위해 Beta distribution을 사건의 확률로 가정한게 아닌가 싶다. Negative item만을 sampling하기 위한 구조는 다음과 같다.
+위에서 정의된 Loss 함수는 일부 negative item을 선택하기 위해 딱 맞춰져 있는 것 같다. 이를 위해 Beta distribution을 사건의 확률로 가정한게 아닌가 싶다. Negative item만을 sampling하기 위해 $\frac{\partial}{\partial x_u}$을 풀어 써 보면 다음과 같다.
 
 $$
     \frac{\partial}{\partial x_u} = \sum_{i\in I^+}{c_{ui}y_i} - \sum_{i\in I^+}  \frac{c_{ui}\exp(r_{ui})}{1 + \exp(r_{ui})}y_i - \sum_{i\in I}  \frac{\exp(r_{ui})}{1 + \exp(r_{ui})}y_i
 $$
 
-편의상 regularization은 생략했고, $I^+$은 유저의 interaction이 존재하는 아이템들, $I$는 전체 아이템셋을 말한다.
+$I^+$은 유저의 interaction이 존재하는 아이템들, $I$는 전체 아이템셋을 말한다.
+편의상 regularization은 생략했다.
 
 저기서 오른쪽 항의 마지막 텀인, $\sum_{i\in I}  \frac{\exp(r_{ui})}{1 + \exp(r_{ui})}y_i$을 보면, $i \in I$에서 하는 부분을 $\vert I' \vert << \vert I \vert$가 성립하는 $I'$에 대해서 sampling해도 괜찮을 것 같지 않은가?
 
-마지막 텀을 전체 아이템을 iterate하지 않고, 아이템의 서브셋에서 iterate하는 것으로 model의 time complexity를 다음과 같이 줄일 수 있다.
+식을 간단히 바꿔 적어 보자.
+
+**마지막 텀을 전체 아이템을 iterate하지 않고, 아이템의 서브셋에서 iterate하는 것으로 model의 time complexity를 다음과 같이 줄일 수 있다.**
+
 $$
     O(\vert I \vert \times \vert U \vert) \rightarrow O(k (\vert I \vert + \vert U \vert))
 $$
 
 $k$는 유저와 아이템의 평균적인 interation 횟수이다.
-또한, $I'$을 만들 때 positive item을 포함하는 이유는, 각 유저 별로 Negative item을 detect해서, 이 안에서 샘플링을 하는 것이 엄청 inefficient하기 때문이다.
+
+또한, $I'$을 만들 때 positive item을 포함하는 이유는, 각 유저 별로 Negative item을 detect해서, 이 안에서 샘플링을 하는 것이 엄청 inefficient하기 때문에, 이를 보상하기 위해 두번째 텀에 $(1+c_{ui})$ 대신 $(c_{ui})$를 곱해주었다.
+
+만약 positive item이 sampling되었을 경우
+
+$$
+ -\frac{c_{ui}\exp(r_{ui})}{1 + \exp(r_{ui})}y_i -  \frac{\exp(r_{ui})}{1 + \exp(r_{ui})}y_i \\
+ = -\frac{(1+c_{ui})\exp(r_{ui})}{1 + \exp(r_{ui})}y_i
+$$
+
+가 되어 원래 gradient 식의 두번째 항이 된다.
 
 #### Loss approximation을 했을 때의 성능 그래프
 
