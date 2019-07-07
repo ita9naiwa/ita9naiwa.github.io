@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "Pixie 리뷰"
-category: "Recommender Systems"
-tag: "Recommender Systems"
+category: "recommender systems"
+tag: "recommender systems"
 mathjax: true
 
 ---
