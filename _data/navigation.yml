@@ -1,5 +1,6 @@
 header:
-  - titles: 일기
+  - titles:
+      en: 일기
     url: /journals.html
   - titles:
       en: RL
