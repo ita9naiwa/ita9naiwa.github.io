@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "Hierarchical Navigable Small World Graph로 nearest neighbor를 빠르게 찾아 보자."
+title: "ALS, BPR을 직접 구현해봤다."
 category: "recommender systems"
 tag: "recommender systems"
 mathjax: true
