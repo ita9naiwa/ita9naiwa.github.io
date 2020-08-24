@@ -11,7 +11,7 @@ mathjax: true
 ### 잡담
 ICLR 2019에 실린 [Stochastic Optimization of Sorting Networks via Continuous Relaxations
 ](https://arxiv.org/abs/1903.08850)의 리뷰.
-글을 안 쓴 지 너무 오래되서 글을 쓰는 방법을 잊어버린 것 같다.;; 이현성넘게을름십색기;;
+글을 안 쓴 지 너무 오래되서 글을 쓰는 방법을 잊어버린 것 같다.;;
 
 
 ### Motivation
@@ -118,13 +118,13 @@ $$
 $v = \log(s)$로 생각하고, $v + g$에 대한 Relaxed Permutation matrix를 여러 개 만들어서 Objective를 업데이트해도 괜찮은 것이다.
 
 $$
-	L = \Epsilon_{q(z|s)}[f(P_z)] \\
-	= \Epsilon_g[f(P_{sort(\log s + z)})] \\
-	\simeq \Epsilon_g[f(\hat P_{sort(\log s + z)})] \\
+	L = E_{q(z|s)}[f(P_z)] \\
+	= E_g[f(P_{sort(\log s + z)})] \\
+	\simeq E_g[f(\hat P_{sort(\log s + z)})] \\
 $$
 
 $$
-	\nabla_s L = \Epsilon_g[ \nabla_s f(\hat P_{sort(\log s + z)})]
+	\nabla_s L = E_g[ \nabla_s f(\hat P_{sort(\log s + z)})]
 $$이 성립한다. (By REINFORCE)
 
 
@@ -135,8 +135,8 @@ $$이 성립한다. (By REINFORCE)
 
 2. 내가 아는 한에서 미분 불가능한 Objective(주로 combinatorial problem)을 Neural Network으로 푸는 방법은 REINFORCE를 이용하는 거였다.
 
-$\nabla_\theta L = E_{z \sim q}[f(z) \nabla_{\theta} \log (q(z|s; \theta)]$
+$\nabla_\theta L = E_{z \sim q}[f(z) \nabla_{\theta} \log (q(z \| s; \theta)]$
 
 이 식을
 
-$\nabla_{\beta} L = E_{z \sim q}[f(z;\beta) \nabla_{\beta} \log (q(z|s; \theta)] + E_{z \sim q}[\nabla_{\beta} f(z;\beta)]$로 생각해서, $\beta$에 대해 optimize를 하는 방식이라 되게 신기했다. 비슷한 류의 work이 몇개 더 있는데, Gumbel-Trick을 이용해 without replacement의 Categorical Distribution을 sampling하는 방법도 있고...
+$\nabla_{\beta} L = E_{z \sim q}[f(z;\beta) \nabla_{\beta} \log (q(z \| s; \theta)] + E_{z \sim q}[\nabla_{\beta} f(z;\beta)]$로 생각해서, $\beta$에 대해 optimize를 하는 방식이라 되게 신기했다. 비슷한 류의 work이 몇개 더 있는데, Gumbel-Trick을 이용해 without replacement의 Categorical Distribution을 sampling하는 방법도 있고...
