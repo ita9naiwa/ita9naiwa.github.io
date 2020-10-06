@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "NeuralSort:"
+title: "NeuralSort"
 category: "recommender systems"
 tag: "recommender systems"
 mathjax: true
@@ -61,7 +61,7 @@ $P^{(z)}{[k, :]}$는 $j$'th element가 1이고, 나머지는 다 0이다. $s$에
 
 P는 이렇게 계산할 수 있다.
 $$
-	P_{[i, j]} = \begin{cases}1 & \text{if} ~j = \argmax[(n+1 - 2i)s - A\mathbf{1} \\0  & \text{otherwise}\end{cases}
+	P_{[i, j]} = \begin{cases}1 & \text{if} ~j = \text{argmax}+1 - 2i)s - A\mathbf{1} \\0  & \text{otherwise}\end{cases}
 $$
 where $A_{[i, j]} = \mid s_i - s_j \mid$.
 
@@ -81,13 +81,13 @@ $\hat P$는 다음과 같은 성질을 만족하는 행렬이다. ($P$도 이를
 
 1. Non-negativity: $U_{[i, j]} \geq 0 \forall i,j\in \{1, 2,..., n\}$
 2. Row Affinity: $\sum_{j=1}^n U_{[i, j]}= 1$
-3. Argmax Permuatiotn: $u = [u_1, u_2, ..., u_n]$ where $u_i = \argmax_j(U_{[i,:]})$  then $u$ is a valid permutation of $\{n\}$
+3. Argmax Permuatiotn: $u = [u_1, u_2, ..., u_n]$ where $u_i = \text{argmax}_j(U_{[i,:]})$  then $u$ is a valid permutation of $\{n\}$
 
 (1), (2)는 discrete permutation에 대한 stochastic relaxation을 의미한다.
 $P_{[k, :]}$는 $j$'th elementh가 1이고, 나머지는 다 0이다. 즉, $s$에서 $k$번째로 큰 element는 $s_j$라는 의미였는데, $\hat P_{[k, :]}$는 $k$번째로 큰 element가 무엇인지에 대한 확률분포(에 가까운 것)이라 생각할 수 있다. $\hat P$는 argmax로 정의되어 있던 $P$의 i번째 row를 Softmax로 대체한 것이다.
 
 
-- $u = [u_1, ..., u_n]$, where $u_i = \argmax(P_{[i, :]})$ , then $u$ = $\text{sort}(s)$
+- $u = [u_1, ..., u_n]$, where $u_i = \text{argmax}(P_{[i, :]})$ , then $u$ = $\text{sort}(s)$
 - $\tau \rightarrow +0$인 경우 $\hat P \rightarrow P$이다.
 
 $\hat P$은 *미분 가능한 정렬 연산자*이다.
@@ -103,7 +103,7 @@ $$
 $$
 이다. 길이가 $n$인 vector $v$가 있고, $n$개의 i.i.d 한 $g_1, g_2, ..., g_n$이 있다고 하자.
 
-$I_1 = \argmax([v_1 + g_1, v_2 + g_2, ..., v_n + g_n]$)$이면,
+$I_1 = \text{argmax}([v_1 + g_1, v_2 + g_2, ..., v_n + g_n]$)$이면,
 
 $$\Pr(I_1 = i) = \frac{\exp(v_i)}{\sum_j\exp(v_j)}$$
 
