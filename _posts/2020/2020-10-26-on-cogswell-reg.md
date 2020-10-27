@@ -13,7 +13,7 @@ Cogswell Regularization has been proposed by [1] in 2015. This is based on the f
 
 - Embeddings are spread on the Euclidean Space.
 - If two feature vectors are different, then their representations are different.
-It would be good to fill the embedding space with a similar density of embeddings if they are in the Networn $ N $ range.
+It would be good to fill the embedding space with a similar density of embeddings if they are in the range of the input network.
 
 So [1] Proposed the following objective.
 
@@ -67,7 +67,7 @@ $D$ is $36/35$ [I found the answer in Quora](https://www.quora.com/What-is-the-a
 For logics, the converse of "if A then B" does not usually hold if "if A then B" holds. However, in the probability world, we can say that P(A \vert B) is high, then P(B \vert A) will be high too.
 
 
-So, at least we can regularize the distances of embeddings towards $ D $. Then, we'll have more chance to get those embeddings less correlated and identically distributed. This can be done by minimizing below.
+So, at least we can regularize the distances of embeddings towards $ D $. Then, we'll have more chances to get those embeddings less correlated and identically distributed. This can be done by minimizing below.
 $$
     \vert \vert D - \text{distance}(v_1, v_2) \vert \vert_2^2
 $$ However, distance involves square root calcuation that makes calculating gradient descent clumsy, thus instead I used
@@ -80,12 +80,14 @@ $$
 \frac{\partial L}{\partial v_1} = \text{sign}(D^2- \text{distance}(v_1, v_2))[2 \text{distance}(v_1, v_2)\frac{\partial \text{distance}(v_1, v_2)}{\partial v_1}]
 $$
 
+I implemented this with Implicit library and tested on ML-1M dataset and found that about 6\% of performance gain was achieved.
 {% gist b328c43508193611a83c07ae0553a9f3 %}
 
 
+
 ### Note:
-I'm currently thinking how it works and finding any relationship between two regularizations.
-Anywho, there's a quite big performance gain with this regularization, even I don't know why it works
+I'm currently thinking about how it works and finding any relationship between two regularizations.
+Anywho, there's a quite big performance gain with this regularization even though I don't know why it works.
 
 
 ### References;
