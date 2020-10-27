@@ -64,7 +64,7 @@ where, $p_1$ and $p_2$ is drawn from in the unit hypersphere i.i.d fashion.
 
 $D$ is $36/35$ [I found the answer in Quora](https://www.quora.com/What-is-the-average-distance-between-two-random-points-in-a-sphere#:~:text=The%20surface%20distance%20between%202,pi%20radians%20equals%20360%20degrees)
 
-For logics, the converse of "if A then B" does not usually hold if "if A then B" holds. However, in the probability world, we can say that P(A|B) is high, then P(B|A) will be high too.
+For logics, the converse of "if A then B" does not usually hold if "if A then B" holds. However, in the probability world, we can say that P(A \vert B) is high, then P(B \vert A) will be high too.
 
 
 So, at least we can regularize the distances of embeddings towards $ D $. Then, we'll have more chance to get those embeddings less correlated and identically distributed. This can be done by minimizing below.
