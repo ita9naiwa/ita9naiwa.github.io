@@ -78,6 +78,10 @@ $$
 {% gist b328c43508193611a83c07ae0553a9f3 %}
 
 
+### Note:
+I'm currently thinking how it works and finding any relationship between two regularizations.
+Anywho, there's a quite big performance gain with this regularization, even I don't know why it works
+
 
 ### References;
 - [1] Cogswell et al., Reducing Overfitting in Deep Networks by Decorrelating Representations, https://arxiv.org/abs/1511.06068
