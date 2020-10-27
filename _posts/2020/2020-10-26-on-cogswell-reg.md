@@ -69,8 +69,7 @@ $$
 L =  \text{abs}(D^2 - \text{distance}(v_1, v_2)^2)
 $$
 
-This regularizer can be easily implemented,
-
+This regularizer can be easily implemented, and the gradient is:
 $$
 \frac{\partial L}{\partial v_1} = \text{sign}(D^2- \text{distance}(v_1, v_2))[2 \text{distance}(v_1, v_2)\frac{\partial \text{distance}(v_1, v_2)}{\partial v_1}]
 $$
