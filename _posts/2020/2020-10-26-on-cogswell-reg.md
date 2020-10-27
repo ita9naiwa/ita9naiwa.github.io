@@ -16,14 +16,18 @@ Cogswell Regularization has been proposed by [1] in 2015. This is based on the f
 It would be good to fill the embedding space with a similar density of embeddings if they are in the Networn $ N $ range.
 
 So [1] Proposed the following objective.
+
 $$
     L_\text{DeCov} = \frac{1}{2}(\vert \vert C \vert \vert_F - \vert \vert diag(C) \vert \vert_2^2 )
 $$
 
 $C$ is empirical covariance among feature vectors, or embeddings, defined as
+
 $$
     \{C_{i, j}\} = \frac{1}{\vert V \vert} \sum_{v \in V}(v_i - \mu_i)(v_j - \mu_j)
-$$ where $\mu = \frac{1}{\vert V\vert }\sum_{v \in V} v$
+$$
+
+where $\mu = \frac{1}{\vert V\vert }\sum_{v \in V} v$
 
 ### Collaborative Metric Learning
 In 2017, Hsieh proposed L2 regularization based factor based top-k recommendation model, CML. It exploits **batched gradient descent** and **Cogswell Regularization**. For this model, the regularization scheme is so critical; thus, it cannot be removed.
@@ -54,7 +58,9 @@ then the average distance between two embeddings will be
 
 $$
     D = \mathbb{E}_{p_1}\mathbb{E}_{p_2}[\text{distance}(p_1, p_2)]
-$$ where, $p_1$ and $p_2$ is drawn from in the unit hypersphere i.i.d fashion.
+$$
+
+where, $p_1$ and $p_2$ is drawn from in the unit hypersphere i.i.d fashion.
 
 $D$ is $36/35$ [I found the answer in Quora](https://www.quora.com/What-is-the-average-distance-between-two-random-points-in-a-sphere#:~:text=The%20surface%20distance%20between%202,pi%20radians%20equals%20360%20degrees)
 
