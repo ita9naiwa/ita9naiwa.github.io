@@ -168,5 +168,5 @@ plugins_dir:
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
-
+  - jekyll-gist
 gems: [jekyll-paginate]
