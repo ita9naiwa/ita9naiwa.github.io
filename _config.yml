@@ -22,7 +22,7 @@ environemtn: "product"
 text_color_theme: "default" # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 url: # the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl: # does not include hostname
-title:  "수원혼모노이현성"
+title:  "블로그"
 description: > # this means to ignore newlines until "Language & timezone"
   ita9naiwa
 
@@ -38,7 +38,6 @@ timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for
 author:
   name: Hyunsung Lee
   email: ita9naiwa@gmail.com
-  facebook: mendou12@naver.com
   github: ita9naiwa
   #twitter: # your Twitter username
   #linkedin: # your Linkedin username
