@@ -4,7 +4,8 @@ title: About ME
 key: page-about
 ---
 
-Contemplating on what matters in my life and getting rid of what doesn't to me.
+- Contemplating on what matters in my life and getting rid of what doesn't to me.
+- Trying not to be a parrot when write something.
 
 탈덕함.
 
