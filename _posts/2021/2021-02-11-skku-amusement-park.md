@@ -3,7 +3,7 @@ layout: article
 title: "성균 테마파크를 나오며"
 category: 일기
 tag: 일기
-comment: false
+comment: true
 key: 20200211
 ---
 ### 성균관 테마파크에서의 마지막을 보내며 문득.

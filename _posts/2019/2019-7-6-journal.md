@@ -3,7 +3,7 @@ layout: article
 title: "나는 무엇을 하고 싶을까"
 category: 일기
 tag: 일기
-comment: false
+comment: true
 key: 20190706
 ---
 
