@@ -3,7 +3,7 @@ layout: article
 title: "절대 말해서는 안되는 것에 대해"
 category: 일기
 tag: 일기
-comment: false
+comment: true
 key: 20201225
 ---
 
