@@ -55,16 +55,16 @@ WIP...
 #### 어떤 가설 집합을 사용할 것인지
 1. Conjugate Prior가 Beta-Bernoulli일 때
 $$
-  \mathcal{H} = A \rightarrow \text{reward } r \sim \text{Bern}(r|\theta) \\
+  \mathcal{H} = A \rightarrow \text{reward } r \sim \text{Bern}(r \vert \theta) \\
   \theta \sim \text{Beta}(\alpha, \beta)
 $$
 
 2. Conjugate Prior가 Normal-Gamma일 때
 
 $$
-  \mathcal{H} = A \rightarrow \text{reward } r \sim \text{Normal}(r|\theta, \lambda^{-1}) \\
-  \theta \sim \text{Normal}(\theta| \mu, \lambda) \\
-  \lambda \sim \text{Gamma}(\lambda|\alpha, \beta)
+  \mathcal{H} = A \rightarrow \text{reward } r \sim \text{Normal}(r \vert \theta, \lambda^{-1}) \\
+  \theta \sim \text{Normal}(\theta \vert  \mu, \lambda) \\
+  \lambda \sim \text{Gamma}(\lambda \vert \alpha, \beta)
 $$ where $\lambda^{-1} = (\sigma^2)$.
 
 #### (2) 어떻게 오차를 표현할 것인지
@@ -84,11 +84,11 @@ $$
 
 2. Conjugate Prior가 Normal-Gamma일 때
 $$
-  \theta \sim \text{Normal}(\theta| \mu, \lambda) \\
-  \lambda \sim \text{Gamma}(\lambda|\alpha, \beta)
+  \theta \sim \text{Normal}(\theta \vert  \mu, \lambda) \\
+  \lambda \sim \text{Gamma}(\lambda \vert \alpha, \beta)
 $$ where $\lambda^{-1} = (\sigma^2)$.
 
-보통, 이에 대해 예측 분포를 만들려면, Marginal Predictive Distribution을 계산한다. 다시 말하자면, $p(r, \theta) \propto p(\theta|r)$이므로, Posterior distribution(혹은 Posterior distribution의 커널)에서 그냥 $\theta$를 하나 뽑는 방법인데, 밑의 적분을 계산해야 한다.
+보통, 이에 대해 예측 분포를 만들려면, Marginal Predictive Distribution을 계산한다. 다시 말하자면, $p(r, \theta) \propto p(\theta \vert r)$이므로, Posterior distribution(혹은 Posterior distribution의 커널)에서 그냥 $\theta$를 하나 뽑는 방법인데, 밑의 적분을 계산해야 한다.
 
 $$
   p(\theta) = \int p(\theta)dr
