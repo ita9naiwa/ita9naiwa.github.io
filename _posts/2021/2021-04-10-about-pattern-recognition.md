@@ -172,4 +172,4 @@ Let $w$ be a solution of the equation $\frac{\partial}{\partial w} \sum_{i=1}^m 
 
 
 ### 예시 2. Multi Armed Bandit의 경우
-{{ site.baseurl }}{% link _posts/2021/2021-04-10-case-of-mab.md %}
+[링크](https://ita9naiwa.github.io/ml/2021/04/10/case-of-mab.html)
