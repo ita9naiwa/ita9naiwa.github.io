@@ -50,7 +50,7 @@ $$
 **Empirical Error**
 
 Empirical Error는 비슷하게 우리가 $\{(x_1, y_1), (x_2, y_2), \dots, (x_m, y_m)\}$을 관측했을 때의 저 값이라고 생각할 수 있습니다.
-> $y_i$는 확률분포 c(x_i)의 한 sample입니다.
+> $y_i$는 확률분포 $c(x_i)$의 한 sample입니다.
 
 $$
         \hat{R}(h) = \frac{1}{m} \sum_{i=1}^m \left[\mathbb{I}(x_i \neq y_i))\right]
