@@ -146,7 +146,7 @@ $$
     -\frac{n}{2} \log( \sigma^2 ) + -\frac{1}{2\sigma^2} \sum_{i=1}^m (y-w^Tx)^2
 $$
 
-Let us treat $sigma^2$ as a constant and just leave terms related to $w$ gives us
+Let us treat $\sigma^2$ as a constant and just leave terms related to $w$ gives us
 
 $$
   \text{Maximize } -\sum_{i=1}^m (y-w^Tx)^2
