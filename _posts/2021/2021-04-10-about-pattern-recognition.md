@@ -101,7 +101,7 @@ $$
 Approximation Error의 예시. 같은 가설(0을 지나는 직선), Concept를 더 잘 설명하는 직선이 존재함.
 
 ![Estimation Error]({{ "/assets/images/0410/est_error.png" | absolute_url }})
-Estimation Error의 예시. $y = 1 + x \text{ \% }2$의 경우 linear regression으로 오차를 충분히 잘 줄일 수 없음.
+Estimation Error의 예시. $y = 1 + x \text{ mod }2$의 경우 linear regression으로 오차를 충분히 잘 줄일 수 없음.
 
 
 > Estimation Error는 선택 공리 내에서의 최선과 내 현실 사이의 오차를 의미합니다.
