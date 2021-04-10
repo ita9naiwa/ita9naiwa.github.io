@@ -142,7 +142,9 @@ Then The likelihood $p(y_1, \dots, y_n)$ = $\prod_{i=1}^{m} \text{Normal}(y_i \v
 $$
     (\sigma^2)^{-n/2} \exp\left[-\frac{1}{2\sigma^2} \sum_{i=1}^m (y-w^Tx)^2 \right]
 $$
+
 Take a log to the previous equation yields
+
 $$
     -\frac{n}{2} \log( \sigma^2 ) + -\frac{1}{2\sigma^2} \sum_{i=1}^m (y-w^Tx)^2
 $$
@@ -152,6 +154,7 @@ Let us treat $\sigma^2$ as a constant and just leave terms related to $w$ gives 
 $$
   \text{Maximize } -\sum_{i=1}^m (y-w^Tx)^2
 $$ or equivalently,
+
 $$
     \text{Minimize }  \sum_{i=1}^m (y-w^Tx)^2
 $$
@@ -160,8 +163,10 @@ $$
 우리가 고칠 수 있는 건 $w$ 뿐.
 
 **3-1 Gradient Descent**
+
 $w \leftarrow w - \lambda \frac{\partial}{\partial w}\sum_{i=1}^m (y-w^Tx)^2$
 
 **3-2 Least Ssquare**
+
 w^* to be a solution of the equation $\frac{\partial}{\partial w} \sum_{i=1}^m (y-w^Tx)^2 = 0$
 and $w = w^*$.
