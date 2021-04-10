@@ -66,7 +66,7 @@ $$
 
 Bayes Error가 만드는 가설 $h^*$를 정의할 수도 있습니다.
 $$
-    h_{\text{Bayes}}_(x) = \text{argmax}_{x} c(x) = \text{argmax}_{x}([p(y_1 \vert x), p(y_2 \vert x), ..., ])
+    h_{\text{Bayes}}(x) = \text{argmax}_{x} c(x) = \text{argmax}_{x}([p(y_1 \vert x), p(y_2 \vert x), ..., ])
 $$
 
 우리가 제거할 수 없는 Error는 Noise라고 부르고 $\text{Noise} = 1 - \frac{1}{m}r(h^*(x))$으로 정의합니다.
@@ -82,7 +82,7 @@ $$
 우리가 잘 하고 싶은 일은,
 
 $$
-    \mathcal{L} = \text{argmin}_h[R(h) - R^* |\mathcal{H}]
+    \mathcal{L} = \text{argmin}_h[R(h) - R^* \vert \mathcal{H}]
 $$인데, 이를 일반적으로 손실 함수, 혹은 오브젝티브라고 합니다. $\mathcal{L}$의 바람직한 성질을 유지하면서 뭔가를 곱하거나 더해주거나 로그를 취하거나 지수를 취하거나 한 것도 다 손실 함수, 혹은 오브젝티브라고 합니다.
 
 이는 또 다시 이렇게 분리가 가능한데,
