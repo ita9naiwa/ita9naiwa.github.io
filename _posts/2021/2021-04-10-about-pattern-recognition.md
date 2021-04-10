@@ -92,6 +92,17 @@ $$
 $$
 오른쪽 식의 왼쪽 항은 Estimation Error를 표현하는 텀입니다. 오른쪽 식의 오른쪽 항은 Approximation Error를 표현하는 텀입니다.
 
+![Error decomposion]({{ "/assets/images/0410/errors.png" | absolute_url }})
+그림으로 봤을 때.[출처](https://mitpress.ublish.com/ereader/7093/?preview=#page/62).
+
+
+![Approximation Error]({{ "/assets/images/0410/approx_error.png" | absolute_url }})
+Approximation Error의 예시. 같은 가설(0을 지나는 직선), Concept를 더 잘 설명하는 직선이 존재함.
+
+![Estimation Error]({{ "/assets/images/0410/estimation.png" | absolute_url }})
+Estimation Error의 예시. $y = 1 + x \text{ \% }2$의 경우 linear regression으로 오차를 충분히 잘 줄일 수 없음.
+
+
 > Estimation Error는 선택 공리 내에서의 최선과 내 현실 사이의 오차를 의미합니다.
 > "복잡한 딥러닝 모델을 학습할 때, Local Minima나 Saddle Point에 빠지지 않게 주의해야 한다"와 같은 얘기입니다.
 > Approximation Error는 내가 만든 가설의 한계를 의미합니다.
