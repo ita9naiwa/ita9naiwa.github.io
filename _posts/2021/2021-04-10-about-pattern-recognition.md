@@ -127,7 +127,11 @@ Estimation Error의 예시. $y = 1 + x \text{ mod }2$의 경우 linear regressio
 
 ### 예시 1. Linear Regresion의 경우
 #### (1) 어떠한 가설 집합을 사용할 것인지.
+**Least Squares**
 $y = w^Tx$, where $w \in \mathbb{R}^d$.
+
+**Bayesian Linear Regression**
+$y \sim \text{Normal}(y \vert  w^Tx, \sigma^2)$
 
 #### (2) 어떻게 오차를 표현할 것인지.
 Let $y \sim \text{Normal}(y \vert  w^Tx, \sigma^2)$.
