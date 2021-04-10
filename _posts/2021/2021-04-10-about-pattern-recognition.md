@@ -167,8 +167,7 @@ $w \leftarrow w - \lambda \frac{\partial}{\partial w}\sum_{i=1}^m (y-w^Tx)^2$
 
 **3-2 Least Ssquare**
 
-Let $w^*$ be a solution of the equation $\frac{\partial}{\partial w} \sum_{i=1}^m (y-w^Tx)^2 = 0$
-and $w = w^*$.
+Let $w$ be a solution of the equation $\frac{\partial}{\partial w} \sum_{i=1}^m (y-w^Tx)^2 = 0$.
 
 
 
