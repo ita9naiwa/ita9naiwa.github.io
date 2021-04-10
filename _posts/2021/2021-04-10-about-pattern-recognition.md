@@ -119,15 +119,10 @@ Estimation Error의 예시. $y = 1 + x \text{ mod }2$의 경우 linear regressio
 3. Estimation Error를 어떻게 줄일 것인지.
     - Least square, Gradient descen..
 
-이 세 가지 작업은 다들 연관이 꽤 큽니다. (3)에서 Least squares를 쓰기 위해서는 (1)의 해겵책은 Linear regression밖에 방법이 없고, (2)는 L2 loss를 가정하고 있다던가... 하지만 이론적으로는 3개는 어느 정도 독립적으로 연구가 되는 것 같습니다.
-
-연구 예시:
-
+이 세 가지 작업은 다들 연관이 꽤 큽니다. (3)에서 Least squares를 쓰기 위해서는 (1)의 해겵책은 Linear regression밖에 방법이 없고, (2)는 L2 loss를 가정하고 있다던가... 하지만 이론적으로는 3개는 어느 정도 독립적으로 연구가 되는 것 같다. 가설 집합에 관해서는 다음과 같은 학문 분야가 존재한다.
 1. [MLP의 Universal Approximatior Theorem](https://en.wikipedia.org/wiki/Universal_approximation_theorem)
     - Nonlinear activation이 있는 hidden-layer가 1개 이상인 MLP는 데이터가 충분히 많다고 가정했을 떄, deterministic concept와의 오차를 원하는 만큼 줄일 수 있다.
-라던가,
-3. [Simplex Algorithm](https://en.wikipedia.org/wiki/Simplex_algorithm)이라던가...
-2. [Metric Learning](https://untitledtblog.tistory.com/164)이라던가....
+2.. [Rademacher Complexity](https://en.wikipedia.org/wiki/Rademacher_complexity): 가설 집합 $\mathcal{H}$의 복잡도가 어느 정도인지.
 
 
 ### 예시 1. Linear Regresion의 경우
