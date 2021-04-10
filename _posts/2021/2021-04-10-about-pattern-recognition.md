@@ -35,7 +35,7 @@ $$
 where axiom of choice satisfies on \mathcal{H} or somehow we can choose $h \in \mathcal{H}$.
 이를테면, $h = (w, b)$이고 , $h = \mathbb{I}[w^Tx+b > 100]$인 경우를 생각할 수 있습니다. 우리는 적당한 방법으로 $h$, 즉 $w, b$를 선택할 수 있어야 합니다. 이 과정은 머신러닝에서는 fitting이라던가, learning이라던가, finding posterior라던가, burn-in이라던가, 암튼 여러 이름으로 부르는데, 아무튼..
 
-> 이 글에서는.. 추가적으로 $\mathcal{H}$이 deterministic이라고 가정합니다.실제로는 그렇지 않아도 괜찮을 뿐더러, 거의 모든 통계적 머신 러닝 방법은 \mathcal{H}가 확률 분포를 모델링하기를 원합니다.
+> 이 글에서는.. 추가적으로 $\mathcal{H}$이 deterministic이라고 가정합니다.실제로는 그렇지 않아도 괜찮을 뿐더러, 거의 모든 통계적 머신 러닝 방법은 $\mathcal{H}$가 확률 분포를 모델링하기를 원합니다.
 
 ### Error
 
@@ -50,7 +50,7 @@ $$
 **Empirical Error**
 
 Empirical Error는 비슷하게 우리가 $\{(x_1, y_1), (x_2, y_2), \dots, (x_m, y_m)\}$을 관측했을 때의 저 값이라고 생각할 수 있습니다.
-> y_i는 확률분포 c(x_i)의 한 sample입니다.
+> $y_i$는 확률분포 c(x_i)의 한 sample입니다.
 
 $$
         \hat{R}(h) = \frac{1}{m} \sum_{i=1}^m \left[\mathbb{I}(x_i \neq y_i))\right]
