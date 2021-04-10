@@ -1,8 +1,8 @@
 ---
 layout: article
-title: "GNN 간단히 - 1"
+title: "패턴 인식에 대해서 생각"
 category: "ML"
-tag: "패턴 인식에 대해서 생각"
+tag: "ML"
 header-includes:
   - \usepackage[fleqn]{amsmath}
 mathjax: true
