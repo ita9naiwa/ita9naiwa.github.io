@@ -40,22 +40,22 @@ where axiom of choice satisfies on \mathcal{H} or somehow we can choose $h \in \
 
 ### Error
 
-**우리가 어떻게 가설 집합 $\mathcal{H}$을 만들었는지, 그 가설 집합 내에서 $h$를 어떻게 선택했는지는 일단 건너뛰고, 우리가 어떻게든 $\mathcal{H}$와 $h$를 구했다고 가정하고 우리가 만든 가설이 얼마나 좋은지 평가하는 방법을 생각해볼 수 있습니다.
+우리가 어떻게 가설 집합 $\mathcal{H}$을 만들었는지, 그 가설 집합 내에서 $h$를 어떻게 선택했는지는 일단 건너뛰고, 우리가 어떻게든 $\mathcal{H}$와 $h$를 구했다고 가정하고 우리가 만든 가설이 얼마나 좋은지 평가하는 방법을 생각해볼 수 있습니다.
 
 **Risk, or Error $R$.**
 
-\[
+$$
     R(h) = \mathop{\mathbb{E}}_{x'\in \mathcal{X}} \mathop{\mathbb{E}}_{y' \in p[y \bert x']}\left[\mathbb{I}(h(x') \neq c(x'))\right]
-\]
+$$
 
 **Empirical Error**
 
 Empirical Error는 비슷하게 우리가 $\{(x_1, y_1), (x_2, y_2), \dots, (x_m, y_m)\}$을 관측했을 때의 저 값이라고 생각할 수 있습니다.
 > y_i는 확률분포 c(x_i)의 한 sample입니다.
 
-\[
+$$
         \hat{R}(h) = \frac{1}{m} \sum_{i=1}^m \left[\mathbb{I}(x_i \neq y_i))\right]
-\]
+$$
 
 ### 우리의 한계
 위의 예제를 생각해 보면, 어떤 concept 내에서 우리가 알 수 있는 것의 한계가 존재합니다.$x = (168cm, 60kg)$이 주어졌을 때 이 사람이 남자인지 여자인지 확실히 알 수는 없습니다. 머리카락의 평균 길이라던가, 유전자라던가...더 많은 정보가 주어진다면 얘기가 다르지만... 우리가 가설 $h$를 찾으려고 최선을 다했을 때 생기는 에러가, 우리의 한계이며, 이를 Bayes Error라 부릅니당.
