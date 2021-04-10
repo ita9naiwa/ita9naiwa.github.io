@@ -32,7 +32,7 @@ Conept는 여러 가지일 수 있지만, "한 가지 문제"라고 생각하면
 $$
     \mathcal{H}: \mathcal{X} \rightarrow y
 $$
-where axiom of choice satisfies on \mathcal{H} or somehow we can choose $h \in \mathcal{H}$.
+where somehow we can choose $h \in \mathcal{H}$.
 이를테면, $h = (w, b)$이고 , $h = \mathbb{I}[w^Tx+b > 100]$인 경우를 생각할 수 있습니다. 우리는 적당한 방법으로 $h$, 즉 $w, b$를 선택할 수 있어야 합니다. 이 과정은 머신러닝에서는 fitting이라던가, learning이라던가, finding posterior라던가, burn-in이라던가, 암튼 여러 이름으로 부르는데, 아무튼..
 
 > 이 글에서는.. 추가적으로 $\mathcal{H}$이 deterministic이라고 가정합니다.실제로는 그렇지 않아도 괜찮을 뿐더러, 거의 모든 통계적 머신 러닝 방법은 $\mathcal{H}$가 확률 분포를 모델링하기를 원합니다.
@@ -171,5 +171,5 @@ Let $w$ be a solution of the equation $\frac{\partial}{\partial w} \sum_{i=1}^m 
 
 
 
-### 예시 1. Multi Armed Bandit의 경우
-#### (1) 어떠한 가설 집합을 사용할 것인지.
+### 예시 2. Multi Armed Bandit의 경우
+{{ site.baseurl }}{% link _posts/2021/2021-04-10-case-of-mab.md %}
