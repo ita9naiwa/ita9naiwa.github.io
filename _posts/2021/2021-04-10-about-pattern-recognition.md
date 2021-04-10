@@ -66,7 +66,7 @@ $$
 
 Bayes Error가 만드는 가설 $h^*$를 정의할 수도 있습니다.
 $$
-    h^*(x) = \text{argmax}_{x} c(x) = \text{argmax}_{x}([p(y_1 \vert x), p(y_2 \vert x), ..., ])
+    h_{\text{Bayes}}_(x) = \text{argmax}_{x} c(x) = \text{argmax}_{x}([p(y_1 \vert x), p(y_2 \vert x), ..., ])
 $$
 
 우리가 제거할 수 없는 Error는 Noise라고 부르고 $\text{Noise} = 1 - \frac{1}{m}r(h^*(x))$으로 정의합니다.
@@ -82,7 +82,7 @@ $$
 우리가 잘 하고 싶은 일은,
 
 $$
-    \mathcal{L} = \argmin_h[R(h) - R^* |\mathcal{H}]
+    \mathcal{L} = \text{argmin}_h[R(h) - R^* |\mathcal{H}]
 $$인데, 이를 일반적으로 손실 함수, 혹은 오브젝티브라고 합니다. $\mathcal{L}$의 바람직한 성질을 유지하면서 뭔가를 곱하거나 더해주거나 로그를 취하거나 지수를 취하거나 한 것도 다 손실 함수, 혹은 오브젝티브라고 합니다.
 
 이는 또 다시 이렇게 분리가 가능한데,
@@ -130,11 +130,11 @@ Estimation Error의 예시. $y = 1 + x \text{ mod }2$의 경우 linear regressio
 2. [Metric Learning](https://untitledtblog.tistory.com/164)이라던가....
 
 
-#### 예시 1. Linear Regresion의 경우
-##### (1) 어떠한 가설 집합을 사용할 것인지.
+### 예시 1. Linear Regresion의 경우
+#### (1) 어떠한 가설 집합을 사용할 것인지.
 $y = w^Tx$, where $w \in \mathbb{R}^d$.
 
-##### (2) 어떻게 오차를 표현할 것인지.
+#### (2) 어떻게 오차를 표현할 것인지.
 Let $y \sim \text{Normal}(y \vert  w^Tx, \sigma^2)$.
 Then The likelihood $p(y_1, \dots, y_n)$ = $\prod_{i=1}^{m} \text{Normal}(y_i \vert  w^Tx, \sigma^2) \propto$
 
@@ -158,7 +158,7 @@ $$
     \text{Minimize }  \sum_{i=1}^m (y-w^Tx)^2
 $$
 
-##### (3) 오차를 어떻게 줄일 것인지.
+#### (3) 오차를 어떻게 줄일 것인지.
 우리가 고칠 수 있는 건 $w$ 뿐.
 
 **3-1 Gradient Descent**
@@ -167,5 +167,10 @@ $w \leftarrow w - \lambda \frac{\partial}{\partial w}\sum_{i=1}^m (y-w^Tx)^2$
 
 **3-2 Least Ssquare**
 
-w^* to be a solution of the equation $\frac{\partial}{\partial w} \sum_{i=1}^m (y-w^Tx)^2 = 0$
+Let $w^*$ be a solution of the equation $\frac{\partial}{\partial w} \sum_{i=1}^m (y-w^Tx)^2 = 0$
 and $w = w^*$.
+
+
+
+### 예시 1. Multi Armed Bandit의 경우
+#### (1) 어떠한 가설 집합을 사용할 것인지.
