@@ -100,7 +100,7 @@ $$
 ![Approximation Error]({{ "/assets/images/0410/approx_error.png" | absolute_url }})
 Approximation Error의 예시. 같은 가설(0을 지나는 직선), Concept를 더 잘 설명하는 직선이 존재함.
 
-![Estimation Error]({{ "/assets/images/0410/estimation.png" | absolute_url }})
+![Estimation Error]({{ "/assets/images/0410/est_error.png" | absolute_url }})
 Estimation Error의 예시. $y = 1 + x \text{ \% }2$의 경우 linear regression으로 오차를 충분히 잘 줄일 수 없음.
 
 
