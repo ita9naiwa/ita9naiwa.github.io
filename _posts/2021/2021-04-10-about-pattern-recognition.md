@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "패턴 인식에 대해서 생각"
+title: "머신 러닝의 정의에 대해 아주 약간"
 category: "ML"
 tag: "ML"
 header-includes:
