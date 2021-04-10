@@ -22,10 +22,11 @@ $x$, $y$는 각각 $\mathcal{X}$, $\mathcal{Y}$의 한 원소를 말합니다.
 Let define a concept $\mathcal{C}$ a family of measurable functions
 
 $$
-    \mathcal{C}: \mathcal{X} \rightarrow p(\mathcal{Y}|\mathcal{X})
+    \mathcal{C}: \mathcal{X} \rightarrow p(\mathcal{Y} \bert \mathcal{X})
 $$
 
-Conept는 여러 가지일 수 있지만, "한 가지 문제"라고 생각하면 좋습니다. 예를 들어서, 국가별로 Concept $\mathcal{C}$가 다를 수 있습니다. 한국에서 $x= (168cm, 62kg)$라면, $y$는 남성일 확률이 비교적 높겠지만, 네덜란드에서는 같은 $x$라고 해도, P(y=여성|x)이 더 높을 것 같습니다.
+
+Conept는 여러 가지일 수 있지만, "한 가지 문제"라고 생각하면 좋습니다. 예를 들어서, 국가별로 Concept $\mathcal{C}$가 다를 수 있습니다. 한국에서 $x= (168cm, 62kg)$라면, $y$는 남성일 확률이 비교적 높겠지만, 네덜란드에서는 같은 $x$라고 해도, $P(y=\text{여성} \vert x)$이 더 높을 것 같습니다.
 
 그리고, hypothesis $\mathcal{H}$을 정의합시다.
 
@@ -44,7 +45,7 @@ where axiom of choice satisfies on \mathcal{H} or somehow we can choose $h \in \
 **Risk, or Error $R$.**
 
 \[
-    R(h) = \mathop{\mathbb{E}}_{x'\in \mathcal{X}} \mathop{\mathbb{E}}_{y' \in p[y|x']}\left[\mathbb{I}(h(x') \neq c(x'))\right]
+    R(h) = \mathop{\mathbb{E}}_{x'\in \mathcal{X}} \mathop{\mathbb{E}}_{y' \in p[y \bert x']}\left[\mathbb{I}(h(x') \neq c(x'))\right]
 \]
 
 **Empirical Error**
@@ -66,7 +67,7 @@ $$
 
 Bayes Error가 만드는 가설 $h^*$를 정의할 수도 있습니다.
 $$
-    h^*(x) = \argmax_{x} c(x) = \argmax_{x}([p(y_1|x), p(y_2|x), ..., ])
+    h^*(x) = \argmax_{x} c(x) = \argmax_{x}([p(y_1 \bert x), p(y_2 \bert x), ..., ])
 $$
 
 우리가 제거할 수 없는 Error는 Noise라고 부르고 $\text{Noise} = 1 - \frac{1}{m}r(h^*(x))$으로 정의합니다.
@@ -135,8 +136,8 @@ Estimation Error의 예시. $y = 1 + x \text{ \% }2$의 경우 linear regression
 $y = w^Tx$, where $w \in \mathbb{R}^d$.
 
 ##### (2) 어떻게 오차를 표현할 것인지.
-Let $y \sim \text{Normal}(y| w^Tx, \sigma^2)$.
-Then The likelihood $p(y_1, \dots, y_n)$ = $\prod_{i=1}^{m} \text{Normal}(y_i| w^Tx, \sigma^2) \propto$
+Let $y \sim \text{Normal}(y \bert  w^Tx, \sigma^2)$.
+Then The likelihood $p(y_1, \dots, y_n)$ = $\prod_{i=1}^{m} \text{Normal}(y_i \bert  w^Tx, \sigma^2) \propto$
 
 $$
     (\sigma^2)^{-n/2} \exp\left[-\frac{1}{2\sigma^2} \sum_{i=1}^m (y-w^Tx)^2 \right]
