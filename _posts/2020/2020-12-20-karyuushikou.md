@@ -3,7 +3,7 @@ layout: article
 title: "크리스마스에 쓰는 일기"
 category: 일기
 tag: 일기
-comment: false
+comment: true
 key: 20201225
 ---
 

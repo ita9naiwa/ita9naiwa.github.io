@@ -3,7 +3,7 @@ layout: article
 title: "\"오픈소스를 해야 하는 이유\"에 대한 생각."
 category: 일기
 tag: 일기
-comment: false
+comment: true
 key: 20201002
 ---
 
