@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "Logistic Matrix Factorization and Negative Sampling"
-category: "recommender systems"
-tag: "recommender systems"
+category: "recsys"
+tag: "recsys"
 mathjax: true
 comment: true
 key: lmf

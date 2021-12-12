@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "Implicit Negative Feedback In Bayesian Personalized Ranking"
-category: "recommender systems"
-tag: "recommender systems"
+category: "recsys"
+tag: "recsys"
 mathjax: true
 comment: true
 key: nfimf

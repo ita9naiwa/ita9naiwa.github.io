@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "ALS, BPR을 직접 구현해봤다."
-category: "recommender systems"
-tag: "recommender systems"
+category: "recsys"
+tag: "recsys"
 mathjax: true
 ---
 

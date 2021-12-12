@@ -1,8 +1,8 @@
 ---
 layout: article
-title: "머신 러닝의 정의에 대해 아주 약간"
-category: "ML"
-tag: "ML"
+title: "Alpha-Beta-NDCG"
+category: "recsys"
+tag: "recsys"
 header-includes:
   - \usepackage[fleqn]{amsmath}
 mathjax: true

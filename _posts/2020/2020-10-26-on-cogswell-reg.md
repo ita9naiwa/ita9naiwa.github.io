@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "An approximation of Cogswell Regularization for SGD update in Recsys."
-category: "recommender systems"
-tag: "recommender systems"
+category: "recsys"
+tag: "recsys"
 mathjax: true
 ---
 

@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "추천 시스템에서의 다양성"
-category: "recommender systems"
-tag: "recommender systems"
+category: "recsys"
+tag: "recsys"
 comment: true
 key: recsys-diversity
 mathjax: true

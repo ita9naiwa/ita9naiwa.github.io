@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "NeuralSort"
-category: "recommender systems"
-tag: "recommender systems"
+category: "recsys"
+tag: "recsys"
 mathjax: true
 
 ---
