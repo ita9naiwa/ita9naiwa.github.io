@@ -86,6 +86,8 @@ $$
 
 <script src="https://gist.github.com/ita9naiwa/1999469f0ccbc9e4fef790fa51504b98.js"></script>
 
+### 한계
+논문을 읽을 때까지만 하더라도
 
 ### Axioms for Diverse Ranking Evaluation
 
