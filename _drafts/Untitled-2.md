@@ -1,13 +1,14 @@
 ---
 layout: article
-title: "추천 시스템의 문제 해결하기"
-category: "ML"
-tag: "ML"
+title: "근황"
+category: "일기"
+tag: "일기"
 mathjax: true
 
 ---
 
-## Recap on Concentration Measure (1)
+이 우울함은 언제쯤 익숙해지고 친해지고, 이 자괴감은 언제쯤 익숙해지고 친해질까.
 
-포트폴리오
-- 
+평범해지고 싶다. 보통 "평범해지고 싶다"는 개새끼들은 보통 자신이 내심 특별한 것에 자부심을 느끼는 경우가 많은 것 같은데.
+
+난 단지 병이 아니라, 조금 감정이 격한 편인 것 아닐까 그냥..

@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "[WIP] Doubly Robust Estimator for Ranking Metrics with Post-Click Conversions."
-category: "recommender systems"
-tag: "recommender systems"
+category: "recsys"
+tag: "recsys"
 mathjax: true
 ---
 
