@@ -30,7 +30,7 @@ Since y is either 0 or 1, gradients vanish quadratically as $p$  converges.
 
 #### BCE with Sigmoid Activation
 
-$L = -\log p(y|x)$
+$L = -\log p(y \vert x)$
 
 $$
   \frac{\partial}{\partial \theta} L = (1-p) \nabla_\theta f(x)
