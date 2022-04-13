@@ -1,0 +1,14 @@
+import time
+import logging
+
+
+def timeit(logger: logging.Logger, name: str = ''):
+    def decorator(f):
+        def wrapper(*args, **kwargs):
+            t0 = time.time()
+            ret = f(*args, **kwargs)
+            elapsed = time.time() - t0
+            logger.info(f'{name} Done. - Elapsed {elapsed:.2f} secs')
+            return ret
+        return wrapper
+    return decorator
