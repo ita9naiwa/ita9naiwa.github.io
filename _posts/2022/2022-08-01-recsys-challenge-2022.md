@@ -1,11 +1,12 @@
 ---
 layout: article
 title: "8월 1일의 일기"
-category: "일기"
-tag: "일기"
-header-includes:
-  - \usepackage[fleqn]{amsmath}
+category: 일기
+tag: 일기
+comment: false
+key: 20220801
 mathjax: true
+
 ---
 
 ### RecSys 2022 Challenge 참가 후기.
