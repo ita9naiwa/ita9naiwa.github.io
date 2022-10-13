@@ -18,13 +18,13 @@ mathjax: true
 
 
 
-AutoEncoder 기준으로, 들어가는 데이터는 한 user-item matrix의 row이다.
+AutoEncoder 기준으로, 들어가는 데이터는 user-item matrix의 row들이다.
 
 우리가 할 연산은,
 1. sparse matrix rows -> dense rows (torch.FloatTensor in cpu)
 2. dense rows (torch.FloatTensor in cpu) -> dense rows (torch.FloatTensor in gpu)
 3. 모델 계산
-가 있다.
+이다.
 
 movielens-20m 데이터의 임의의 500 로우(배치 한 번이라고 생각하자)를 가져와서 대강 시간이 얼마나 걸리나 계산해보자.
 
