@@ -32,8 +32,11 @@ Refer to [original paper](https://arxiv.org/pdf/1003.0146.pdf) for notations. Li
 $$
     \hat{s} = \theta^T x + \alpha * \text{UCB}
 $$
-where $\theta$ : $\Sigma b$ and $\text{UCB} = \sqrt{x\Sigma^{-1}x}$. Let's decompose $\Sigma$ using Cholsky Decomposition, $\Sigma = LL^T$
+where
+- $\theta$ : $\Sigma b$
+- $\text{UCB} = \sqrt{x\Sigma^{-1}x}$.
 
+Let's decompose $\Sigma$ using Cholsky Decomposition, $\Sigma = LL^T$
 ### deriving mu without inverse calculation
 $$
     \theta x = b^T(LL^T)^{-1}x = (b^T L^{-T}) (L^{-1}x) = (L^{-1}b)^T (L^{-1} x)
