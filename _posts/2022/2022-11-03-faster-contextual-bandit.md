@@ -44,7 +44,7 @@ $$
 
 ### deriving UCB without inverse calculation
 $$
-    UCB^2 = x \Sigma^{-1} x = x(LL^T)^{-1}x = (L^{-1}x)^T(L^{-1}x)
+    \text{UCB}^2 = x \Sigma^{-1} x = x(LL^T)^{-1}x = (L^{-1}x)^T(L^{-1}x)
 $$
 
 ### Python Implementation
