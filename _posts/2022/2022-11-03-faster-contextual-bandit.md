@@ -11,10 +11,13 @@ mathjax: true
 Linear contextual bandit is a necessary tool in modern machine learning, especially in Recommender Systems. One of the difficulties of deploying it comes from that it involves an inverse operation. In this post, I will explain how to make it faster without removing inverse operation.
 
 ## Cholskey Decomposition
-It decomposes a positive-definite matrix into the product of a lower triangular matrix and its transpose. And, Covariance Matrix of Multivariate Gaussian Distribution is also positive-definite. Thus, covariance matrix $\Sigma$ in the Gaussian Distribution can be decomposed by $\Sigma = LL^T$ where $L$ is a lower trinalguar matrix.
+It decomposes a positive-definite matrix into the product of a lower triangular matrix and its transpose.
+And, Covariance Matrix of Multivariate Gaussian Distribution is also positive-definite.
+Thus, covariance matrix $\Sigma$ in the Gaussian Distribution can be decomposed by $\Sigma = LL^T$ where $L$ is a lower trinalguar matrix.
+and, It's quite faster than inverse operation although they have same time complexity (as far as I know, this decomposition is used in some methods calculating matrix inverse)
+
 
 Let's suppose we defined following variables for training and inference in the Linear UCB and Linear Thompson Sampling.
-
 ```python
 def get_ingredients(dim=2):
     user_feat = np.random.normal(size=dim)
@@ -123,7 +126,9 @@ inv = np.linalg.inv(cov)
 ```
 > 75.3 ms ± 8.17 ms per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
-In high dimension, it shows about 1.5-2 times faster inference, and learning one sample becomes 5-10x times faster. We can try if we need a faster model update and bit slower inference is tolerable (however it is not very common case I guess). In higher dimension, however, both inference and training become faster so we can consider to use this method.
+In high dimension, it shows about 1.5-2 times faster inference, and learning one sample becomes 5-10x times faster.
+We can try if we need a faster model update and bit slower inference is tolerable (however it is not very common case I guess).
+In higher dimension, however, both inference and training become faster so we can consider to use this method.
 
 ## Fast Enough Linear Thompson Sampling
 Refer to [original paper](http://proceedings.mlr.press/v28/agrawal13?ref=https://githubhelp.com) for notations.
