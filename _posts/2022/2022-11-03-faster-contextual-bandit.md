@@ -63,6 +63,8 @@ def without_inv_ucb_calc():
 
 ### Benchmark
 #### in 64 dim
+
+Inference is not much faster than usual cases rahter become slower in lower dimension.
 ```python
 %%timeit -n 1000 -t 5
 usual_ucb_calc()
@@ -75,6 +77,8 @@ without_inv_ucb_calc()
 ```
 > 61.2 µs ± 8.42 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
+
+However, in higher dimension, it is much faster than usual cases.
 ```python
 %%timeit -n 1000 -t 5
 L = np.linalg.cholesky(cov)
@@ -87,7 +91,13 @@ inv = np.linalg.inv(cov)
 ```
 > 4.78 ms ± 211 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
+about 10x gain in training one sample in 64 dim.
+
 #### in 256 dim
+
+
+However, in very high dimension of 256, it shows both faster inference and training.
+
 ```python
 %%timeit -n 1000 -t 5
 usual_ucb_calc()
