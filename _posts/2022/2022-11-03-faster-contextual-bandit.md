@@ -161,3 +161,6 @@ it's about 300 times faster!
 
 ### Conclusion
 Linear UCB shows moderable performance gain. However, Linear Thompson sampling with Gaussian Prior shows 300x times faster inference.
+
+### Reference:
+[Sampling from Multivariate Normal (precision and covariance parameterizations)](http://www.statsathome.com/2018/10/19/sampling-from-multivariate-normal-precision-and-covariance-parameterizations/)
