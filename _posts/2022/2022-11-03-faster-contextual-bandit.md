@@ -1,8 +1,8 @@
 ---
 layout: article
-title: "11월 3일의 일기"
-category: 일기
-tag: 일기
+title: "Faster Linear Contextual Bandit"
+category: "recsys"
+tag: "recsys"
 comment: false
 key: 20221103
 mathjax: true
