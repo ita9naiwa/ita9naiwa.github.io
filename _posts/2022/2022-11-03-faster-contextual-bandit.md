@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "Faster Linear Contextual Bandit"
+title: "Faster Linear Contextual Bandit by Removing Inverse Operation"
 category: "recsys"
 tag: "recsys"
 comment: false
@@ -8,12 +8,13 @@ key: 20221103
 mathjax: true
 ---
 
-Linear contextual bandit is a necessary tool in modern machine learning especially in Recommender Systems. One of the difficulties of deploying it comes from that it involves an inverse operation. In this post, I will explain how to make it faster without removing inverse operation.
+Linear contextual bandit is a necessary tool in modern machine learning, especially in Recommender Systems. One of the difficulties of deploying it comes from that it involves an inverse operation. In this post, I will explain how to make it faster without removing inverse operation.
 
 ## Cholskey Decomposition
-it decomposes positive-definite matrix into the product of a lower triangular matrix and its transpose. And, Covariance Matrix in MVN is also positive-definite Thus, $\Sigma = LL^T$ where $L$ is a lower trinalguar matrix.
+It decomposes a positive-definite matrix into the product of a lower triangular matrix and its transpose. And, Covariance Matrix of Multivariate Gaussian Distribution is also positive-definite. Thus, covariance matrix $\Sigma$ in the Gaussian Distribution can be decomposed by $\Sigma = LL^T$ where $L$ is a lower trinalguar matrix.
 
-Let's suppose we defined following variables
+Let's suppose we defined following variables for training and inference in the Linear UCB and Linear Thompson Sampling.
+
 ```python
 def get_ingredients(dim=2):
     user_feat = np.random.normal(size=dim)
@@ -36,25 +37,28 @@ where
 - $\theta$ : $\Sigma b$
 - $\text{UCB} = \sqrt{x\Sigma^{-1}x}$.
 
-Let's decompose $\Sigma$ using Cholsky Decomposition, $\Sigma = LL^T$
-### deriving mu without inverse calculation
+Let's decompose $\Sigma$ using Cholsky Decomposition, $\Sigma = LL^T$.
+### deriving mu without inverse calculations
+We will drive $\hat{s}$ without using inverse. First step is $\theta^T x$.
 $$
     \theta^T x = b^T \Sigma = b^T(LL^T)^{-1}x = (b^T L^{-T}) (L^{-1}x) = (L^{-1}b)^T (L^{-1} x)
 $$
 
 ### deriving UCB without inverse calculation
+Followingly, we will derive $\text{UCB}$ without using inverse too.
 $$
     \text{UCB}^2 = x \Sigma^{-1} x = x(LL^T)^{-1}x = (L^{-1}x)^T(L^{-1}x)
 $$
-
 ### Python Implementation
 ```python
 def usual_ucb_calc():
+    # usual UCB inference.
     mu = inv.dot(b).dot(x)
     ucb = np.sqrt(inv.dot(x).dot(x))
     return mu + ucb
 
 def without_inv_ucb_calc():
+    # UCB inference without inverse operation.
     v = scipy.linalg.solve_triangular(L, x, lower=True)
     mu = np.dot(scipy.linalg.solve_triangular(L, b, lower=True), v)
     ucb = np.sqrt(np.dot(v, v))
@@ -63,7 +67,6 @@ def without_inv_ucb_calc():
 
 ### Benchmark
 #### in 64 dim
-
 Inference is not much faster than usual cases rahter become slower in lower dimension.
 ```python
 %%timeit -n 1000 -t 5
@@ -78,7 +81,7 @@ without_inv_ucb_calc()
 > 61.2 µs ± 8.42 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 
 
-However, in higher dimension, it is much faster than usual cases.
+However, in higher dimensions, it is much faster than usual cases.
 ```python
 %%timeit -n 1000 -t 5
 L = np.linalg.cholesky(cov)
@@ -90,12 +93,9 @@ L = np.linalg.cholesky(cov)
 inv = np.linalg.inv(cov)
 ```
 > 4.78 ms ± 211 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
-
-about 10x gain in training one sample in 64 dim.
+The performance gain at the 64d is about 10x gain in training one sample in 64 dim.
 
 #### in 256 dim
-
-
 However, in very high dimension of 256, it shows both faster inference and training.
 
 ```python
@@ -123,16 +123,16 @@ inv = np.linalg.inv(cov)
 ```
 > 75.3 ms ± 8.17 ms per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
-In high dimension, it shows about 1.5-2 times faster inference, and learning one sample becomes 5-10x times faster
+In high dimension, it shows about 1.5-2 times faster inference, and learning one sample becomes 5-10x times faster. We can try if we need a faster model update and bit slower inference is tolerable (however it is not very common case I guess). In higher dimension, however, both inference and training become faster so we can consider to use this method.
 
 ## Fast Enough Linear Thompson Sampling
 Refer to [original paper](http://proceedings.mlr.press/v28/agrawal13?ref=https://githubhelp.com) for notations.
 
 Linear Thompson Sampling with Gaussian Prior samples data from
 $$
-    \text{Normal}(\mu, a^2  B^{-1})
+    \text{Normal}(\mu, \alpha^2 B^{-1})
 $$
-where $\mu$ is some $d$ vector, and $\alpha$ is some hyperparameter, and $B$ is an inverse of $d \times d$ matrix
+where $\mu$ is some $d$ vector, and $\alpha$ is some hyperparameter, and $B$ is an inverse of $d \times d$ matrix.
 
 Sampling from Multivariate Gaussian Distribution is one and largest bottleneck of Linear Thompson Sampling. Let's remove inverse operation and see how much it become faster!
 
@@ -141,13 +141,13 @@ Drawing a sample X from MVN, $ X \sim \text{Normal}(\mu, a^2  B^{-1})$ is equiva
 Thus, in python language, they are equivalent to
 
 ```python
-    rv1 = mean + sqrtalpha * scipy.linalg.solve_triangular(U, np.random.normal(size=dim), lower=False)
-    rv2 = np.random.multivariate_normal(mean, alpha * inv)
+    rv1 = mean + alpha * scipy.linalg.solve_triangular(U, np.random.normal(size=dim), lower=False)
+    rv2 = np.random.multivariate_normal(mean, (alpha ** 2) * inv)
 ```
 ### Implementation
 ```python
 %%timeit -n 100 -t 5
-rv = mean + sqrtalpha * scipy.linalg.solve_triangular(U, np.random.normal(size=dim))
+rv = mean + alpha * scipy.linalg.solve_triangular(U, np.random.normal(size=dim))
 ```
 > 154 µs ± 281 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
@@ -156,11 +156,10 @@ rv = mean + sqrtalpha * scipy.linalg.solve_triangular(U, np.random.normal(size=d
 rv = np.random.multivariate_normal(mean, alpha * inv)
 ```
 > 52.1 ms ± 28.8 ms per loop (mean ± std. dev. of 7 runs, 100 loops each)
-
-it's about 300 times faster!
+(154us vs 52.1ms!) It's about 300 times faster! It's definitely good to be used in most of cases.
 
 ### Conclusion
-Linear UCB shows moderable performance gain. However, Linear Thompson sampling with Gaussian Prior shows 300x times faster inference.
+Linear UCB shows moderable performance gain. However, Linear Thompson sampling with Gaussian Prior shows at most 300x times faster inference.
 
 ### Reference:
 [Sampling from Multivariate Normal (precision and covariance parameterizations)](http://www.statsathome.com/2018/10/19/sampling-from-multivariate-normal-precision-and-covariance-parameterizations/)
