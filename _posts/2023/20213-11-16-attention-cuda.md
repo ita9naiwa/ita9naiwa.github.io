@@ -195,13 +195,15 @@ __global__ void naive_attention_forward_kernel(
 }```
 쿠다 코드에서 3차원 이상의 텐서는 이렇게 인덱싱해 곱하고 더해주고 할 수 있다. 이것만 기억하면 (느리겠지만) 아무쪼록 쿠다 코드를 짤 수 있다. 위 코드에서는 S (Q*K)를 구하는 부분만 보여주었지만, 나머지는 사실 저 부분과 크게 차이가 나지 않는 곱셈의 연속이다.
 
-#### reduction
 
+#### 실제로 구현한 것들
+위의 가장 쉬운 naive attention 이외에도, 세 개를 더 구현해뒀다.
+- KV-cache Attention
+- Continuous Batching Attention
+- Paged KV cache Attention
 
-```cpp
+위 코드를 이해했다면, 차근차근 본다면 그리 어렵지 않을 것이라 생각한다.
 
-#### Paged KV cache Attention
-어텐션에서 또 kv Cache를 쓰는 경우가 있다.
 
 ### 내가 본 자료들
 1. [Learn CUDA Programming](https://github.com/PacktPublishing/Learn-CUDA-Programming)
