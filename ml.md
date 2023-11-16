@@ -1,14 +1,16 @@
 ---
 layout: article
 titles:
-  en: "Recommender Systems"
+  en: "Machine Learning"
 show_title: false
 ---
 
-### My posts on Recommender Systems(click to read full post!)
+### ML posts(click to read full post!)
+ML에 관해 썼던 글들입니다
+
 <div class="post-list">
   <ul>
-    {%- for post in site.tags["recsys"]-%}
+    {%- for post in site.tags["ML"]-%}
     <li>
       {%- assign __path = post.url -%}
       {%- include snippets/prepend-baseurl.html -%}
