@@ -141,6 +141,7 @@ std::vector<torch::Tensor> naive_attention_forward(
 ```
 
 naive_attention_forward는 다음과 같이 이루어져 있다.
+
 ```cpp
 template <typename scalar_t>
 __global__ void naive_attention_forward_kernel(
@@ -193,7 +194,9 @@ __global__ void naive_attention_forward_kernel(
     }
     ...
     ...
-}```
+}
+```
+
 쿠다 코드에서 3차원 이상의 텐서는 이렇게 인덱싱해 곱하고 더해주고 할 수 있다. 이것만 기억하면 (느리겠지만) 아무쪼록 쿠다 코드를 짤 수 있다. 위 코드에서는 S (Q*K)를 구하는 부분만 보여주었지만, 나머지는 사실 저 부분과 크게 차이가 나지 않는 곱셈의 연속이다.
 
 
