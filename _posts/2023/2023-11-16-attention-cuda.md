@@ -241,8 +241,83 @@ decoder only LLM 모델에서 한 시퀀스에 대해, 각 레이어의 K, V는 
 
 일반적인 KV Cache는 max sequence length분량의 **연속된 메모리**를 미리 할당해주어야 한다는 점이 있는데, 이는 심각한 메모리 부족을 초래한다. 이렇게 하지 말고, 필요시마다 그때그때 **불연속적인 메모리를** 할당하는 방법이 제안되었는데, 이를 Paged Attention이라고 한다. 불연속적 메모리를 사용하면서 발생하는 캐시 비효율 등의 문제가 있지만, 메모리를 효율적으로 사용할 수 있다는 장점이 있어 널리 사용되고 있다. 가장 단순하게, 할당 단위가 1인 paged attention의 구현을 해 보자.
 
+여기선 offset, K_cache, V_cache, cache_indices라는 추가적인 인자가 필요해진다. cache indices는 각 쿼리가 쓰는 K_cache, V_cache의 인덱스들을 담고 있고, offsets는 배치 안 쿼리들 사이에 어떤 K_cache, V_cache 사이즈를 담고 있다. 이런 노테이션이 익숙하지 않다면, [위키](https://en.wikipedia.org/wiki/Sparse_matrix)의 CSR matrix 부분을 참고하면 된다.
+예를 들면,
+```python
+cache_indices = [33, 26, 111, 63]
+offsets = [2, 4]
+```
+라고 하면, [0, 2)까지의 캐시 인덱스들인 {33, 26}은 첫 번째 쿼리의 KV cache 인덱스가 된다. [2, 4) 까지의 캐시 인덱스인 {111, 63}은 두 번째 쿼리의 KV cache 인덱스가 된다. 구현체는 다음과 같다.
+
+```cpp
+template <typename scalar_t>
+__global__ void paged_kv_attention_forward_kernel(
+    const int max_context_len,
+    const int dim,
+    const float scale,
+    scalar_t* __restrict__ Q,               // [length, num_heads, dim]
+    scalar_t* __restrict__ K,               // [length, num_heads, dim]
+    scalar_t* __restrict__ V,               // [length, num_heads, dim]
+    scalar_t* __restrict__ K_cache,         // [cache_size, num_heads, dim]
+    scalar_t* __restrict__ V_cache,         // [cache_size, num_heads, dim]
+    int* __restrict__ cache_indices,        // [length]
+    int* __restrict__ offsets,              // [batch_size]
+    scalar_t* __restrict__ S,               // [batch_size, num_heads, max_context_len + 1]
+    scalar_t* __restrict__ P,               // [batch_size, num_heads, max_context_len + 1]
+    scalar_t* __restrict__ O                // [length, num_heads, dim]
+) {
+    const int thread_id = threadIdx.x;
+    const int block_dim = blockDim.x;
+    const int block_id = blockIdx.x;
+    const int head_id = blockIdx.y;
+    const int batch_size = gridDim.x;
+    const int num_heads = gridDim.y;
+
+    const int beg_idx = (block_id == 0)? 0 : offsets[block_id - 1];
+    const int end_idx = offsets[block_id];
+    const int size = end_idx - beg_idx;
+
+     // S[i] = K_cache[i][j] * Q[j];
+    for(int i = thread_id; i < size; i += block_dim) {
+        int S_idx = ((1 + max_context_len) * num_heads) * block_id + \
+                    (1 + max_context_len) * head_id + i;
+        for(int j = 0;j < dim; ++j) {
+            // S[block_id][head_id][i] += K_cache[cache_indices[beg_idx + 1]][head_id][j] * Q[block_id][head_id][j]을 실제로는 계산한다.
+            int K_cache_idx = (dim) * head_id + (num_heads * dim) * cache_indices[beg_idx + i] + j;
+            int Q_idx = (num_heads * dim) * block_id + dim * head_id + j;
+            S[S_idx] += K_cache[K_cache_idx] * Q[Q_idx];
+        }
+    }
+
+    // 위 루프에서는 0,...,context_len까지만 계산한다. 그럼 context_len + 1번째 원소는 어떻게 계산할까?
+    // context_len + 1번째 원소는 K, Q의 self attention이므로 직접 계산해준다.
+    __syncthreads();
+    scalar_t tmp = 0.0;
+    for(int i = thread_id; i < dim; i += block_dim) {
+        int Q_idx = (num_heads * dim) * block_id + dim * head_id + i;
+        int K_idx = Q_idx;
+        tmp += Q[Q_idx] * K[K_idx];
+    }
+
+    S[(num_heads * (1 + max_context_len)) * block_id + (max_context_len + 1) * head_id + size] = blockReduceSum<float>(tmp);
+
+    ...
+    //밑에서는 P, O를 비슷한 방법으로 계산해준다.
+}
+```
+
+
+### 다음 할 일
+공부하면 할 수록 하고 싶은 일이 늘어난다. 추가적으로 더 해 보고 싶은 것들이 많다.
+
+- 더 빠르게 만들 수 있을 것 같다. [FlashAttention](https://arxiv.org/abs/2205.14135)을 구현해보고 싶다. 지금 내 구현체에서는 shared memory를 거의 활용하지 않는데, 이로 계산을 훨씬 효율적이게 할 수 있을 것 같다.
+- 메모리도 적게 쓸 수 있을 것 같다. [Self-attention Does Not Need O(n2) Memory](https://arxiv.org/abs/2112.05682)을 보면, 어텐션은 사실 메모리 효율적인 구현이 가능하다고 하다.
+- CUDA intrinsic 연산을 더 잘 활용할 수 있을 것 같다. 이것도 좀 참고해볼 만한 것이 있으면 좋을 것 같은데 아직까지는 잘 모르겠다. 혼자 배우니 막히는 부분이 많은 것 같다 ;ㅅ;
+
 
 ### 내가 본 자료들
+쿠다를 이해하기 위해서 지금까지 참고한 자료 중 기억에 남는 것들이다. 읽고 도움이 되었으면 좋겠다.
+
 1. [Learn CUDA Programming](https://github.com/PacktPublishing/Learn-CUDA-Programming)
 그나마 난이도가 현실적이고 순차적이고 계단적이게 되어 있다!
 
