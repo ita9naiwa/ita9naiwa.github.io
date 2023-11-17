@@ -8,6 +8,9 @@ key: 20231110
 mathjax: true
 ---
 
+![뉴진스]](https://cdn.goodkyung.com/news/photo/202208/185351_146767_3848.jpg)
+
+
 ### CUDA를 공부하기.
 쿠다를 공부하려고 오래 전 부터 마음먹었는데 실제로는 한 달 쯤 전부터 (정말 필요해진 순간에!) 공부하게 되었다. 회사에서 LLM 인퍼런스 모델을 이해해야 할 일이 생겨서, 동기가 강제로 부여되게 되어 겨우 쿠다 첫 걸음을 떼었다. 사실 아직 뗐다고 말 할 수 있는지도 잘 모르겠다.
 
@@ -15,17 +18,20 @@ mathjax: true
 
 사진 출처:https://kjhov195.github.io/2020-01-07-activation_function_1
 
-인터넷에 많이 있는 쿠다 자료의 특징은 난이도가 Sigmoid 함수를 따른다는 점이다. 쉬웠다가...쉬웠다가... 갑자기 어려워진다! 예를 들면 다음과 같다. 첫 예제에서 벡터 곱셈을 배우고, 두번째 예제에서 쿠다로 Quick Sort를 구현하고, 세 번째 예제에서는 CNN을 (심지어 backprop도) 구현하는 느낌의 난이도 배치가 되어 있다. 정말 학습자의 의욕을 정말 깎아먹지 않을 수가 없는 배치이다. 그래서 든 생각이, 내가 아는 쿠다 지식으로 뭘 만들어보면 그나마 조금이라도 익숙해지지 않을까 싶었다.
+인터넷에 많이 있는 쿠다 자료의 특징은 난이도가 Sigmoid 함수를 따른다는 점이다. 쉬웠다가...쉬웠다가... 갑자기 어려워진다! 예를 들면 다음과 같다. 첫 예제에서 벡터 곱셈을 배우고, 두번째 예제에서 쿠다로 Quick Sort를 구현하고, 세 번째 예제에서는 CNN을 (심지어 backprop도) 구현하는 느낌의 난이도 배치가 되어 있다. 정말 학습자의 의욕을 정말 깎아먹지 않을 수가 없는 배치이다.
+
+이 글의 목적은 벡터 덧셈 정도를 쿠다로 구현해 본 사람에게, 쿠다로 어텐션을 구현해 볼 수 있을 정도의 지식을 제공하는 것이다. 워프, 레인, shared memory 정도는 알고 있으면 좋다.
+
+
 
 ### Attention
-(이 글을 읽는 사람은 셀프-어텐션을 이해하고 있다고 가정한다)
+이 글을 읽는 사람은 셀프어텐션을 이해하고 있다고 가정한다. 어텐션 모듈은 구현 난이도도 적절하고(적어도 구현하기 전까지는 그렇게 보였다). 나온지 그렇게 오래되지 않았기 때문에, 아직 가장 효율적인 계산 방법이 알려지지 않았고, 여러 개선이 시도되고 있고 따라서 여러 번 많은 사람이나 회사가 다시 재작성되는 모듈이다. 그래서 구현해 볼 가치가 있다고 생각했다.
 
-난이도도 적절하고, LLM inference에서 실질적으로 많이 optimize되고 재구현되고 있는 모듈이다. 따라서 이를 구현해보기로 결심했다.
+실제 구현체는 여기 있다. ([깃허브 링크](https://github.com/ita9naiwa/attention-impl))
 
-실제 구현체는 여기 있다. https://github.com/ita9naiwa/attention-impl
 
 #### Warp Reduce Sum and Block Reduce Sum
-출처: https://github.com/vllm-project/vllm/blob/main/csrc/reduction_utils.cuh
+
 ```cpp
 template<typename T>
 __inline__ __device__ T warpReduceSum(T val) {
@@ -34,13 +40,19 @@ __inline__ __device__ T warpReduceSum(T val) {
     val += __shfl_xor_sync(0xffffffff, val, mask, 32);
   return val;
 }
+
 ```
-쿠다에서 공유 메모리를 제외하고 다른 스레드의 값을 가져오는 유일한 방법은 __shfl_* 함수를 사용하는 것이다. __shfl은 warp 내에서 다른 스레드의 값을 가져오는 연산이다. xor은 다음과 같은 신기한 성질이 있어 이를 이용해 각 warp(32개 스레드의 그룹)의 합을 다음과 같이 계산할 수 있다.
+
+코드 출처: https://github.com/vllm-project/vllm/blob/main/csrc/reduction_utils.cuh
+
+쿠다에서 공유 메모리를 제외하고 다른 스레드의 값을 가져오는 유일한 방법은 __shfl_* 함수를 사용하는 것이다. __shfl은 warp 내에서 다른 스레드의 값을 가져오는 연산이다. `__shfl_xor_sync`는 자기 스레드 아이디에, 주어진 세 번째 인자와 xor한 스레드 아이디의 같은 변수의 값을 가져오는 연산인데, xor은 다음과 같은 신기한 성질이 있어 이를 이용해 각 warp(32개 스레드의 그룹)의 합을 다음과 같이 계산할 수 있다.
+
 ![그래프]({{ "/assets/images/att/butterfly_reduction.png" | absolute_url }})
 출처:https://people.maths.ox.ac.uk/~gilesm/cuda/lecs/lec4.pdf
 
 그럼, 이 워프 계산을 마치면 0,..., 31까지는 같은 값이 있다(0-31까지의 합), 32,...,63까지는 또 같은 값이 있다.
-그럼 다시, 이 32개의 값을 다시 한번 더 더해주면, 0-63까지의 합을 구할 수 있다. 이를 반복하면, 0-1023까지의 합을 구할 수 있다. 이를 이용해 다음과 같은 코드를 구현할 수 있다. 0, 32, 64, ...,에 있는 값을 `shared[]`에 모아주고, 얘를 다시 warp reduce sum한다는 내용의 코드이고 이로써 0-1023까지 모든 값을 더할 수 있다.
+그럼 다시, 이 32개의 값을 다시 한번 더 더해주면, 0-63까지의 합을 구할 수 있다. 이를 반복하면, 0-1023까지의 합을 구할 수 있다. 이를 이용해 다음과 같은 코드를 구현할 수 있다. 0, 32, 64, ...,에 있는 값을 `shared[]`에 모아주고, `shared[]`의 모든 값을 더해주는 방식으로 thread 0 - thread 1023까지의 합을 구할 수 있다.
+
 ```cpp
 template<typename T>
 __inline__ __device__ T blockReduceSum(T val) {
@@ -50,8 +62,13 @@ __inline__ __device__ T blockReduceSum(T val) {
             shared[i] = 0.0;
         }
     }
+    // 얘는 스레드 아이디
     int lane = threadIdx.x & 0x1f;
+
+    // 워프의 아이디
     int wid = threadIdx.x >> 5;
+
+    //각 워프 별로 sum을 계산한다. 워프 안의 모든 스레드는 같은 값을 가진다.
     val = warpReduceSum<T>(val);
 
     if (lane == 0)
@@ -64,6 +81,10 @@ __inline__ __device__ T blockReduceSum(T val) {
   return ret;
 }
 ```
+
+
+코드 출처: https://github.com/vllm-project/vllm/blob/main/csrc/reduction_utils.cuh
+
 
 참고 자료:
 - https://people.maths.ox.ac.uk/~gilesm/cuda/lecs/lec4.pdf
@@ -150,8 +171,9 @@ __global__ void naive_attention_forward_kernel(
     const int context_len,
     const int dim,
     const float scale,
-    scalar_t* __restrict__ Q, // __restrict__ 키워드는 포인터가 가리키는 메모리가 다른 포인터에 의해 접근되지 않는다는 것을 컴파일러에게 알려준다.
-    scalar_t* __restrict__ K, // 캐싱할 유리해져서, 속도 향상에 도움을 줄 수 있다.
+    scalar_t* __restrict__ Q, // __restrict__ 키워드는 포인터가 가리키는 메모리가
+                              // 다른 포인터에 의해 접근되지 않는다는 것을 컴파일러에게 알려준다.
+    scalar_t* __restrict__ K, // 캐싱할 유리해져 속도 향상에 도움을 줄 수 있다.
     scalar_t* __restrict__ V,
     scalar_t* __restrict__ mask,
     scalar_t* __restrict__ S,
@@ -201,6 +223,23 @@ __global__ void naive_attention_forward_kernel(
 
 쿠다 코드에서 3차원 이상의 텐서는 이렇게 인덱싱해 곱하고 더해주고 할 수 있다. 이것만 기억하면 (느리겠지만) 아무쪼록 쿠다 코드를 짤 수 있다. 위 코드에서는 S (Q*K)를 구하는 부분만 보여주었지만, 나머지는 사실 저 부분과 크게 차이가 나지 않는 곱셈의 연속이다.
 
+#### Continuous Batching
+
+![cont batching](https://images.ctfassets.net/xjan103pcp94/744TAv4dJIQqeHcEaz5lko/b823cc2d92bbb0d82eb252901e1dce6d/cb_03_diagram-continuous-batching.png)
+
+출처: https://www.anyscale.com/blog/continuous-batching-llm-inference
+
+sequence data로 torch를 사용해본 사람은 padding에 대해 기억하고 있을 것이다. 입력 시퀀스마다 길이가 다를 수 있지만, 입력으로 들어가는 텐서는 길이가 같아야 한다. 따라서 패딩과 마스크를 보통 사용하는데, 이러면 새 입력이 들어왔을 때 시퀀스 길이가 늘어나거나 줄어드는 경우도 있고 잘 생각해보면 여러모로 불편하다. 위 그림의 오른쪽 배칭은 cont. batching을 보여주고 있다. 그냥 패딩 대신 packed된 입력을 준다. 이렇게 하면 패딩과 마스크를 사용하지 않을 수 있다. 자세한 설명은 위 출처를 참고하자.
+
+
+**차이점**
+Q, K, V의 차원이 (batch_size, context_size, dim)에서, (total length, dim) 차원으로 바뀌게 된다. offset [batch_size] 차원의 텐서가 추가된다. 이는 각 배치의 Q, K, V에서의 종료 위치를 나타내게 된다. 이를테면, context length 3인 입력 3개로 이루어진 배치가 있다고 하면, offset = [3, 6, 9]가 되게 된다.
+
+#### KV Cache and PagedAttention
+
+decoder only LLM 모델에서 한 시퀀스에 대해, 각 레이어의 K, V는 한 번 계산되면 그 시퀀스 내에서는 값이 고정된다. 그럼 어텐션 연산을 여러 번 해 줄 필요 없이 이 값을 어딘가에 들고 있으면 된다. 이를 KV Cache라고 한다.
+
+일반적인 KV Cache는 max sequence length분량의 **연속된 메모리**를 미리 할당해주어야 한다는 점이 있는데, 이는 심각한 메모리 부족을 초래한다. 이렇게 하지 말고, 필요시마다 그때그때 **불연속적인 메모리를** 할당하는 방법이 제안되었는데, 이를 Paged Attention이라고 한다. 불연속적 메모리를 사용하면서 발생하는 캐시 비효율 등의 문제가 있지만, 메모리를 효율적으로 사용할 수 있다는 장점이 있어 널리 사용되고 있다. 가장 단순하게, 할당 단위가 1인 paged attention의 구현을 해 보자.
 
 #### 실제로 구현한 것들
 위의 가장 쉬운 naive attention 이외에도, 세 개를 더 구현해뒀다.
