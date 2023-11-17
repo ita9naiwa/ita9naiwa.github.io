@@ -241,14 +241,6 @@ decoder only LLM 모델에서 한 시퀀스에 대해, 각 레이어의 K, V는 
 
 일반적인 KV Cache는 max sequence length분량의 **연속된 메모리**를 미리 할당해주어야 한다는 점이 있는데, 이는 심각한 메모리 부족을 초래한다. 이렇게 하지 말고, 필요시마다 그때그때 **불연속적인 메모리를** 할당하는 방법이 제안되었는데, 이를 Paged Attention이라고 한다. 불연속적 메모리를 사용하면서 발생하는 캐시 비효율 등의 문제가 있지만, 메모리를 효율적으로 사용할 수 있다는 장점이 있어 널리 사용되고 있다. 가장 단순하게, 할당 단위가 1인 paged attention의 구현을 해 보자.
 
-#### 실제로 구현한 것들
-위의 가장 쉬운 naive attention 이외에도, 세 개를 더 구현해뒀다.
-- KV-cache Attention
-- Continuous Batching Attention
-- Paged KV cache Attention
-
-위 코드를 이해했다면, 차근차근 본다면 그리 어렵지 않을 것이라 생각한다.
-
 
 ### 내가 본 자료들
 1. [Learn CUDA Programming](https://github.com/PacktPublishing/Learn-CUDA-Programming)
