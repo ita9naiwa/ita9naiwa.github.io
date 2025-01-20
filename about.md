@@ -5,8 +5,8 @@ key: page-about
 ---
 
 ### Me
-Now I work as a System Software Engineer at NVIDIA This field is completely new to me and I'm excited!
-Previously, I worked at OctoAI for Optimizing LLM inference and Kakao for recommender systems.
+	I now work as a System Software Engineer at NVIDIA. This field is completely new to me, and I’m excited!
+    Previously, I worked at OctoAI optimizing LLM inference and at Kakao on recommender systems.
 
 
 
