@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "Attention을 쿠다로 구현해보기"
-category: "ML"
-tag: "ML"
+category: "mlsys"
+tag: "mlsys"
 comment: false
 key: 20231110
 mathjax: true
