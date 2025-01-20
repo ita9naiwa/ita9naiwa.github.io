@@ -5,7 +5,8 @@ key: page-about
 ---
 
 ### Me
-	I now work as a System Software Engineer at NVIDIA. This field is completely new to me, and I’m excited!
+    I'm Hyunsung Lee.
+    I now work as a System Software Engineer at NVIDIA. This field is completely new to me, and I’m excited!
     Previously, I worked at OctoAI optimizing LLM inference and at Kakao on recommender systems.
 
 
