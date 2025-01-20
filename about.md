@@ -5,15 +5,9 @@ key: page-about
 ---
 
 ### Me
-I'm an engineer at Recommendation team of Kakao corpporation.
+Now I work as a System Software Engineer at NVIDIA This field is completely new to me and I'm excited!
+Previously, I worked at OctoAI for Optimizing LLM inference and Kakao for recommender systems.
 
-
-- Contemplating on what matters in my life and getting rid of what doesn't to me.
-- Trying not to be a parrot when write something.
-
-### Interests
-- Scheduling algorithm using probabilistic approach (so called Machine Learning)
-- Recommender Systems with complex data structure
 
 
 ## Some Links
