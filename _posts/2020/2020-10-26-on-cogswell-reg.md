@@ -81,8 +81,6 @@ $$
 $$
 
 I implemented this with Implicit library and tested on ML-1M dataset and found that about 6\% of performance gain was achieved.
-{% gist b328c43508193611a83c07ae0553a9f3 %}
-
 
 
 ### Note:

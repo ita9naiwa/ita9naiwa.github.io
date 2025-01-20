@@ -2,6 +2,8 @@ source 'https://rubygems.org/'
 
 gemspec
 gem 'jekyll-gist'
+gem 'kramdown-parser-gfm'
+gem "jekyll-gist"
 
 # For dev under windows, I know that yikes....
 
