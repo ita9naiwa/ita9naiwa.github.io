@@ -332,23 +332,7 @@ Then, $exp(P - m) @ V / d$ can be represented in
 
 The core idea of fusing 3-4 merged block into the loop block 2 is that
 
-> While we are constructing `m`, `d`, we can use intermediate values of `m`, `d` and calculate partial outcome and run Reduction.
-
-
-```python
-    # 2-3-4 merged block
-    m = -inf # size of M by K_2 array
-    d = 0    # size of M by K_2 array
-    O = 0    # M by N Matrix
-    for j in 1 ... K_2: # Reduction Loop
-        # Each chunk calculates:
-        m[:][j] = max(m[:][j - 1], P[:][j])
-        d[:][j] = d[:][j - 1] * exp(m[:][j-1] - m[:][j]) + exp(P[:][j] - m[:][j])
-        O = O * exp(m[:][j - 1] - m[:][j]) + exp(P[:][j] - m[:][j]) @ V[j][:]
-    return O / d
-```
-
-So, our final Attention procedure is that:
+> While we are constructing `m`, `d`, we can use intermediate values of `m`, `d` and calculate partial outcome and run Reduction. So, our final Attention procedure is that:
 
 ```python
     # loop block 1
@@ -363,7 +347,7 @@ So, our final Attention procedure is that:
         m[:][j] = max(m[:][j - 1], P[:][j])
         d[:][j] = d[:][j - 1] * exp(m[:][j-1] - m[:][j]) + exp(P[:][j] - m[:][j])
         O = O * exp(m[:][j - 1] - m[:][j]) + outerProduct(exp(P[:][j] - m[:][j]), V[j][:])
-    return O / d
+    return O / d[:][K_2 - 1]
 ```
 
 In practice, FlashAttention kernels break this loop into tile-sized chunks (in the sequence dimension) and also tile the outerProduct for GPU efficiency. The key insight is doing all computations in a single pass, reducing intermediate reads/writes and improving numerical stability by keeping values in higher-precision registers.
