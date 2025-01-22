@@ -3,8 +3,6 @@ header:
     url: "/mlsys.html"
   - title: "ML"
     url: "/ml.html"
-  - title: "RL"
-    url: "/rl.html"
   - title: "Recsys"
     url: "/recsys.html"
   - title: "Archive"
