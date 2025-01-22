@@ -188,16 +188,16 @@ Proposed in https://arxiv.org/abs/1805.02867, FastSafeSoftmax merges two loop bl
 
 `fastSafeSoftmax(v)`
 ```python
-    m_0 = -inf
-    d_0 = 0
+    m = -inf # n sized array
+    d = 0    # n sized array
     for i in 1 ... n: # Reduction Loop
         # Each chunk calculates:
-        m_i = max(m_{i-1}, x_j)
-        d_j = d_{j-1} * exp(m_{j-1} - m_j) + exp(x_j - m_j)
-        # m, d are reduced finally
+        m[i] = max(m[i - 1], x[i])
+        d[i] = d[i - 1] * exp(m[i - 1] - m[i]) + exp(x[i] - m[i])
+        # m[n - 1], d[n - 1] are reduced finally
 
     for i in 1 ... n: # Parallel Loop
-        y_i = exp(x_i - m) / d
+        y[i] = exp(x[i] - m[n - 1]) / d[n - 1]
     return y
 ```
 
