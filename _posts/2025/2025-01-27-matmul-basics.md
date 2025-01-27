@@ -113,3 +113,6 @@ __global__ void matmul_smem(int *A, int *B, int *C, int M, int K, int N) {
 ### Conclusion
 I've struggled but finally I grasped one of the most important idea in HPC computing...!
 
+### References:
+- [Learn CUDA Programming](https://www.amazon.com/CUDA-Cookbook-Effective-parallel-programming/dp/1788996240)
+- [CUTLASS: Fast Linear Algebra in CUDA C++](https://developer.nvidia.com/blog/cutlass-linear-algebra-cuda/)
