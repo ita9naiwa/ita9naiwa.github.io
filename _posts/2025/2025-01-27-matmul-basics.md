@@ -12,7 +12,6 @@ mathjax: true
 I'm extremly poor at thinking about matrices. I've seen many people graphically think and draw matrix strides, multiplications, etc....
 Yet as a person who work in ML, I think I should understand matmul, even in high-level concepts. This post is about my struggle to understand matmul in HPC environment.
 
-
 for convenience, I set the notation: `A = M by K, B = K by N, C = A @ B = M by N`, where `@` is matrix multiplication.
 
 ### Loops 1
@@ -63,7 +62,7 @@ This Loops 4 form is what we want, Slightly different image showing same procedu
 - We can parallelize loops not involving k, and k0.
     - first two loops having i, j can be parallelized by Grids
     - i0, j0 loops are parallelized by Blocks
-- We can tile `A[i:i + 16][k * 16:(k + 1) * 16]`, and `B[k*16:(k+1) * 16][j:j + 16]` to the shared memory
+- We can tile `A[i:i + 16][k * 16:(k + 1) * 16]`, and `B[k*16:(k+1) * 16][j:j + 16]` and store them to the shared memory
 
 Visualized figure is given below;
 
@@ -71,7 +70,7 @@ Visualized figure is given below;
 
 
 Cuda implementation is given below;
-```CUDA
+```cpp
 __global__ void matmul_smem(int *A, int *B, int *C, int M, int K, int N) {
     __shared__ int tile_A[16][16];
     __shared__ int tile_B[16][16];
