@@ -12,7 +12,11 @@ mathjax: true
 I'm extremly poor at thinking about matrices. I've seen many people graphically think and draw matrix strides, multiplications, etc....
 Yet as a person who work in ML, I think I should understand matmul, even in high-level concepts. This post is about my struggle to understand matmul in HPC environment.
 
-for convenience, I set the notation: `A = M by K, B = K by N, C = A @ B = M by N`, where `@` is matrix multiplication.
+for convenience, I set the notation:
+- A is M by K sized matrix
+- B is K by N sized matrix
+- C = A @ B, is M by N sized matrix
+
 
 ### Loops 1
 ```python
