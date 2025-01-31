@@ -36,7 +36,7 @@ int tx = threadIdx.x / BLOCK_SIZE;
 int ty = threadIdx.x % BLOCK_SIZE;
 ```
 
-I did this to enable `__shfl` among `ty`s. However, one bad thing is that **by setting `ROW_BLOCK_SIZE=COL_BLOCK_SIZE`**, I wasn't able to increase `COL_BLOCK_SIZE` to be 32, thus using `__shfl_xor_sync` become difficult. Instead, I performed reduction in following way.
+I did this to enable `__shfl` among `ty`s. However, one bad thing is that **by setting `ROW_BLOCK_SIZE=COL_BLOCK_SIZE`**, I wasn't able to increase `COL_BLOCK_SIZE` to be 32 (shared memory size limit), thus using `__shfl_xor_sync` become difficult. Instead, I performed reduction in following way.
 
 ```cpp
 float S_ij = S_ij_orig;
