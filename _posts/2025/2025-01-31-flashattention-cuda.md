@@ -11,7 +11,7 @@ mathjax: true
 ### Warning
 This is not a comprehensive tutorial. It's more a note for myself to write what descisions I made while implementing naive FlashAttention V1. So sadly this also describes my limitation of skills.
 
-I already posted [an introductory post about CUDA]({{"_posts/2023/2023-11-16-attention-cuda.md" | absolute_url}}) a year ago. I've been not using CUDA actively after writing this post. It would be great if I continue to develop Parallel Computing since then. Anyway now I am again studying Parallel Computing. I wrote two posts about [matmul]({{"_posts/2025/2025-01-27-matmul-basics.md" | absolute_url}}) and [Attention]({{"_posts/2025/2025-01-27-matmul-basics.md" | absolute_url}}).
+I already posted [an introductory post about CUDA]({{"mlsys/2023/11/16/attention-cuda" | absolute_url}}) a year ago. I've been not using CUDA actively after writing this post. It would be great if I continue to develop Parallel Computing since then. Anyway now I am again studying Parallel Computing. I wrote two posts about [matmul]({{"mlsys/2025/01/27/matmul-basics | absolute_url }}) and [Attention]({{"mlsys/2025/01/18/flash-att-mlir" | absolute_url}}).
 
 Now we (at least I) are ready to implement FlashAttention V1.
 
