@@ -16,6 +16,5 @@ Please feel free to reach out!
 ![afsdjfasji]({{ "/assets/my-email.png" | absolute_url }})
 
 
-## Some Links
-- [About this blog](/blog/2015/10/14/about-this-blog.html)
+### Some Links
 - [TeXt Theme](https://github.com/kitian616/jekyll-TeXt-theme)
