@@ -10,6 +10,11 @@ key: page-about
     Previously, I worked at OctoAI optimizing LLM inference and at Kakao on recommender systems.
 
 
+### Contact
+Please feel free to reach out!
+
+![afsdjfasji]({{ "/assets/my-email.png" | absolute_url }})
+
 
 ## Some Links
 - [About this blog](/blog/2015/10/14/about-this-blog.html)
