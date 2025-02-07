@@ -112,3 +112,8 @@ torch::Tensor wmma_matmul(torch::Tensor A, torch::Tensor B, torch::Tensor C) {
   return C_padded.index({torch::indexing::Slice(0, M), torch::indexing::Slice(0, N)});
 }
 ```
+
+
+### Reference
+
+[CUDA C Programming Guide 7.24](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html?highlight=wmma#warp-matrix-functions)
