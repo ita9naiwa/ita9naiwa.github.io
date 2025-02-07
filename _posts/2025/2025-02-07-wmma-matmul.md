@@ -25,7 +25,7 @@ Put it short, Each warp can calculate matmul in small tile (16x16 for example). 
 
 Below is the code of simple matmul:
 
-```CUDA
+```cpp
 #include <iostream>
 
 #include "ATen/core/TensorBody.h"
