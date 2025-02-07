@@ -21,7 +21,9 @@ There are several ways to do matmul in CUDA.
 
 It's not the end, yet another way to implement matmul is to use `wmma`. This accronym is (I guess) short for maybe, **Warp-level** Matrix Multiplication Accumulation. MMA is well known term since it exists in many numerical computing libaries.
 
-Put it short, Each warp can calculate matmul in small tile (16x16 for example).
+Put it short, Each warp can calculate matmul in small tile (16x16 for example). So you'll notice that this is tiled matmul handled by not programmer by the API. One great thing is that `wmma` exploits Tensor Core. I don't see great performance improvement compared to the smem version of matmul. Maybe it is beneficial in more complicated scenario, such as FlashAttention?
+
+Below is the code of simple matmul:
 
 ```CUDA
 #include <iostream>
