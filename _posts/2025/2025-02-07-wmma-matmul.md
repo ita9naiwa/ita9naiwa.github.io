@@ -115,5 +115,5 @@ torch::Tensor wmma_matmul(torch::Tensor A, torch::Tensor B, torch::Tensor C) {
 
 
 ### Reference
-
-[CUDA C Programming Guide 7.24](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html?highlight=wmma#warp-matrix-functions)
+- [CUDA C Programming Guide 7.24](https://docs.nvidia.com/cuda/cuda-c-programming-guide/index.html?highlight=wmma#warp-matrix-functions)
+- [PyTorch C++ API](https://pytorch.org/cppdocs/)
