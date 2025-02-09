@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "A Plan for Getting involved in an open source project"
+title: "A plan for getting involved in an open source project"
 category: "Thoughts"
 tag: "Thoughts"
 comment: true
