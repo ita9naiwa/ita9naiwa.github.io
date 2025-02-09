@@ -11,7 +11,10 @@ mathjax: true
 I have little experience with open source, but currently I’m neither associated with nor active in any open source project. I want to be, and I have a good plan for it. From my experience, I believe it’s a good plan, so other people who want to get involved but struggle might find it helpful. Keep in mind this is **my plan** and may not suit everyone.
 
 #### Precaution
-> While many guides paint a rosy picture of open source contribution, be aware of these often-overlooked facts: You’ll get ignored often. Initial pull requests or comments might go unanswered. Stay patient and keep contributing—over time, consistent effort builds credibility. Also, gaining in-depth project knowledge is tough The ramp-up phase is challenging unless if you know someone directly and she can help you. Deep understanding of the codebase, culture, and workflows takes time and persistent effort.
+While many guides paint a rosy picture, keep in mind two key points:
+- Your initial issues, pull requests, and comments may be ignored—patience and persistence build credibility.
+- Ramping up is challenging; gaining deep understanding of the codebase, culture, and workflows takes time, especially without direct mentorship.
+
 
 0. Pick a beginner-friendly OSS, something that excites you. For example, if the project has [newbie friendly things in their README.md](https://github.com/Lightning-AI/lightning-thunder#get-involved), or [Contribution guide](https://github.com/triton-lang/triton/blob/main/CONTRIBUTING.md). You also see newbies are welcomed in their communication channel (e.g., Github issues, Discord).
 1.	Find issues with [good first issue](https://github.com/iree-org/iree/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22good%20first%20issue%20%F0%9F%8C%B1%22) tags on GitHub, or look for some TODO comments in the code, and resolve them. Then, write a comment on the issue or submit a PR solving that issue. Do this until one of the contributors to the project notices your existence.
