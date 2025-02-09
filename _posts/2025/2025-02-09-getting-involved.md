@@ -1,8 +1,8 @@
 ---
 layout: article
 title: "A Plan for Getting involved in an open source project"
-category: "Thought"
-tag: "Thought"
+category: "Thoughts"
+tag: "Thoughts"
 comment: true
 key: 20250209
 mathjax: true
