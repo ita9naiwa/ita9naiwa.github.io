@@ -16,9 +16,7 @@ I have little experience with open source, but currently I’m neither associate
 3.	Continue contributing until you get recognized by them. It’s important to build credibility. You may not have enough skill to do something, or you may disappear after showing your interest; both cases are very common among newcomers to a project.
 4.	Once you have proven your ability to do meaningful work and have been acknowledged, you’re in.
 
-
 I’ve been following this plan for a few weeks. I have not achieved anything monumental yet.
 
 ![image2]({{ "assets/images/getting-involved/image2.png" | absolute_url }})
-
 I’ll revisit this post later, after I have actually accomplished something.
