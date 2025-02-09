@@ -19,6 +19,6 @@ I have little experience with open source, but currently I’m neither associate
 
 I’ve been following this plan for a few weeks. I have not achieved anything monumental yet.
 
-![image2]({{ "/assets/images/getting-involved/image2.png" | absolute_url }})
+![image2]({{ "assets/images/getting-involved/image2.png" | absolute_url }})
 
 I’ll revisit this post later, after I have actually accomplished something.
