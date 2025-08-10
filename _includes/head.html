@@ -4,7 +4,45 @@
 {%- include snippets/page-title.html -%}
 <title>{%- if __return -%}{{ __return }} - {{ site.title }}{%- else -%}{{ site.title }}{%- endif -%}</title>
 <meta name="description" content="{%- if page.excerpt -%}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{%- else -%}{{ site.description }}{%- endif -%}">
+<meta name="author" content="{{ site.author.name }}">
+{% if page.tags %}<meta name="keywords" content="{{ page.tags | join: ', ' }}">{% endif %}
 <link rel="canonical" href="{%- include snippets/page-url.html -%}">
+
+<!-- Open Graph -->
+<meta property="og:type" content="{% if page.layout == 'article' %}article{% else %}website{% endif %}">
+<meta property="og:locale" content="{{ site.lang | replace: '-', '_' | default: 'en' }}">
+<meta property="og:title" content="{%- if page.title -%}{{ page.title }}{%- else -%}{{ site.title }}{%- endif -%}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:description" content="{%- if page.excerpt -%}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{%- else -%}{{ site.description }}{%- endif -%}">
+{% if page.image %}<meta property="og:image" content="{{ page.image | absolute_url }}">{% endif %}
+
+<!-- JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{% if page.layout == 'article' %}BlogPosting{% else %}WebSite{% endif %}",
+  "headline": "{%- if page.title -%}{{ page.title | escape }}{%- else -%}{{ site.title | escape }}{%- endif -%}",
+  "url": "{{ page.url | absolute_url }}",
+  {% if page.layout == 'article' %}
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{% if page.lastmod %}{{ page.lastmod | date_to_xmlschema }}{% else %}{{ page.date | date_to_xmlschema }}{% endif %}",
+  {% endif %}
+  "description": "{%- if page.excerpt -%}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 | escape }}{%- else -%}{{ site.description | escape }}{%- endif -%}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ site.author.name }}"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "{{ site.title }}",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "{{ '/assets/images/logo/logo.svg' | absolute_url }}"
+    }
+  }
+}
+</script>
 {%- assign __path = '/feed.xml' -%}
 {%- include snippets/prepend-baseurl.html -%}
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ __return | prepend: site.url }}">

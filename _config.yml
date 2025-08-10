@@ -20,9 +20,9 @@
 environemtn: "product"
 
 text_color_theme: "default" # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
-url: # the base hostname & protocol for your site e.g. https://www.someone.com
+url: https://ita9naiwa.github.io # the base hostname & protocol for your site e.g. https://www.someone.com
 baseurl: # does not include hostname
-title:  "Blog"
+title:  "Hyunsung Lee's Blog"
 description: > # this means to ignore newlines until "Language & timezone"
   ita9naiwa
 
@@ -162,10 +162,11 @@ defaults:
 
 ## => Plugins
 ##############################
-plugins_dir:
+plugins:
   - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap
   - jemoji
   - jekyll-gist
+  - jekyll-seo-tag
 gems: [jekyll-paginate]
