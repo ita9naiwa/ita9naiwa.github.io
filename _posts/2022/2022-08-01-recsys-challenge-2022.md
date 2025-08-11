@@ -3,7 +3,7 @@ layout: article
 title: "8월 1일의 일기"
 category: 일기
 tag: 일기
-comment: false
+comment: true
 key: 20220801
 mathjax: true
 

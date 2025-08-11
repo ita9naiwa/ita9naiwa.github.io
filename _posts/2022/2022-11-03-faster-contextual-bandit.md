@@ -3,7 +3,7 @@ layout: article
 title: "Faster Linear Contextual Bandit by Removing Inverse Operation"
 category: "recsys"
 tag: "recsys"
-comment: false
+comment: true
 key: 20221103
 mathjax: true
 ---

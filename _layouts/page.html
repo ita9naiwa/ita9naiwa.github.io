@@ -53,7 +53,7 @@ layout: base
               {%- include article-info.html -%}
               <div class="js-article-content">{{ content }}</div>
 
-              {%- if jekyll.environment != "development" and page.comment != false -%}
+              {%- if page.comment != false -%}
                 <section class="page__comment">{%- include comment.html -%}</section>
               {%- endif -%}
 

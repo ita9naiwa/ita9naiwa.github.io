@@ -3,7 +3,7 @@ layout: article
 title: "Attention을 쿠다로 구현해보기"
 category: "mlsys"
 tag: "mlsys"
-comment: false
+comment: true
 key: 20231110
 mathjax: true
 ---
