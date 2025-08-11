@@ -94,9 +94,16 @@ sources: # bootcdn (default), unpkg
 
 ## => Comments
 ##############################
-## Disqus
-disqus:
-  shortname: "ita9naiwa"
+## Disqus (disabled - using utterances instead)
+# disqus:
+#   shortname: "ita9naiwa"
+
+## Utterances
+utterances:
+  repo: "ita9naiwa/ita9naiwa.github.io" # GitHub repository in "owner/repo" format
+  issue_term: "pathname" # Blog post to issue mapping: pathname (default), url, title, og:title
+  label: "💬 comment" # Optional label for GitHub issues created
+  theme: "github-light" # Theme: github-light (default), github-dark, preferred-color-scheme, github-dark-orange, icy-dark, dark-blue, photon-dark
 
 ## Gitalk
 # please refer to https://github.com/gitalk/gitalk for more info.
