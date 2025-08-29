@@ -10,7 +10,7 @@ mathjax: true
 
 Recently, my first contribution to Triton ([PR #7918](https://github.com/triton-lang/triton/pull/7918)) was merged.
 
-This was not just a bug fix, but a significant feature addition: **support for Scaled Dot Product**, a new matrix multiply operation introduced in sm_120 NVIDIA architectures (RTX 5000, A6000 series)
+This features a new matrix multiply operation introduced in sm_120 NVIDIA architectures (RTX 5000, A6000 series)
 
 In this post, I will cover:
 - What the Scaled Dot operation is
