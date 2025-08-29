@@ -9,15 +9,10 @@ mathjax: true
 ---
 
 Recently, my first contribution to Triton ([PR #7918](https://github.com/triton-lang/triton/pull/7918)) was merged.
-
 This features a new matrix multiply operation introduced in sm_120 NVIDIA architectures (RTX 5000, A6000 series)
-
-In this post, I will cover:
-- What the Scaled Dot operation is
-- How it is defined in the PTX ISA
-- How Triton lowers it from IR → PTX
-
 Thanks to [@masahi](https://github.com/masahi), and [@mobiacham](https://github.com/mobicham), I was able to make my first contribution to triton.
+
+
 ---
 
 ### What is the Scaled Dot Product?
@@ -99,24 +94,26 @@ mma.sync.aligned.m16n8k32.mxf8f6f4.block_scale.scale_vec::1X
 
 ### Benchmark
 E2E vLLM Benchmark: Llama3-8B-Instruct - in_len=1024 out_len=1024 batch_size=128 (5090 RTX)
+
 (Thanks to @mobicham, he conducted this benchmark)
 
+```
 fp8 x fp8 = 42.83 sec
 mxfp8 x mxfp8 (using native dot) = 44.45 sec
 mxfp8 x mxfp8 (main using emulation) = 76.44 sec
-
+```
 
 ### Conclusion and Next Steps
 
 I plan to continue bridging the gap between Triton IR and the latest PTX capabilities.
 
-- Supporting more MMA shapes (e.g., m32n8k16)
-- Handling multi-CTA cases where scale layouts diverge
+- Handling multi-CTA cases
+- Supporting more scale modes (e.g., X2, X4)
 - Adding FP4 and additional precision modes
 
 ---
 
 Reference:
 
-- CUDA Doc: (https://docs.nvidia.com/cuda/parallel-thread-execution)
-- PTX Doc: (https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#warp-level-matrix-instructions)
+- CUDA official docs: https://docs.nvidia.com/cuda/parallel-thread-execution
+- PTX official docs: https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#warp-level-matrix-instructions
