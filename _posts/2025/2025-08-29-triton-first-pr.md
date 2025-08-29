@@ -4,7 +4,7 @@ title: "Adding Scaled Dot Product to Triton "
 category: "mlsys"
 tag: "mlsys"
 comment: true
-key: 20250830
+key: 20250829
 mathjax: true
 ---
 
