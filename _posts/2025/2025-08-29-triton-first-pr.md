@@ -9,8 +9,10 @@ mathjax: true
 ---
 
 Recently, my first contribution to Triton ([PR #7918](https://github.com/triton-lang/triton/pull/7918)) was merged.
-This features a new matrix multiply operation introduced in sm_120 NVIDIA architectures (RTX 5000, A6000 series)
+This features a new matrix multiply operation introduced in sm_120 NVIDIA architectures (RTX 5000, A6000 series).
 Thanks to [@masahi](https://github.com/masahi), and [@mobiacham](https://github.com/mobicham), I was able to make my first contribution to triton.
+
+With this addition, fast quantization and accelerated inference using Scaled Dot Product is now available even on consumer GPUs (see projects like [gemlite](https://github.com/mobiusml/gemlite))
 
 
 ---
