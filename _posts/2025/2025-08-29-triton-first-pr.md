@@ -14,7 +14,6 @@ Thanks to [@masahi](https://github.com/masahi), and [@mobiacham](https://github.
 
 With this addition, fast quantization and accelerated inference using Scaled Dot Product is now available even on consumer GPUs (see projects like [gemlite](https://github.com/mobiusml/gemlite))
 
-
 ---
 
 ### What is the Scaled Dot Product?
@@ -105,7 +104,7 @@ mxfp8 x mxfp8 (using native dot) = 44.45 sec
 mxfp8 x mxfp8 (main using emulation) = 76.44 sec
 ```
 
-### Conclusion and Next Steps
+### Next Steps
 
 I plan to continue bridging the gap between Triton IR and the latest PTX capabilities.
 
