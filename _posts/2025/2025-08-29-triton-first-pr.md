@@ -28,7 +28,7 @@ Here **SF_A, SF_B** are scale factors applied per row (A) and per column (B). Th
 
 The PTX ISA defines scaling granularity modes:
 - **scale_vec::1X** → A: M×1, B: 1×N (per-row / per-col)
-- **scale_vec::2X** → A: M×2, B: 2×N (split K in half)
+- **scale_vec::2X** → A: M×2, B: 2×N (2 Scale factors per row/col)
 
 In other words, for larger K dimensions, scaling becomes more fine-grained.
 
