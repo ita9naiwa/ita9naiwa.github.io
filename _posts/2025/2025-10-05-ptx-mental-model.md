@@ -30,8 +30,8 @@ The example below is close to the simplest matrix multiply that mixes CUDA and P
 For this kernel the transfer is a single-use stream, so we lean on `.cg`:
 
 - **Access pattern:** each tile is loaded once from gmem and immediately consumed, so there is no reuse to justify filling L1.
-- **L1 profile:** a few dozen kilobytes, private to the SM, great for tiny hot data but easy to thrash with large sequential copies.
-- **L2 profile:** several megabytes, shared across the GPU, coalesces long bursts before they reach DRAM.
+- **L1 cache:** a few dozen kilobytes, L1 lives inside each SM, shared among warps in that SM rather than being global. great for tiny hot data but easy to thrash with large sequential copies.
+- **L2 cache:** several megabytes, shared across the GPU, coalesces long bursts before they reach DRAM.
 - **Outcome:** bypassing L1 prevents cache pollution for other warps while L2 still provides bandwidth and coalescing.
 
 `cp.async.cg` therefore skips L1 and reaches shared memory efficiently for this workload.
@@ -52,7 +52,6 @@ For this kernel the transfer is a single-use stream, so we lean on `.cg`:
 
     // Copy A: 16x16 halves = 512 bytes = 32 chunks of 16 bytes
     // Each thread copies 16-byte chunks (8 halves)
-    // cp.async.cg: commit group, ensures 16-byte aligned transfers
     for (int chunk = tid; chunk < 32; chunk += blockDim.x) {
         asm volatile(
             "cp.async.cg.shared.global [%0], [%1], 16;\n"
@@ -100,7 +99,7 @@ highlights the available modifiers:
 
 - `ldmatrix` indicates a cooperative warp load of a 2D tile from shared memory into registers.
 - `.sync` means the instruction is warp-synchronous; all 32 lanes must execute it together.
-- `.aligned` promises that the shared memory address is 16-byte aligned so the hardware can issue 128-bit transactions efficiently.
+- `.aligned` indicates that the A and B fragments follow the aligned register layout expected by mma.sync (as produced by ldmatrix.aligned).
 - `.m8n8` selects the tile shape. Tensor Cores consume 8x8 fragments, so a warp always loads that size.
 - `.x1`, `.x2`, or `.x4` specify how many tiles each lane receives. For m16n8k16 MMA, operand A is usually loaded with `.x4` while operand B often uses `.x2`.
 - `.trans` asks the hardware to interpret the tile as transposed when it is written into registers, which is how we feed row-major data into the layout expected by the Tensor Cores.
