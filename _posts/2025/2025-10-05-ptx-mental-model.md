@@ -82,7 +82,7 @@ For this kernel the transfer is a single-use stream, so we lean on `.cg`:
 
 #### ldmatrix
 
-`ldmatrix`—short for "load matrix"—moves a tile from shared memory into registers. Conceptually the data flows gmem → smem → registers, but the interesting part is how the warp distributes pieces of the tile so `mma.sync` receives exactly the layout Tensor Cores expect.
+`ldmatrix`—short for "load matrix"—moves a tile from shared memory into registers. Conceptually the data flows gmem -> smem -> registers, but the interesting part is how the warp distributes pieces of the tile so `mma.sync` receives exactly the layout Tensor Cores expect.
 
 Key facts:
 
@@ -111,6 +111,7 @@ Putting that together, the variant we rely on is `ldmatrix.sync.aligned.m8n8.x4.
 
 #### Loading A, B fragments
 
+{% raw %}
 ```cpp
     unsigned a_reg[4];              // A fragment: 4x 32-bit registers (8 halves)
     int a_quad = lane >> 3;                  // Thread group ID: 0..3 (8 threads per group)
@@ -159,6 +160,7 @@ Putting that together, the variant we rely on is `ldmatrix.sync.aligned.m8n8.x4.
         : "l"(b_addr)                        // Input: SMEM address
     );
 ```
+{% endraw %}
 
 #### Stage 3: Matrix Multiply-Accumulate (MMA)
 
@@ -175,6 +177,7 @@ In short, `mma.sync.aligned.m16n8k16.row.col.f16.f16.f16.f16` asks the warp to m
 
 
 With both operand fragments staged in registers, the multiply-accumulate step drops to a single Tensor Core instruction. `mma.sync` consumes the warp-scoped fragments, performs the fused multiply-accumulate in hardware, and updates the accumulator registers in place.
+{% raw %}
 ```cpp
     unsigned c_reg[2] = {0u, 0u};   // C accumulator: 2x 32-bit registers (4 halves), init to 0
     asm volatile(
@@ -185,6 +188,7 @@ With both operand fragments staged in registers, the multiply-accumulate step dr
           "r"(b_reg[0]), "r"(b_reg[1])                                  // Input: B registers
     );
 ```
+{% endraw %}
 
 The accumulator now holds the 16x8 tile of products, still spread across the warp. Each lane owns a 2x2 slice, and the layout follows the interleaving baked into `mma.m16n8k16`. The final step scatters those slices back to global memory.
 
