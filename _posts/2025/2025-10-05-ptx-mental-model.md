@@ -27,9 +27,14 @@ The example below is close to the simplest matrix multiply that mixes CUDA and P
 
 `cp.async` performs fast, asynchronous copies from global memory (gmem) into shared memory (smem). The instruction accepts two cache modifiers: `.ca`, which lets the copy use both L1 and L2 caches, and `.cg`, which bypasses L1 while still leveraging L2.
 
-In this kernel the copy is a streaming, one-and-done transfer between global memory and shared memory tiles. L1 lives inside each streaming multiprocessor, is only a few dozen kilobytes, and is private to the warp that fills it. That makes it perfect for tiny datasets with tight temporal locality, but a poor fit for bulk transfers that will not be reused. By contrast, L2 is several megabytes, is shared by the whole GPU, and coalesces large sequential accesses before they hit DRAM. Bypassing L1 avoids thrashing its small capacity and keeps the streamed data from polluting caches that could be used by other warps. Consequently `.cg` is the usual choice for tiled matrix copies because it keeps the transaction in L2 and maximizes bandwidth between global memory and shared memory.
+For this kernel the transfer is a single-use stream, so we lean on `.cg`:
 
-`cp.async.cg` therefore skips L1 and reaches shared memory more efficiently for this workload.
+- **Access pattern:** each tile is loaded once from gmem and immediately consumed, so there is no reuse to justify filling L1.
+- **L1 profile:** a few dozen kilobytes, private to the SM, great for tiny hot data but easy to thrash with large sequential copies.
+- **L2 profile:** several megabytes, shared across the GPU, coalesces long bursts before they reach DRAM.
+- **Outcome:** bypassing L1 prevents cache pollution for other warps while L2 still provides bandwidth and coalescing.
+
+`cp.async.cg` therefore skips L1 and reaches shared memory efficiently for this workload.
 
 ```cpp
 // ========================================================================
@@ -77,9 +82,15 @@ In this kernel the copy is a streaming, one-and-done transfer between global mem
 
 #### ldmatrix
 
-`ldmatrix` - short for "load matrix" - moves a tile from shared memory into registers. Conceptually the data flows gmem -> smem -> registers, but the interesting part is how the warp distributes pieces of the tile into its lanes so that `mma.sync` receives the layout Tensor Cores expect.
+`ldmatrix`—short for "load matrix"—moves a tile from shared memory into registers. Conceptually the data flows gmem → smem → registers, but the interesting part is how the warp distributes pieces of the tile so `mma.sync` receives exactly the layout Tensor Cores expect.
 
-`ldmatrix` is a warp-wide instruction: every lane participates, the source must be in shared memory, and the hardware reshuffles data as it lands in registers. The PTX mnemonic
+Key facts:
+
+- Every lane in the warp participates; the instruction is inherently warp-wide.
+- The source must live in shared memory, and the hardware reshuffles values as they are deposited into registers.
+- Operand modifiers describe how much data each lane grabs and whether the tile is transposed on the fly.
+
+The PTX mnemonic
 
 ```
 ldmatrix[.sync][.aligned].m8n8[.x1|.x2|.x4][.trans].shared.b16
