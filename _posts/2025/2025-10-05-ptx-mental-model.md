@@ -21,7 +21,7 @@ The example below is close to the simplest matrix multiply that mixes CUDA and P
     __shared__ __align__(128) half As[16 * 16]; // 16x16 row-major, 512 bytes
     __shared__ __align__(128) half Bs[16 * 8];  // 16x8 row-major, 256 bytes
 ```
-`__align__(128)` aligns smem by 16 bytes (128 bits) which is later required by ldmatrix.
+`__align__(128)` aligns smem by 128 bytes which is later required by ldmatrix.
 
 #### Stage 1: Global Memory to Shared Memory using `cp.async`
 
