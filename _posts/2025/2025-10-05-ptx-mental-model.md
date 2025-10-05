@@ -10,14 +10,18 @@ mathjax: true
 
 ### Simplest matmul using PTX
 
-During the Chuseok break I decided to build a clear mental model for how `mma` works at the PTX level.
+During the Chuseok (Mid-Autumn Festibal) break I decided to build a clear mental model for how `mma` works at the PTX level.
 
-The example below is close to the simplest matrix multiply that mixes CUDA and PTX. The problem size is m16n8k16 and the A, B, and accumulator operands all use `f16`.
+The example below is close to the simplest matrix multiply that mixes CUDA and PTX.
+
+- The problem size is m16n8k16
+- A, B, and accumulator operands all use `f16`.
 
 ```c++
     __shared__ __align__(128) half As[16 * 16]; // 16x16 row-major, 512 bytes
     __shared__ __align__(128) half Bs[16 * 8];  // 16x8 row-major, 256 bytes
 ```
+`__align__(128)` aligns smem by 16 bytes (128 bits) which is later required by ldmatrix.
 
 #### Stage 1: Global Memory to Shared Memory using `cp.async`
 
