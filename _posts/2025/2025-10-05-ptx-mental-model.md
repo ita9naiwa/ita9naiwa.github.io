@@ -10,7 +10,7 @@ mathjax: true
 
 ### Simplest matmul using PTX
 
-During the Chuseok (Mid-Autumn Festibal) break I decided to build a clear mental model for how `mma` works at the PTX level.
+During the Chuseok (Mid-Autumn Festival) break I decided to build a clear mental model for how `mma` works at the PTX level.
 
 The example below is close to the simplest matrix multiply that mixes CUDA and PTX.
 
