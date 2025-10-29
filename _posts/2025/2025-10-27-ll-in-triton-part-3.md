@@ -1,6 +1,6 @@
 ---
 layout: article
-title: "Linear Layout in Triton (3)"
+title: "[WIP]Linear Layout in Triton (3)"
 category: "mlsys"
 tag: "mlsys"
 comment: true
