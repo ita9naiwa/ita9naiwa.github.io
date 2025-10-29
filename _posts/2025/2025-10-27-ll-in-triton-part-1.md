@@ -1,10 +1,10 @@
 ---
 layout: article
-title: "Linear Layout Fundamentals: From XOR Rule to GF(2)"
+title: "Linear Layout in Triton (1)"
 category: "mlsys"
 tag: "mlsys"
 comment: true
-key: 20251005
+key: 20251027_1
 mathjax: true
 ---
 
@@ -287,12 +287,5 @@ Notice how we only specify the basis vectors (powers of 2), and the `LinearLayou
 The key insight is that by specifying just a few basis vectors (powers of 2), we can compactly represent complex hardware-to-logical mappings. This makes Linear Layout both **memory-efficient** and **composable**—we can combine multiple layouts together.
 
 In the next parts of this series, we'll explore:
-- **Part 2**: How to compose Linear Layouts
-- **Part 3**: Real-world examples from Triton's codebase
-
-
-
-### References
-- [LinearLayout.h](https://github.com/triton-lang/triton/blob/main/include/triton/Tools/LinearLayout.h)
-- [Linear Layouts: Robust Code Generation of Efficient Tensor Computation Using 𝔽2](https://arxiv.org/abs/2505.23819)
-- [Triton Linear Layout: Concept](https://www.lei.chat/posts/triton-linear-layout-concept/#what-we-need)
+- **Part 2**: Dimension naming conventions, core API, and practical examples
+- **Part 3**: Layout conversions, lowering, and advanced topics

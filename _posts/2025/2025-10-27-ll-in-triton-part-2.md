@@ -4,10 +4,11 @@ title: "Linear Layout in Triton (2)"
 category: "mlsys"
 tag: "mlsys"
 comment: true
-key: 20251005
+key: 20251027_2
 mathjax: true
 ---
-
+### Introduction
+We continue our discussion here, and I assume you know some (1) triton frontend, and (2) CUDA. I used mostly NVIDIA GPU terms but same logic can apply to AMD GPUs.
 
 ## 4. Dimension Naming Conventions and Semantics
 
@@ -527,11 +528,3 @@ for (int regId = 0; regId < numRegs; regId++) {
   store(registerValues[regId], ptr);
 }
 ```
-
-
-
-
-### References
-- [LinearLayout.h](https://github.com/triton-lang/triton/blob/main/include/triton/Tools/LinearLayout.h)
-- [Linear Layouts: Robust Code Generation of Efficient Tensor Computation Using 𝔽2](https://arxiv.org/abs/2505.23819)
-- [Triton Linear Layout: Concept](https://www.lei.chat/posts/triton-linear-layout-concept/#what-we-need)
