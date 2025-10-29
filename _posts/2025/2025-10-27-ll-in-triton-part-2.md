@@ -67,6 +67,7 @@ auto ll = blocked.toLinearLayout(shape);
 
 The guide (`ll-guide.md` section 4.1) explains how these attributes decompose into basis vectors. For a quick sanity check, evaluate `ll.apply` at a few known points:
 
+{% raw %}
 ```cpp
 // Thread 0, register 0 should map to tensor index 0
 assert(ll.apply({{S("register"), 0}, {S("lane"), 0}, {S("warp"), 0}})[0].second == 0);
@@ -74,6 +75,7 @@ assert(ll.apply({{S("register"), 0}, {S("lane"), 0}, {S("warp"), 0}})[0].second 
 // Thread 0, register 1 should map to the next element along the first axis
 assert(ll.apply({{S("register"), 1}, {S("lane"), 0}, {S("warp"), 0}})[0].second == 1);
 ```
+{% endraw %}
 
 #### Shared Memory Layouts
 
@@ -163,6 +165,7 @@ Before calling `reshapeIns` or `reshapeOuts`:
 
 **Example workflow:**
 
+{% raw %}
 ```cpp
 // Original: (register:4, lane:8, warp:2) — total size 64
 auto flat = layout.flattenIns();
@@ -176,6 +179,7 @@ auto transposed = layout.transposeIns({S("warp"), S("lane"), S("register")});
 auto flatWarpMajor = transposed.flattenIns();
 // Now warp changes fastest
 ```
+{% endraw %}
 
 ---
 
@@ -200,6 +204,7 @@ static LinearLayout identity1D(
 **Semantics:** `L(x) = x` for `x ∈ [0, size)`
 
 **Example:**
+{% raw %}
 ```cpp
 auto L = LinearLayout::identity1D(8, S("lane"), S("dim0"));
 // L(0) = 0, L(1) = 1, ..., L(7) = 7
@@ -207,6 +212,7 @@ auto L = LinearLayout::identity1D(8, S("lane"), S("dim0"));
 
 assert(L.apply({{S("lane"), 5}})[0].second == 5);
 ```
+{% endraw %}
 
 **When to use:**
 - Contiguous, one-to-one mappings (e.g., `register` indices inside a single thread)
@@ -228,6 +234,7 @@ static LinearLayout strided1D(
 Under the hood, everything is still GF(2) arithmetic, so the stride must be a power of two to preserve linearity.
 
 **Example:**
+{% raw %}
 ```cpp
 auto L = LinearLayout::strided1D(4, 2, S("lane"), S("dim0"));
 // L(0) = 0, L(1) = 2, L(2) = 4, L(3) = 6
@@ -235,6 +242,7 @@ auto L = LinearLayout::strided1D(4, 2, S("lane"), S("dim0"));
 
 assert(L.apply({{S("lane"), 3}})[0].second == 6);
 ```
+{% endraw %}
 
 **When to use:**
 - Warp-level tiling where lanes map to strided tensor indices
@@ -263,6 +271,7 @@ static LinearLayout zeros1D(
 Every input value maps to zero in the chosen output dimension. This models **broadcasting**: all threads share the same tensor index along this axis.
 
 **Example:**
+{% raw %}
 ```cpp
 auto L = LinearLayout::zeros1D(8, S("lane"), S("dim1"));
 // L(0) = L(1) = ... = L(7) = 0
@@ -270,6 +279,7 @@ auto L = LinearLayout::zeros1D(8, S("lane"), S("dim1"));
 
 assert(L.apply({{S("lane"), 5}})[0].second == 0);
 ```
+{% endraw %}
 
 **When to use:**
 - Broadcasting a single value across all threads (e.g., a column vector broadcast)
@@ -312,12 +322,14 @@ LinearLayout swizzle({
 
 **Verification tip:** Whenever you hand-roll a basis, test it with a few manually computed points to ensure your phase/stride arithmetic is correct:
 
+{% raw %}
 ```cpp
 // offset=17 → binary decomposition: 16 + 1
 auto result = swizzle.apply({{S("offset"), 17}});
 // L(17) = L(16) ⊕ L(1) = (1,0) ⊕ (0,1) = (1,1)
 assert(result == SmallVector{{S("dim0"), 1}, {S("dim1"), 1}});
 ```
+{% endraw %}
 
 ### 5.3 Layout Combination with `operator*`
 
@@ -345,6 +357,7 @@ auto L = LinearLayout::identity1D(4, S("lane"), S("dim1")) *
 ```
 
 **Example 2: Sharing an output dimension (XOR interaction)**
+{% raw %}
 ```cpp
 auto L1 = LinearLayout::identity1D(4, S("lane"), S("dim0"));
 auto L2 = LinearLayout::identity1D(8, S("register"), S("dim0"));
@@ -354,6 +367,7 @@ auto L = L1 * L2;
 // L(lane=2, register=3) = (dim0 = 2 ⊕ 3 = 1)
 assert(L.apply({{S("lane"), 2}, {S("register"), 3}})[0].second == 1);
 ```
+{% endraw %}
 
 **Example 3: Broadcast combined with identity**
 ```cpp
@@ -381,6 +395,7 @@ Use `compose` when the **output** of one layout feeds directly into the **input*
 - `this->getOutDimSize(d) ≤ outer.getInDimSize(d)` for all output dimensions `d`
 
 **Example:**
+{% raw %}
 ```cpp
 // L1: (register) → (offset)
 auto L1 = LinearLayout::identity1D(32, S("register"), S("offset"));
@@ -395,6 +410,7 @@ auto L3 = L1.compose(L2);
 auto coords = L3.apply({{S("register"), 5}});
 // coords = {{S("dim0"), ...}, {S("dim1"), ...}}
 ```
+{% endraw %}
 
 **Why use `compose`?**
 - **Modularity:** Test `L1` and `L2` independently before stitching them together.
@@ -431,6 +447,7 @@ auto cvt = regLayout.invertAndCompose(sharedLayout);
 - `outer` can be **non-injective** (multiple inputs map to same output); the algorithm picks the smallest pre-image
 
 **Detailed example:**
+{% raw %}
 ```cpp
 // 1) Register layout: thread 0, register 0 holds tensor[2,3]
 auto regLayout = toLinearLayout(blockedEncoding);
@@ -447,6 +464,7 @@ auto cvt = regLayout.invertAndCompose(memLayout);
 assert(cvt.apply({{S("register"),0}, {S("lane"),0}, {S("warp"),0}})
        == SmallVector{{S("offset"),10}});
 ```
+{% endraw %}
 
 **Why it works:** Both `regLayout` and `memLayout` map to the same tensor space `(dim0, dim1)`. The inversion finds the shared memory offset that corresponds to the same tensor element.
 
@@ -538,6 +556,7 @@ Feed integer inputs, get integer outputs. Perfect for:
 - **Manual verification** of basis correctness
 
 **Example:**
+{% raw %}
 ```cpp
 auto result = layout.apply({
   {S("register"), 3},
@@ -549,6 +568,7 @@ auto result = layout.apply({
 assert(result[0].second == expectedDim0);
 assert(result[1].second == expectedDim1);
 ```
+{% endraw %}
 
 #### MLIR `applyLinearLayout` — For LLVM Lowering
 
@@ -601,6 +621,7 @@ The following scenarios show how the APIs above compose into real Triton workflo
 
 **Construction:**
 
+{% raw %}
 ```cpp
 auto layout =
   LinearLayout::identity1D(8, S("register"), S("dim0")) *
@@ -612,6 +633,7 @@ assert(layout.apply({{S("register"), 1}, {S("lane"), 0}})[0].second == 4);
 assert(layout.apply({{S("register"), 0}, {S("lane"), 1}})[0].second == 1);
 assert(layout.apply({{S("register"), 2}, {S("lane"), 3}})[0].second == 11);
 ```
+{% endraw %}
 
 **Explanation:**
 - **Register basis:** `identity1D(8, ...)` creates basis `[1, 2, 4]` for dim0
@@ -795,12 +817,14 @@ For offset with row component, e.g., offset = numCols×4 + 1 = 32×4 + 1 = 129:
 - L(129) = (0,1) ⊕ (4,8) = (4, 9)
 
 **Verification code:**
+{% raw %}
 ```cpp
 // offset 129 = row 4, col 1
 auto result = swizzled.apply({{S("offset"), 129}});
 // Expected: (row=4, actualCol = 1 ⊕ 8 = 9)
 assert(result == SmallVector{{S("dim0"), 4}, {S("dim1"), 9}});
 ```
+{% endraw %}
 
 **Tip:** Print a few more offsets if the swizzle pattern feels off; mismatched phases usually show up immediately. You can dump the full basis with `swizzled.toString()` to inspect each power-of-two contribution.
 
@@ -837,11 +861,13 @@ auto cvtLayout = regLayout.invertAndCompose(sharedLayout);
 // For each (register, lane, warp, block) tuple, it gives the corresponding
 // (offset, block) in shared memory that should receive that value.
 ```
+{% endraw %}
 
 **Conceptual verification:**
 
 Before lowering, you can verify the conversion makes sense:
 
+{% raw %}
 ```cpp
 // Pick a specific register value
 int regId = 3;
@@ -868,9 +894,11 @@ auto smemCoords = cvtLayout.apply({
 auto check = sharedLayout.apply({{S("offset"), smemCoords[0].second}});
 assert(check == tensorCoords);  // Should match!
 ```
+{% endraw %}
 
 **Step 4: Use during LLVM lowering**
 
+{% raw %}
 ```cpp
 // Inside LocalStoreOpConversion or similar
 auto [laneId, warpId] = getLaneAndWarpId(rewriter, loc);
