@@ -7,13 +7,10 @@ comment: true
 key: 20251026
 mathjax: true
 ---
-### Introduction
-This article continues the story from Part 1 and assumes that you skimmed the canonical reference in `ll-guide.md`. Our goal here is to turn those dense notes into a set of practical patterns you can reach for while reasoning about Triton's `LinearLayout`. We keep the same numbering as the guide so the two documents can be read side by side.
 
 **Prerequisites**
 - Part 1 of this series (concepts, GF(2) intuition, and basis vectors)
 - A working knowledge of CUDA-thread hierarchy (CTA → warp → lane) or an equivalent AMD mental model
-- The guide itself, which we will cite as we go
 
 **What you will learn here**
 - How to map hardware dimensions to layout inputs without memorising folklore
@@ -21,7 +18,6 @@ This article continues the story from Part 1 and assumes that you skimmed the ca
 - How to combine layouts safely through composition, inversion, and reshape calls
 - End-to-end examples that you can adapt straight into lowering code
 
-If something feels unfamiliar, jump back to the same-numbered section in `ll-guide.md` for the deeper theory.
 
 ---
 
@@ -65,7 +61,7 @@ auto ll = blocked.toLinearLayout(shape);
 // - block:    size depends on launch grid
 ```
 
-The guide (`ll-guide.md` section 4.1) explains how these attributes decompose into basis vectors. For a quick sanity check, evaluate `ll.apply` at a few known points:
+These attributes decompose into basis vectors. For a quick sanity check, evaluate `ll.apply` at a few known points:
 
 {% raw %}
 ```cpp
@@ -185,7 +181,7 @@ auto flatWarpMajor = transposed.flattenIns();
 
 ## 5. Core API Detailed Guide
 
-This section walks through the core `LinearLayout` constructors and combinators, showing you how to build, manipulate, and apply layouts in practice. We follow the same structure as `ll-guide.md` section 5, but with extra commentary and quick sanity checks you can paste into your own code.
+This section walks through the core `LinearLayout` constructors and combinators, showing you how to build, manipulate, and apply layouts in practice, with extra commentary and quick sanity checks you can paste into your own code.
 
 ### 5.1 Basic Constructors — Build 1D Pieces
 
@@ -607,7 +603,7 @@ Value sharedOffset = offsets[0].second;  // MLIR Value representing offset
 
 ## 6. Practical Examples: Step-by-Step Construction
 
-The following scenarios show how the APIs above compose into real Triton workflows. Each example walks through the mental model explicitly, matching section 6 of `ll-guide.md`.
+The following scenarios show how the APIs above compose into real Triton workflows. Each example walks through the mental model explicitly.
 
 ### 6.1 Example 1 — Simple 1D Distribution Across Lanes
 
@@ -956,36 +952,3 @@ for (int regId = 0; regId < numRegs; ++regId) {
 ## Conclusion
 
 Armed with the patterns above, `LinearLayout` stops being a black box and becomes a practical tool you can reach for daily.
-
-**What you now know:**
-
-- **Section 4** showed you the dimension naming conventions—the vocabulary for talking about hardware (register, lane, warp, block) and logical tensor axes (dim0, dim1, ...). You understand why the order matters and how to flatten/reshape safely.
-
-- **Section 5** walked you through the core API: the three basic constructors (`identity1D`, `strided1D`, `zeros1D`), direct basis construction for custom patterns, layout combination with `operator*`, function composition with `compose`, the critical `invertAndCompose` for layout conversions, shape transformations (flatten, reshape, transpose), and the two flavors of `apply` for testing and lowering.
-
-- **Section 6** gave you four complete, worked examples:
-  1. Simple 1D strided distribution
-  2. Full 2D blocked layout construction (matching BlockedEncodingAttr)
-  3. Shared memory swizzle with bank conflict avoidance
-  4. End-to-end register → shared conversion pipeline
-
-**How to use this document:**
-
-- **As a reference:** When you encounter a layout transformation in Triton lowering code, look up the corresponding section here to understand what each API call does.
-
-- **As a cookbook:** Copy the examples in Section 6 as templates. Most real-world layouts are variations on these four patterns.
-
-- **Alongside ll-guide.md:** This document focuses on practical usage; the guide (`ll-guide.md`) provides the mathematical foundations, proofs, and exhaustive coverage of edge cases. Read this first for intuition, then consult the guide for deeper understanding.
-
-**Next steps:**
-
-- Explore Section 7 of `ll-guide.md` for conversion implementations (BlockedEncodingAttr, SwizzledSharedEncodingAttr, NVMMASharedEncodingAttr, and CTA/CGA handling)
-- Study Section 8 for real lowering examples (`LocalStoreOp`, `applyLinearLayout` implementation details, and MMA operand conversions)
-- Check Section 9 for advanced topics (bank conflict analysis, `divideLeft`/`divideRight`, free variable masks, and `ColumnAction`)
-- Use Section 10's debugging tips when things go wrong (`toString()`, spot checks, common errors and solutions)
-
-**Final advice:**
-
-Start small. Build a simple 1D layout, verify it with `apply()`, then gradually add dimensions. When debugging, always dump the layout with `toString()` and check a handful of coordinates manually. The basis vectors tell you everything—learn to read them fluently, and `LinearLayout` will feel natural.
-
-Happy hacking!
