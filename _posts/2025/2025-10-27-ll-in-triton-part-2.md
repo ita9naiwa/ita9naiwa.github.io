@@ -538,3 +538,6 @@ for (int regId = 0; regId < numRegs; regId++) {
 }
 ```
 {% endraw %}
+
+### Conclusion
+Now we have verified several common layouts in LL.

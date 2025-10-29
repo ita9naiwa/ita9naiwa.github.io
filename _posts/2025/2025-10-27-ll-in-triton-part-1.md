@@ -290,4 +290,3 @@ The key insight is that by specifying just a few basis vectors (powers of 2), we
 
 In the next parts of this series, we'll explore:
 - **Part 2**: Dimension naming conventions, core API, and practical examples
-- **Part 3**: Layout conversions, lowering, and advanced topics
