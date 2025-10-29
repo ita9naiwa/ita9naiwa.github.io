@@ -4,7 +4,7 @@ title: "Linear Layout in Triton (1)"
 category: "mlsys"
 tag: "mlsys"
 comment: true
-key: 20251027_1
+key: 20251025
 mathjax: true
 ---
 
@@ -254,6 +254,7 @@ This is a classic **swizzled pattern**: `(t, w⊕t)`. This kind of swizzling is 
 
 Now let's see how to actually implement these layouts in Triton's codebase. The API is quite elegant:
 
+{% raw %}
 ```cpp
 MLIRContext *ctx = ...;
 StringAttr kThread = StringAttr::get(ctx, "thread");
@@ -278,6 +279,7 @@ auto result = swizzled.apply({{kThread, 3}, {kWarp, 2}});
 // result = {{kDim0, 3}, {kDim1, 1}}
 // This means thread=3, warp=2 maps to position (3, 1) in the tensor
 ```
+{% endraw %}
 
 Notice how we only specify the basis vectors (powers of 2), and the `LinearLayout` class automatically computes all other values using the linearity rule!
 

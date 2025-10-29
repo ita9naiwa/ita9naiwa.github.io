@@ -4,7 +4,7 @@ title: "Linear Layout in Triton (2)"
 category: "mlsys"
 tag: "mlsys"
 comment: true
-key: 20251025
+key: 20251026
 mathjax: true
 ---
 ### Introduction
@@ -268,6 +268,7 @@ auto cvt = regLayout.invertAndCompose(memLayout);
 - `outer` can be non-injective (chooses smallest solution)
 
 **Example Scenario:**
+{% raw %}
 ```cpp
 // 1) Register distribution: thread 0, reg 0 holds tensor[2,3]
 auto regLayout = toLinearLayout(blockedEncoding);
@@ -284,6 +285,7 @@ auto cvt = regLayout.invertAndCompose(memLayout);
 assert(cvt.apply({{S("register"),0}, {S("lane"),0}, {S("warp"),0}})
        == {{S("offset"),10}});
 ```
+{% endraw %}
 
 ### 5.6 Shape Transformations
 
@@ -336,6 +338,7 @@ SmallVector<std::pair<StringAttr, int32_t>>
 apply(ArrayRef<std::pair<StringAttr, int32_t>> ins) const;
 ```
 
+{% raw %}
 ```cpp
 auto result = layout.apply({
   {S("register"), 3},
@@ -344,6 +347,7 @@ auto result = layout.apply({
 });
 // result: {{S("dim0"), ...}, {S("dim1"), ...}}
 ```
+{% endraw %}
 
 #### Applying with MLIR Values
 ```cpp
@@ -379,6 +383,7 @@ auto offsets = applyLinearLayout(loc, rewriter, cvt, {
 
 **Scenario:** Distribute 32 elements across 4 threads, 8 elements per thread
 
+{% raw %}
 ```cpp
 // Each thread: 8 registers
 // Thread 0: elements [0,4,8,12,16,20,24,28]
@@ -396,6 +401,7 @@ assert(layout.apply({{S("register"),1}, {S("lane"),0}}) == {{S("dim0"),4}});
 assert(layout.apply({{S("register"),0}, {S("lane"),1}}) == {{S("dim0"),1}});
 assert(layout.apply({{S("register"),2}, {S("lane"),3}}) == {{S("dim0"),11}});
 ```
+{% endraw %}
 
 **Explanation:**
 - `register`: stride=4 (bases: [4,8,16,...])
@@ -432,11 +438,13 @@ auto layout = regLayout * laneLayout * warpLayout;
 // Verification: lane=5(=0b0101), register=2(=0b10)
 // dim0: reg_contrib=0, lane_contrib=2×1=2, warp_contrib=0 → 2
 // dim1: reg_contrib=2, lane_contrib=2×0=0, warp_contrib=0 → 2
+{% raw %}
 assert(layout.apply({
   {S("register"), 2},
   {S("lane"), 5},
   {S("warp"), 0}
 }) == {{S("dim0"), 2}, {S("dim1"), 2}});
+{% endraw %}
 ```
 
 **Automatic BlockedEncodingAttr Conversion:**
@@ -495,6 +503,7 @@ LinearLayout swizzled({
 
 **Complete Workflow:**
 
+{% raw %}
 ```cpp
 // 1) Define register layout
 auto regLayout = BlockedEncodingAttr::get(...).toLinearLayout(shape);
@@ -528,3 +537,4 @@ for (int regId = 0; regId < numRegs; regId++) {
   store(registerValues[regId], ptr);
 }
 ```
+{% endraw %}
