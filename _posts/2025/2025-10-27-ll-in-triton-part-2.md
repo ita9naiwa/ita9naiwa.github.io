@@ -4,7 +4,7 @@ title: "Linear Layout in Triton (2)"
 category: "mlsys"
 tag: "mlsys"
 comment: true
-key: 20251027_2
+key: 20251025
 mathjax: true
 ---
 ### Introduction

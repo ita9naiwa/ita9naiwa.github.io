@@ -51,6 +51,7 @@ author:
 repository: ita9naiwa/ita9naiwa.github.io
 repository_tree: master
 
+future: true
 
 ## => Paths
 ##############################
