@@ -605,6 +605,20 @@ Value sharedOffset = offsets[0].second;  // MLIR Value representing offset
 
 The following scenarios show how the APIs above compose into real Triton workflows. Each example walks through the mental model explicitly.
 
+**Arithmetic view (bitfield intuition):** When two inputs contribute to the same output dimension via `operator*` and their basis bits do not overlap, the XOR accumulation is equivalent to standard integer addition over disjoint bitfields. For example,
+
+```cpp
+auto L1 = LinearLayout::identity1D(4, S("lane"), S("dim0"));
+auto L2 = LinearLayout::identity1D(8, S("register"), S("dim0"));
+auto L  = L1 * L2;
+
+// Effective arithmetic form (disjoint bitfields):
+// dim0 = (lane % 4) + ((register % 8) << 2)
+//      = (lane % 4) + (register % 8) * 4
+```
+
+This works because `lane` occupies the lower 2 bits of `dim0`, while `register` occupies the next 3 bits. If the bitfields overlap (e.g., you deliberately place both on the same bit positions), the combination is true XOR, not integer addition.
+
 ### 6.1 Example 1 — Simple 1D Distribution Across Lanes
 
 **Scenario:** Distribute 32 logical elements across 4 threads so that each thread owns 8 elements in a strided pattern.
@@ -647,6 +661,13 @@ assert(layout.apply({{S("register"), 2}, {S("lane"), 3}})[0].second == 11);
 - Registers contribute the **coarse stride** (multiples of 4 in this case)
 - Lanes inject the **fine-grained offset** inside the stride
 - XOR combines both contributions—always verify with a few spot checks!
+
+**Arithmetic view:** With disjoint bitfields, XOR equals integer add on those fields:
+
+```cpp
+// dim0 = (lane % 4) + ((register % 8) << 2)
+//      = (lane & 0b11) + ((register & 0b111) << 2)
+```
 
 ### 6.2 Example 2 — 2D Blocked Layout (BlockedEncodingAttr)
 
@@ -729,6 +750,20 @@ The automatic conversion should reproduce the same layout. Verify equality by:
 1. Comparing `layout.toString()` with `layoutFromAttr.toString()`
 2. Probing a dozen random coordinates with `apply(...)`
 3. Checking that both have the same basis vectors
+
+**Arithmetic view:** Decompose each input into 2D bitfields and sum with strides:
+
+```cpp
+int regX  =  (register >> 0) & 0b1;    // sizePerThread.x = 2
+int regY  =  (register >> 1) & 0b1;    // sizePerThread.y = 2
+int laneX =  (lane >> 0) & 0b11;       // threadsPerWarp.x = 4
+int laneY =  (lane >> 2) & 0b11;       // threadsPerWarp.y = 4
+int warpX =  (warp >> 0) & 0b1;        // warpsPerCTA.x = 2
+int warpY =  (warp >> 1) & 0b1;        // warpsPerCTA.y = 2
+
+int dim0 = regX + (laneX << 1) + (warpX << 3);  // 1, 2, 8 strides
+int dim1 = regY + (laneY << 1) + (warpY << 3);
+```
 
 ### 6.3 Example 3 — Shared Memory Swizzle
 
@@ -824,6 +859,18 @@ assert(result == SmallVector{{S("dim0"), 4}, {S("dim1"), 9}});
 
 **Tip:** Print a few more offsets if the swizzle pattern feels off; mismatched phases usually show up immediately. You can dump the full basis with `swizzled.toString()` to inspect each power-of-two contribution.
 
+**Arithmetic view:** Closed-form for row/column and swizzle.
+
+```cpp
+int row   = offset / numCols;
+int col   = offset % numCols;
+int phase = (row / perPhase) % maxPhase;
+int col2  = col ^ ((vec * phase) % numCols);  // XOR-based swizzle
+
+int dim0 = row;
+int dim1 = col2;
+```
+
 ### 6.4 Example 4 — Register → Shared Conversion Pipeline
 
 This is the **complete workflow** you'll eventually wire into Triton's lowering passes when converting data from register layouts to shared memory layouts.
@@ -891,6 +938,17 @@ auto check = sharedLayout.apply({{S("offset"), smemCoords[0].second}});
 assert(check == tensorCoords);  // Should match!
 ```
 {% endraw %}
+
+**Arithmetic view:** For a swizzled shared layout, compute the write offset directly.
+
+```cpp
+// Given (X,Y) = regLayout(register, lane, warp).  Then:
+int row   = X;
+int col2  = Y;                                // swizzled column
+int phase = (row / perPhase) % maxPhase;
+int col   = col2 ^ ((vec * phase) % numCols); // invert the swizzle
+int offset = row * numCols + col;             // destination in shared
+```
 
 **Step 4: Use during LLVM lowering**
 
