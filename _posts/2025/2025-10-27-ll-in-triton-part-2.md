@@ -20,174 +20,15 @@ mathjax: true
 
 
 ---
-
-## 4. Dimension Naming Conventions and Semantics
-
-Understanding dimension names is the gateway to reading and writing `LinearLayout` code fluently. This section maps Triton's encoding attributes to the input/output dimension vocabulary you will use throughout the API.
-
-### 4.1 Input Dimensions — Hardware Hierarchy
-
-Input dimensions describe **where** a value lives in hardware. The standard progression follows the GPU execution model from finest to coarsest granularity:
-
-#### Distributed (Register-based) Layouts
-```
-"register" → Index into per-thread register slots (values held by one thread)
-"lane"     → Thread ID within a warp (0–31 on NVIDIA, 0–63 on AMD)
-"warp"     → Warp ID within a CTA (Cooperative Thread Array)
-"block"    → Block (CTA) ID within the grid/cluster
-```
-
-**Why this order?**
-- **`register`** is the most minor dimension. It represents data you can permute cheaply inside a single thread without cross-lane communication.
-- **`lane`** is the next level. Lanes execute in lockstep within a warp, so this dimension often maps to contiguous memory strides.
-- **`warp`** and **`block`** scale the same pattern across the SM and grid. They typically control coarser-grained tiling.
-
-**Conversion example: BlockedEncodingAttr → LinearLayout**
-
-```cpp
-// sizePerThread=[4,2], threadsPerWarp=[8,4], warpsPerCTA=[2,2]
-auto blocked = BlockedEncodingAttr::get(ctx,
-  /*sizePerThread=*/{4, 2},
-  /*threadsPerWarp=*/{8, 4},
-  /*warpsPerCTA=*/{2, 2},
-  /*order=*/{1, 0},
-  CTALayoutAttr::get(/*...*/));
-auto ll = blocked.toLinearLayout(shape);
-
-// Resulting input dimensions (ins):
-// - register: 0..7   (4×2 - 1 values per thread)
-// - lane:     0..31  (8×4 - 1 threads per warp)
-// - warp:     0..3   (2×2 - 1 warps per CTA)
-// - block:    size depends on launch grid
-```
-
-These attributes decompose into basis vectors. For a quick sanity check, evaluate `ll.apply` at a few known points:
-
-{% raw %}
-```cpp
-// Thread 0, register 0 should map to tensor index 0
-assert(ll.apply({{S("register"), 0}, {S("lane"), 0}, {S("warp"), 0}})[0].second == 0);
-
-// Thread 0, register 1 should map to the next element along the first axis
-assert(ll.apply({{S("register"), 1}, {S("lane"), 0}, {S("warp"), 0}})[0].second == 1);
-```
-{% endraw %}
-
-#### Shared Memory Layouts
-
-Shared encodings replace the fine-grained hardware axes (`register`, `lane`, `warp`) with a single `offset` dimension:
-
-```
-"offset" → Linear index in shared memory (measured in elements, not bytes)
-"block"  → CTA ID (optional; used when reasoning about multi-CTA scenarios)
-```
-
-**Swizzled shared example**
-
-```cpp
-auto shared = SwizzledSharedEncodingAttr::get(
-  ctx,
-  /*vec=*/8,
-  /*perPhase=*/4,
-  /*maxPhase=*/8,
-  /*order=*/{1, 0},
-  CTALayoutAttr::get(/*...*/));
-auto ll = swizzledSharedToLinearLayout(shape, shared);
-
-// Input dimensions:  offset, block
-// Output dimensions: dim0, dim1
-// The offset → (dim0, dim1) mapping encodes the swizzle pattern to avoid bank conflicts
-```
-
-Use this form when you need to reason about shared-memory bank conflicts at the IR level, before lowering to LLVM.
-
-### 4.2 Output Dimensions — Logical Tensor Axes
-
-Output dimensions always correspond to the **logical tensor axes** in their original order. The layout's `order` field controls internal memory layout (row-major vs. column-major), but the output dimension names remain canonical:
-
-```
-"dim0" → First tensor axis
-"dim1" → Second tensor axis
-"dim2" → Third tensor axis
-...
-```
-
-**Key property:** All layouts—regardless of their internal `order`—speak the same output language. This uniformity is why `LinearLayout` composes so cleanly: every transformation operates on `dim0`, `dim1`, etc., and you never need to track multiple coordinate systems.
-
-**Example:**
-```cpp
-// Both layouts have order={1,0} (column-major), but outputs are still named dim0, dim1
-auto blocked = BlockedEncodingAttr::get(/*..., order={1,0}*/).toLinearLayout(shape);
-auto shared  = swizzledSharedToLinearLayout(shape, sharedAttr);
-
-// Both use the same output names:
-// blocked:  (register,lane,warp) → (dim0, dim1)
-// shared:   (offset) → (dim0, dim1)
-```
-
-### 4.3 Dimension Ordering, Flattening, and Reshaping
-
-All `LinearLayout` operations interpret dimensions in **minor-to-major** order:
-- The **first** dimension is the most minor (changes fastest in memory).
-- The **last** dimension is the most major (changes slowest).
-
-This convention affects how `flattenIns`, `flattenOuts`, `reshapeIns`, and `reshapeOuts` combine or split dimensions.
-
-#### Flatten Rule of Thumb
-
-```cpp
-// Input dimensions: ["register", "lane", "warp"]
-// Minor-to-major: register is most minor, warp is most major
-
-auto flattened = layout.flattenIns();
-// Result: single dimension with size = register_size × lane_size × warp_size
-// Elements are ordered: register changes fastest, then lane, then warp
-```
-
-If you want a different flattening order (e.g., lane-major), transpose first:
-
-```cpp
-auto laneMajor = layout.transposeIns({S("lane"), S("register"), S("warp")}).flattenIns();
-// Now lane changes fastest
-```
-
-#### Reshape Checklist
-
-Before calling `reshapeIns` or `reshapeOuts`:
-
-1. **Verify total size:** The product of new dimension sizes must equal the product of old dimension sizes.
-2. **Plan transposes:** `reshapeIns` always flattens in minor-to-major order before splitting. If you need a different minor axis, transpose first.
-3. **Check dimension counts:** Use `getInDimSize(name)` or `getOutDimSize(name)` to confirm sizes before reshaping. Silent dimension drops are a common source of bugs.
-
-**Example workflow:**
-
-{% raw %}
-```cpp
-// Original: (register:4, lane:8, warp:2) — total size 64
-auto flat = layout.flattenIns();
-// Flat: (register:64)
-
-auto reshaped = flat.reshapeIns({{S("thread"), 32}, {S("block"), 2}});
-// Reshaped: (thread:32, block:2)
-
-// If you wanted warp to be minor instead of register, do this:
-auto transposed = layout.transposeIns({S("warp"), S("lane"), S("register")});
-auto flatWarpMajor = transposed.flattenIns();
-// Now warp changes fastest
-```
-{% endraw %}
-
----
-
-## 5. Core API Detailed Guide
+## 1. Core API Detailed Guide
 
 This section walks through the core `LinearLayout` constructors and combinators, showing you how to build, manipulate, and apply layouts in practice, with extra commentary and quick sanity checks you can paste into your own code.
 
-### 5.1 Basic Constructors — Build 1D Pieces
+### 1.1 Basic Constructors — Build 1D Pieces
 
 All three factory helpers return a **one-dimensional** layout. You stack them with `operator*` to produce richer, multi-dimensional structures.
 
-#### 5.1.1 `identity1D` — Pass-Through Mapping
+#### 1.1.1 `identity1D` — Pass-Through Mapping
 
 ```cpp
 static LinearLayout identity1D(
@@ -214,7 +55,7 @@ assert(L.apply({{S("lane"), 5}})[0].second == 5);
 - Contiguous, one-to-one mappings (e.g., `register` indices inside a single thread)
 - As the "seed" layout when assembling more complex multi-dimensional structures
 
-#### 5.1.2 `zeros1D` — Broadcast / Replication
+#### 1.1.2 `zeros1D` — Broadcast / Replication
 
 ```cpp
 static LinearLayout zeros1D(
@@ -246,7 +87,7 @@ assert(L.apply({{S("lane"), 5}})[0].second == 0);
 
 **Optional parameter:** `outDimSize` lets you record the logical extent even though all values collapse to zero. This is useful when you later compose or invert the layout and need to track the full codomain.
 
-### 5.2 Direct Construction from Basis Vectors
+### 1.2 Direct Construction from Basis Vectors
 
 When the helper constructors can't express your pattern (swizzles, MMA layouts, custom permutations), build the layout manually from basis vectors.
 
@@ -290,7 +131,7 @@ assert(result == SmallVector{{S("dim0"), 1}, {S("dim1"), 1}});
 ```
 {% endraw %}
 
-### 5.3 Layout Combination with `operator*`
+### 1.3 Layout Combination with `operator*`
 
 ```cpp
 friend LinearLayout operator*(LinearLayout inner, LinearLayout outer);
@@ -339,7 +180,7 @@ auto L = LinearLayout::zeros1D(4, S("lane"), S("dim1")) *
 
 **Mental model:** Use `operator*` whenever two hardware dimensions co-exist at runtime (e.g., `register × lane`, `warp × block`). The result is a layout that maps the Cartesian product of inputs to (possibly XOR-ed) outputs.
 
-### 5.4 Function Composition — `compose`
+### 1.4 Function Composition — `compose`
 
 ```cpp
 LinearLayout compose(const LinearLayout &outer) const;
@@ -375,7 +216,7 @@ auto coords = L3.apply({{S("register"), 5}});
 - **Modularity:** Test `L1` and `L2` independently before stitching them together.
 - **Clarity:** Express multi-stage transformations (register → offset → tensor) explicitly in code.
 
-### 5.5 Invert and Compose — `invertAndCompose`
+### 1.5 Invert and Compose — `invertAndCompose`
 
 ```cpp
 LinearLayout invertAndCompose(const LinearLayout &outer) const;
@@ -427,7 +268,7 @@ assert(cvt.apply({{S("register"),0}, {S("lane"),0}, {S("warp"),0}})
 
 **Why it works:** Both `regLayout` and `memLayout` map to the same tensor space `(dim0, dim1)`. The inversion finds the shared memory offset that corresponds to the same tensor element.
 
-### 5.6 Shape Transformations — Flatten, Reshape, Transpose
+### 1.6 Shape Transformations — Flatten, Reshape, Transpose
 
 These utilities let you reorganize the input or output dimensions without changing the underlying mapping.
 
@@ -498,7 +339,7 @@ auto flat = transposed.flattenIns();
 // Now warp changes fastest, then lane, then register
 ```
 
-### 5.7 Evaluating Layouts — `apply` and `applyLinearLayout`
+### 1.7 Evaluating Layouts — `apply` and `applyLinearLayout`
 
 Two complementary helpers let you inspect or materialize a layout.
 
@@ -563,8 +404,7 @@ Value sharedOffset = offsets[0].second;  // MLIR Value representing offset
 **Critical reminder:** Always keep the dimension names in sync between `applyLinearLayout` inputs and the layout you created. Mismatched strings lead to silent wrong-code bugs!
 
 ---
-
-## 6. Practical Examples: Step-by-Step Construction
+## 2. Practical Examples: Step-by-Step Construction
 
 The following scenarios show how the APIs above compose into real Triton workflows. Each example walks through the mental model explicitly.
 
@@ -582,7 +422,7 @@ auto L  = L1 * L2;
 
 This works because `lane` occupies the lower 2 bits of `dim0`, while `register` occupies the next 3 bits (shifted by 2 via stride=4). If the bitfields overlap (e.g., you deliberately place both on the same bit positions), the combination is true XOR, not integer addition.
 
-### 6.1 Example 1 — Simple 1D Distribution Across Lanes
+### 2.1 Example 1 — Simple 1D Distribution Across Lanes
 
 **Scenario:** Distribute 32 logical elements across 4 threads so that each thread owns 8 elements in a strided pattern.
 
@@ -614,7 +454,7 @@ dim0 = (lane % 4) + ((register % 8) << 2)
      = (lane & 0b11) + ((register & 0b111) << 2)
 ```
 
-### 6.2 Example 2 — 2D Blocked Layout (MMA Tile)
+### 2.2 Example 2 — 2D Blocked Layout (MMA Tile)
 
 **Scenario:** A CTA cooperatively computes a 32×32 accumulator tile. Each warp handles a 16×8 MMA fragment (`m16n8k16`), and each lane packs two accumulator values in registers. We want a `LinearLayout` that maps `(register, lane)` coordinates back to logical `(row, col)` indices while respecting the register packing and warp tiling order used by NVIDIA's `nvidiaMmaTile`.
 
@@ -723,7 +563,163 @@ for row, r in enumerate(array):
 
 The output packs each row into eight-lane groups (`lane >> 2`) and shows how registers cycle every `kWidth` columns. This is a direct confirmation that our simplified `ctaLayout` reproduces the PTX accumulator expectations—exactly what you need before calling `invertAndCompose` to stitch the accumulator to shared-memory staging buffers.
 
+## 3. Dimension Naming Conventions and Semantics
 
+Understanding dimension names is the gateway to reading and writing `LinearLayout` code fluently. This section maps Triton's encoding attributes to the input/output dimension vocabulary you will use throughout the API.
+
+### 3.1 Input Dimensions — Hardware Hierarchy
+
+Input dimensions describe **where** a value lives in hardware. The standard progression follows the GPU execution model from finest to coarsest granularity:
+
+#### Distributed (Register-based) Layouts
+```
+"register" → Index into per-thread register slots (values held by one thread)
+"lane"     → Thread ID within a warp (0–31 on NVIDIA, 0–63 on AMD)
+"warp"     → Warp ID within a CTA (Cooperative Thread Array)
+"block"    → Block (CTA) ID within the grid/cluster
+```
+
+**Why this order?**
+- **`register`** is the most minor dimension. It represents data you can permute cheaply inside a single thread without cross-lane communication.
+- **`lane`** is the next level. Lanes execute in lockstep within a warp, so this dimension often maps to contiguous memory strides.
+- **`warp`** and **`block`** scale the same pattern across the SM and grid. They typically control coarser-grained tiling.
+
+**Conversion example: BlockedEncodingAttr → LinearLayout**
+
+```cpp
+// sizePerThread=[4,2], threadsPerWarp=[8,4], warpsPerCTA=[2,2]
+auto blocked = BlockedEncodingAttr::get(ctx,
+  /*sizePerThread=*/{4, 2},
+  /*threadsPerWarp=*/{8, 4},
+  /*warpsPerCTA=*/{2, 2},
+  /*order=*/{1, 0},
+  CTALayoutAttr::get(/*...*/));
+auto ll = blocked.toLinearLayout(shape);
+
+// Resulting input dimensions (ins):
+// - register: 0..7   (4×2 - 1 values per thread)
+// - lane:     0..31  (8×4 - 1 threads per warp)
+// - warp:     0..3   (2×2 - 1 warps per CTA)
+// - block:    size depends on launch grid
+```
+
+These attributes decompose into basis vectors. For a quick sanity check, evaluate `ll.apply` at a few known points:
+
+{% raw %}
+```cpp
+// Thread 0, register 0 should map to tensor index 0
+assert(ll.apply({{S("register"), 0}, {S("lane"), 0}, {S("warp"), 0}})[0].second == 0);
+
+// Thread 0, register 1 should map to the next element along the first axis
+assert(ll.apply({{S("register"), 1}, {S("lane"), 0}, {S("warp"), 0}})[0].second == 1);
+```
+{% endraw %}
+
+#### Shared Memory Layouts
+
+Shared encodings replace the fine-grained hardware axes (`register`, `lane`, `warp`) with a single `offset` dimension:
+
+```
+"offset" → Linear index in shared memory (measured in elements, not bytes)
+"block"  → CTA ID (optional; used when reasoning about multi-CTA scenarios)
+```
+
+**Swizzled shared example**
+
+```cpp
+auto shared = SwizzledSharedEncodingAttr::get(
+  ctx,
+  /*vec=*/8,
+  /*perPhase=*/4,
+  /*maxPhase=*/8,
+  /*order=*/{1, 0},
+  CTALayoutAttr::get(/*...*/));
+auto ll = swizzledSharedToLinearLayout(shape, shared);
+
+// Input dimensions:  offset, block
+// Output dimensions: dim0, dim1
+// The offset → (dim0, dim1) mapping encodes the swizzle pattern to avoid bank conflicts
+```
+
+Use this form when you need to reason about shared-memory bank conflicts at the IR level, before lowering to LLVM.
+
+### 3.2 Output Dimensions — Logical Tensor Axes
+
+Output dimensions always correspond to the **logical tensor axes** in their original order. The layout's `order` field controls internal memory layout (row-major vs. column-major), but the output dimension names remain canonical:
+
+```
+"dim0" → First tensor axis
+"dim1" → Second tensor axis
+"dim2" → Third tensor axis
+...
+```
+
+**Key property:** All layouts—regardless of their internal `order`—speak the same output language. This uniformity is why `LinearLayout` composes so cleanly: every transformation operates on `dim0`, `dim1`, etc., and you never need to track multiple coordinate systems.
+
+**Example:**
+```cpp
+// Both layouts have order={1,0} (column-major), but outputs are still named dim0, dim1
+auto blocked = BlockedEncodingAttr::get(/*..., order={1,0}*/).toLinearLayout(shape);
+auto shared  = swizzledSharedToLinearLayout(shape, sharedAttr);
+
+// Both use the same output names:
+// blocked:  (register,lane,warp) → (dim0, dim1)
+// shared:   (offset) → (dim0, dim1)
+```
+
+### 3.3 Dimension Ordering, Flattening, and Reshaping
+
+All `LinearLayout` operations interpret dimensions in **minor-to-major** order:
+- The **first** dimension is the most minor (changes fastest in memory).
+- The **last** dimension is the most major (changes slowest).
+
+This convention affects how `flattenIns`, `flattenOuts`, `reshapeIns`, and `reshapeOuts` combine or split dimensions.
+
+#### Flatten Rule of Thumb
+
+```cpp
+// Input dimensions: ["register", "lane", "warp"]
+// Minor-to-major: register is most minor, warp is most major
+
+auto flattened = layout.flattenIns();
+// Result: single dimension with size = register_size × lane_size × warp_size
+// Elements are ordered: register changes fastest, then lane, then warp
+```
+
+If you want a different flattening order (e.g., lane-major), transpose first:
+
+```cpp
+auto laneMajor = layout.transposeIns({S("lane"), S("register"), S("warp")}).flattenIns();
+// Now lane changes fastest
+```
+
+#### Reshape Checklist
+
+Before calling `reshapeIns` or `reshapeOuts`:
+
+1. **Verify total size:** The product of new dimension sizes must equal the product of old dimension sizes.
+2. **Plan transposes:** `reshapeIns` always flattens in minor-to-major order before splitting. If you need a different minor axis, transpose first.
+3. **Check dimension counts:** Use `getInDimSize(name)` or `getOutDimSize(name)` to confirm sizes before reshaping. Silent dimension drops are a common source of bugs.
+
+**Example workflow:**
+
+{% raw %}
+```cpp
+// Original: (register:4, lane:8, warp:2) — total size 64
+auto flat = layout.flattenIns();
+// Flat: (register:64)
+
+auto reshaped = flat.reshapeIns({{S("thread"), 32}, {S("block"), 2}});
+// Reshaped: (thread:32, block:2)
+
+// If you wanted warp to be minor instead of register, do this:
+auto transposed = layout.transposeIns({S("warp"), S("lane"), S("register")});
+auto flatWarpMajor = transposed.flattenIns();
+// Now warp changes fastest
+```
+{% endraw %}
+
+---
 ## Conclusion
 
 Armed with the patterns above, `LinearLayout` stops being a black box and becomes a practical tool you can reach for daily.
