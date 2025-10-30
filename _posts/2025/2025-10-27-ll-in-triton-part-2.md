@@ -338,7 +338,7 @@ friend LinearLayout operator*(LinearLayout inner, LinearLayout outer);
 - XOR-accumulating contributions to shared output dimensions
 
 **Rules of thumb:**
-1. **Input dimensions must be disjoint** — otherwise you redefine a dimension.
+1. **Input dimensions can overlap** — overlapping in-dims are merged; use disjoint dims when you want Cartesian products.
 2. **Shared output dimensions receive XOR contributions** from both operands.
 3. **The left operand is more minor** — its dimensions change faster.
 
@@ -609,7 +609,7 @@ The following scenarios show how the APIs above compose into real Triton workflo
 
 ```cpp
 auto L1 = LinearLayout::identity1D(4, S("lane"), S("dim0"));
-auto L2 = LinearLayout::identity1D(8, S("register"), S("dim0"));
+auto L2 = LinearLayout::strided1D(8, 4, S("register"), S("dim0"));  // shift register by 2 bits
 auto L  = L1 * L2;
 
 // Effective arithmetic form (disjoint bitfields):
@@ -617,7 +617,7 @@ auto L  = L1 * L2;
 //      = (lane % 4) + (register % 8) * 4
 ```
 
-This works because `lane` occupies the lower 2 bits of `dim0`, while `register` occupies the next 3 bits. If the bitfields overlap (e.g., you deliberately place both on the same bit positions), the combination is true XOR, not integer addition.
+This works because `lane` occupies the lower 2 bits of `dim0`, while `register` occupies the next 3 bits (shifted by 2 via stride=4). If the bitfields overlap (e.g., you deliberately place both on the same bit positions), the combination is true XOR, not integer addition.
 
 ### 6.1 Example 1 — Simple 1D Distribution Across Lanes
 
@@ -634,8 +634,8 @@ This works because `lane` occupies the lower 2 bits of `dim0`, while `register` 
 {% raw %}
 ```cpp
 auto layout =
-  LinearLayout::identity1D(8, S("register"), S("dim0")) *
-  LinearLayout::strided1D(4, 1, S("lane"), S("dim0"));
+  LinearLayout::strided1D(8, 4, S("register"), S("dim0")) *
+  LinearLayout::identity1D(4, S("lane"), S("dim0"));
 
 // Verification
 assert(layout.apply({{S("register"), 0}, {S("lane"), 0}})[0].second == 0);
@@ -646,16 +646,16 @@ assert(layout.apply({{S("register"), 2}, {S("lane"), 3}})[0].second == 11);
 {% endraw %}
 
 **Explanation:**
-- **Register basis:** `identity1D(8, ...)` creates basis `[1, 2, 4]` for dim0
-  - register=1 → 0 + 4×1 = 4
-  - register=2 → 0 + 4×2 = 8
+- **Register basis:** `strided1D(8, 4, ...)` shifts the register contribution by 2 bits, so its effective contribution is multiples of 4 in `dim0`.
+  - register=1 → 4
+  - register=2 → 8
   - ...
-- **Lane basis:** `strided1D(4, 1, ...)` creates basis `[1, 2]` for dim0
+- **Lane basis:** `identity1D(4, ...)` provides the fine-grained offset inside each stride
   - lane=1 → 1
   - lane=2 → 2
   - lane=3 → 3
-- **XOR combination:** `dim0 = register_contrib ⊕ lane_contrib`
-  - (register=2, lane=3) → 8 ⊕ 3 = 11 ✓
+- **XOR combination (disjoint bitfields):** equivalent to integer add here
+  - (register=2, lane=3) → 8 + 3 = 11 ✓
 
 **Key takeaways:**
 - Registers contribute the **coarse stride** (multiples of 4 in this case)
@@ -981,31 +981,7 @@ for (int regId = 0; regId < numRegs; ++regId) {
 ```
 {% endraw %}
 
-**Implementation tips:**
-
-1. **Dimension name consistency:** Keep the dimension names immutable across calls. Typos or mismatches (`"lane"` vs `"lanes"`) lead to silent wrong-code that's hard to debug.
-
-2. **Bounds checking:** Guard the loop with the actual number of registers you hold. Layouts happily accept out-of-range values and will produce garbage offsets.
-
-3. **Debugging with `toString()`:** Consider dumping `cvtLayout.toString()` during development. It prints the basis in a compact form that lets you spot swizzle errors quickly:
-   ```cpp
-   llvm::errs() << "Conversion layout:\n" << cvtLayout.toString() << "\n";
-   ```
-
-4. **Test incrementally:**
-   - First verify `regLayout` with a few spot checks
-   - Then verify `sharedLayout` independently
-   - Finally verify `cvtLayout` by checking round-trip consistency
-
-5. **Watch for block dimensions:** If your layout includes a `block` dimension but you're lowering a single-CTA kernel, you can often ignore it (set to 0). But for multi-CTA kernels, make sure you pass the correct `blockId`.
-
-**Common pitfalls:**
-
-- **Forgetting to unpack:** `src` is often an LLVM struct; you must unpack it into individual register values before storing.
-- **Wrong pointer type:** Make sure the GEP uses the correct address space (3 for shared memory on NVIDIA).
-- **Swizzle parameter mismatches:** If `cvtLayout` looks wrong, double-check that `sharedAttr`'s `vec`, `perPhase`, and `maxPhase` match the actual shared memory allocation.
-
----
+ ---
 
 ## Conclusion
 
