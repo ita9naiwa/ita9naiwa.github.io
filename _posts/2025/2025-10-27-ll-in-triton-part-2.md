@@ -633,9 +633,9 @@ This works because `lane` occupies the lower 2 bits of `dim0`, while `register` 
 
 {% raw %}
 ```cpp
-auto layout =
-  LinearLayout::strided1D(8, 4, S("register"), S("dim0")) *
-  LinearLayout::identity1D(4, S("lane"), S("dim0"));
+auto L1 = LinearLayout::identity1D(4, S("lane"), S("dim0"));
+auto L2 = LinearLayout::identity1D(8, S("register"), S("dim0"));
+auto layout = L1 * L2;
 
 // Verification
 assert(layout.apply({{S("register"), 0}, {S("lane"), 0}})[0].second == 0);
@@ -645,233 +645,121 @@ assert(layout.apply({{S("register"), 2}, {S("lane"), 3}})[0].second == 11);
 ```
 {% endraw %}
 
-**Explanation:**
-- **Register basis:** `strided1D(8, 4, ...)` shifts the register contribution by 2 bits, so its effective contribution is multiples of 4 in `dim0`.
-  - register=1 → 4
-  - register=2 → 8
-  - ...
-- **Lane basis:** `identity1D(4, ...)` provides the fine-grained offset inside each stride
-  - lane=1 → 1
-  - lane=2 → 2
-  - lane=3 → 3
-- **XOR combination (disjoint bitfields):** equivalent to integer add here
-  - (register=2, lane=3) → 8 + 3 = 11 ✓
-
-**Key takeaways:**
-- Registers contribute the **coarse stride** (multiples of 4 in this case)
-- Lanes inject the **fine-grained offset** inside the stride
-- XOR combines both contributions—always verify with a few spot checks!
-
-**Arithmetic view:** With disjoint bitfields, XOR equals integer add on those fields:
 
 ```cpp
-// dim0 = (lane % 4) + ((register % 8) << 2)
-//      = (lane & 0b11) + ((register & 0b111) << 2)
+dim0 = (lane % 4) + ((register % 8) << 2)
+     = (lane & 0b11) + ((register & 0b111) << 2)
 ```
 
-### 6.2 Example 2 — 2D Blocked Layout (BlockedEncodingAttr)
+### 6.2 Example 2 — 2D Blocked Layout (MMA Tile)
 
-**Scenario:**
-- Tensor shape: 16 × 16
-- `sizePerThread = [2, 2]` → each thread handles a 2×2 patch (4 elements total)
-- `threadsPerWarp = [4, 4]` → 16 threads per warp, arranged in a 4×4 grid
-- `warpsPerCTA = [2, 2]` → 4 warps per CTA, arranged in a 2×2 grid
+**Scenario:** A CTA cooperatively computes a 32×32 accumulator tile. Each warp handles a 16×8 MMA fragment (`m16n8k16`), and each lane packs two accumulator values in registers. We want a `LinearLayout` that maps `(register, lane)` coordinates back to logical `(row, col)` indices while respecting the register packing and warp tiling order used by NVIDIA's `nvidiaMmaTile`.
 
-**Manual construction (step by step):**
+![mma_fig86]({{ "/assets/mma_fig86.png" | absolute_url }})
+Image brought from https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#mma-16816-c-i8
+
+
+**Goal:** Produce a layout equivalent to the relevant portion of `LinearLayout.cpp::nvidiaMmaTile`, but stripped down to just the accumulator mapping. The fragment is parameterised by
+- `tileShape = {m=16, n=8}`
+- `repOrder = {dimM, dimN}`
+- `kWidth = 2`
+
 
 ```cpp
-// Step 1: Register layout (2×2 block per thread)
-auto regLayout =
-  LinearLayout::identity1D(2, S("register"), S("dim0")) *
-  LinearLayout::identity1D(2, S("register"), S("dim1"));
-// register=0 → (0,0), register=1 → (1,0), register=2 → (0,1), register=3 → (1,1)
+// Step 1: trivial CTA layout with the desired output dimension order
+int rank = repOrder.size();
+auto dimNames = standardOutDimNames(ctx, rank);
+auto trivialShape = SmallVector<unsigned>(rank, 1);
+LinearLayout ctaLayout =
+    identityStandardND(S("register"), trivialShape, repOrder);
 
-// Step 2: Lane layout (4×4 grid of threads, stride=2)
-auto laneLayout =
-  LinearLayout::strided1D(4, 2, S("lane"), S("dim0")) *
-  LinearLayout::strided1D(4, 2, S("lane"), S("dim1"));
-// lane covers [0,8) in each dimension with stride 2
+// Step 2: identify inner/outer logical axes
+assert(rank == 2);
+auto inner = order[0];
+auto outer = order[1];
 
-// Step 3: Warp layout (2×2 grid of warps, stride=8)
-auto warpLayout =
-  LinearLayout::strided1D(2, 8, S("warp"), S("dim0")) *
-  LinearLayout::strided1D(2, 8, S("warp"), S("dim1"));
-// warp covers [0,16) in each dimension with stride 8
+// Step 3: accumulate the blocked structure
+assert(tileShape.size() == rank);
+int m = tileShape[outer];   // rows handled per warp
+int n = tileShape[inner];   // columns handled per warp
 
-// Step 4: Combine all levels
-auto layout = regLayout * laneLayout * warpLayout;
+assert(m % 8 == 0);
+assert(n % (kWidth * 4) == 0);
+ctaLayout = ctaLayout *
+            LinearLayout::identity1D(kWidth, S("register"), dimNames[inner]) *
+            LinearLayout::identity1D(4, S("lane"), dimNames[inner]) *
+            LinearLayout::identity1D(8, S("lane"), dimNames[outer]) *
+            LinearLayout::identity1D(m / 8, S("register"), dimNames[outer]) *
+            LinearLayout::identity1D(n / (kWidth * 4), S("register"),
+                                      dimNames[inner]);
 ```
 
-**Detailed verification:**
+**What each factor contributes**
+- `identity1D(kWidth, register → dimN)` walks across the `k`-width columns that a single lane updates.
+- `identity1D(4, lane → dimN)` folds the 4-lane quad (threads 0–3, 4–7, …) into neighbouring columns.
+- `identity1D(8, lane → dimM)` groups lanes into eight-row strips (`lane >> 2`).
+- `identity1D(m/8, register → dimM)` repeats the strip across the vertical extent of the tile.
+- `identity1D(n/(kWidth*4), register → dimN)` handles column repetitions when `n > kWidth*4`.
 
-Let's check `(register=2, lane=5, warp=0)`:
-- lane=5 = 0b0101
-- register=2 = 0b10
+Together these six factors pack lane quads into rows, distribute row groups across registers, and make the layout cyclic over the 16×8 accumulator tile contained in each warp.
 
-Compute dim0:
-- register contrib: bit 1 of register in dim0 position → 0
-- lane contrib: bits of lane in dim0 position → 2×1 = 2 (from lane bit 0)
-- warp contrib: 0
-- **dim0 = 0 ⊕ 2 ⊕ 0 = 2**
+**Mapper / demapper sanity checks**
 
-Compute dim1:
-- register contrib: bit 1 of register in dim1 position → 2
-- lane contrib: bits of lane in dim1 position → 2×0 = 0
-- warp contrib: 0
-- **dim1 = 2 ⊕ 0 ⊕ 0 = 2**
+You can test the layout by reproducing the PTX warp-tile mapping in Python. The helper below mirrors how the layout turns `(register, lane)` pairs into `(outer=row, inner=col)` coordinates and back:
 
-```cpp
-{% raw %}
-assert(layout.apply({
-  {S("register"), 2},
-  {S("lane"), 5},
-  {S("warp"), 0}
-}) == (SmallVector{
-  std::pair{S("dim0"), 2},
-  std::pair{S("dim1"), 2}
-}));
-{% endraw %}
+```python
+import numpy as np
+from collections import defaultdict
+
+def mapper(register, lane, kWidth=8, m=16, n=8):
+    """(lane, register) → (outer=row, inner=col)"""
+    m_prime = m // 8                     # row repetition (two 8-row halves)
+    n_prime = max(1, n // (kWidth * 4))  # column repetition (>=1 when n≥32)
+
+    inner = (register % kWidth) * 4 + lane % 4
+    outer = (lane // 4) % 8
+
+    outer = outer * m_prime + (register // kWidth) % m_prime
+    inner = inner * n_prime + (register // (kWidth * m_prime)) % n_prime
+    return outer, inner
+
+def demapper(outer, inner, kWidth=8, m=16, n=8):
+    """(outer=row, inner=col) → (lane, register)"""
+    m_prime = max(1, m // 8)
+    n_prime = max(1, n // (kWidth * 4))
+
+    inner_base = inner // n_prime
+    rep_inner = inner % n_prime
+
+    lane = (outer % 8) * 4 + (inner % 4)
+
+    reg0 = (inner_base // 4) % kWidth
+    reg1 = outer % m_prime
+    reg2 = rep_inner
+
+    register = reg0 + kWidth * (reg1 + m_prime * reg2)
+    return lane, register
 ```
 
-**Automatic conversion (using BlockedEncodingAttr):**
+Running `demapper` across the 16×16 accumulator viewport prints the lane/register assignments for each row. You should see the familiar Hopper-style pattern where four consecutive columns belong to the same four-lane subgroup, and rows advance in steps of eight threads:
 
-```cpp
-auto blocked = BlockedEncodingAttr::get(ctx,
-  /*sizePerThread=*/{2, 2},
-  /*threadsPerWarp=*/{4, 4},
-  /*warpsPerCTA=*/{2, 2},
-  /*order=*/{1, 0},  // row-major
-  CTALayoutAttr::get(/*...*/));
+```python
+kWidth, m, n = 8, 16, 16
+array = [[demapper(row, col, kWidth=kWidth, m=m, n=n) for col in range(n)]
+         for row in range(m)]
 
-auto layoutFromAttr = blocked.toLinearLayout({16, 16});
+def tie(row):
+    d = defaultdict(list)
+    for reg, lane in row:
+        d[reg].append(lane)
+    return [(r, d[r]) for r in sorted(d.keys())]
+
+for row, r in enumerate(array):
+    print(f"row {row:2d}", tie(r))
 ```
 
-The automatic conversion should reproduce the same layout. Verify equality by:
-1. Comparing `layout.toString()` with `layoutFromAttr.toString()`
-2. Probing a dozen random coordinates with `apply(...)`
-3. Checking that both have the same basis vectors
+The output packs each row into eight-lane groups (`lane >> 2`) and shows how registers cycle every `kWidth` columns. This is a direct confirmation that our simplified `ctaLayout` reproduces the PTX accumulator expectations—exactly what you need before calling `invertAndCompose` to stitch the accumulator to shared-memory staging buffers.
 
-**Arithmetic view:** Decompose each input into 2D bitfields and sum with strides:
-
-```cpp
-int regX  =  (register >> 0) & 0b1;    // sizePerThread.x = 2
-int regY  =  (register >> 1) & 0b1;    // sizePerThread.y = 2
-int laneX =  (lane >> 0) & 0b11;       // threadsPerWarp.x = 4
-int laneY =  (lane >> 2) & 0b11;       // threadsPerWarp.y = 4
-int warpX =  (warp >> 0) & 0b1;        // warpsPerCTA.x = 2
-int warpY =  (warp >> 1) & 0b1;        // warpsPerCTA.y = 2
-
-int dim0 = regX + (laneX << 1) + (warpX << 3);  // 1, 2, 8 strides
-int dim1 = regY + (laneY << 1) + (warpY << 3);
-```
-
-### 6.3 Example 3 — Shared Memory Swizzle
-
-**Goal:** Model a 128×32 shared-memory tile with a 128-byte swizzle pattern, common on NVIDIA GPUs to avoid bank conflicts.
-
-**Background:**
-- Shared memory on NVIDIA GPUs has 32 banks (4-byte wide)
-- Consecutive elements in a row must map to different banks
-- Swizzling XORs row information into the column index to spread accesses across banks
-
-**Swizzle parameters:**
-```cpp
-int numRows = 128;
-int numCols = 32;  // for FP32 elements
-int vec = 8;       // 8 elements = 32 bytes = 128 bits
-int perPhase = 4;  // 4 rows per phase
-int maxPhase = 8;  // 8 phases total
-```
-
-**Construction:**
-
-```cpp
-std::vector<std::vector<int>> bases2D;
-
-// Column basis (no swizzle applied to column bits)
-for (int col = 1; col < numCols; col *= 2) {
-  bases2D.push_back({0, col});  // contributes only to dim1
-}
-
-// Row basis (swizzle applied)
-for (int row = 1; row < numRows; row *= 2) {
-  int phase = (row / perPhase) % maxPhase;
-  int colSwizzle = (vec * phase) % numCols;
-  bases2D.push_back({row, colSwizzle});  // row with column XOR
-}
-
-LinearLayout swizzled({
-  {S("offset"), bases2D}
-}, {S("dim0"), S("dim1")});
-```
-
-**Swizzle formula explained:**
-```
-phase = (row / perPhase) % maxPhase
-actualCol = baseCol ⊕ (vec × phase)
-```
-
-For each group of `perPhase` rows (4 rows), the phase increments. The column index gets XOR-ed with `vec × phase`, rotating the bank assignments.
-
-**Manual verification:**
-
-Let's check `offset = 17`:
-- Binary decomposition: 17 = 16 + 1 = 0b10001
-- Row contribution: offset bit 4 → row=16, phase=(16/4)%8=4, swizzle=8×4=32 mod 32=0? No wait, let me recalculate.
-
-Actually, offset 17 in a row-major 128×32 layout:
-- offset 17 = row 0, col 17
-- Column bits: 1 = 0b00001
-- L(offset=1) = (0, 1) — from column basis bit 0
-- L(offset=16) = (0, 16) — from column basis bit 4
-- L(17) = L(16) ⊕ L(1) = (0, 16) ⊕ (0, 1) = (0, 17)
-
-Wait, let me re-read the basis construction. The first `log2(numCols)` basis vectors are for columns, then the row bases come after. So:
-
-Basis order:
-```
-bases2D[0..4]:  column bases (col=1, 2, 4, 8, 16)
-bases2D[5..11]: row bases (row=1, 2, 4, 8, 16, 32, 64)
-```
-
-For offset=17 = 0b10001:
-- Bit 0 set → use bases2D[0] = (0, 1)
-- Bit 4 set → use bases2D[4] = (0, 16)
-- L(17) = (0,1) ⊕ (0,16) = (0, 17)
-
-For offset with row component, e.g., offset = numCols×4 + 1 = 32×4 + 1 = 129:
-- This is (row=4, col=1)
-- Bit 0 set → bases2D[0] = (0, 1)
-- Bit 7 set → bases2D[7] which corresponds to row=4
-  - row=4, phase=(4/4)%8=1, swizzle=8×1=8
-  - bases2D[7] = (4, 8)
-- L(129) = (0,1) ⊕ (4,8) = (4, 9)
-
-**Verification code:**
-{% raw %}
-```cpp
-// offset 129 = row 4, col 1
-auto result = swizzled.apply({{S("offset"), 129}});
-// Expected: (row=4, actualCol = 1 ⊕ 8 = 9)
-assert(result == SmallVector{{S("dim0"), 4}, {S("dim1"), 9}});
-```
-{% endraw %}
-
-**Tip:** Print a few more offsets if the swizzle pattern feels off; mismatched phases usually show up immediately. You can dump the full basis with `swizzled.toString()` to inspect each power-of-two contribution.
-
-**Arithmetic view:** Closed-form for row/column and swizzle.
-
-```cpp
-int row   = offset / numCols;
-int col   = offset % numCols;
-int phase = (row / perPhase) % maxPhase;
-int col2  = col ^ ((vec * phase) % numCols);  // XOR-based swizzle
-
-int dim0 = row;
-int dim1 = col2;
-```
-
----
 
 ## Conclusion
 
