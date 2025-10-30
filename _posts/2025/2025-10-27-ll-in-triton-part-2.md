@@ -214,44 +214,7 @@ assert(L.apply({{S("lane"), 5}})[0].second == 5);
 - Contiguous, one-to-one mappings (e.g., `register` indices inside a single thread)
 - As the "seed" layout when assembling more complex multi-dimensional structures
 
-#### 5.1.2 `strided1D` — Stride Multiplication
-
-```cpp
-static LinearLayout strided1D(
-  int32_t size,
-  int32_t stride,      // Must be power of two
-  StringAttr inDim,
-  StringAttr outDim
-);
-```
-
-**Semantics:** `L(x) = stride × x` for `x ∈ [0, size)`
-
-Under the hood, everything is still GF(2) arithmetic, so the stride must be a power of two to preserve linearity.
-
-**Example:**
-{% raw %}
-```cpp
-auto L = LinearLayout::strided1D(4, 2, S("lane"), S("dim0"));
-// L(0) = 0, L(1) = 2, L(2) = 4, L(3) = 6
-// Basis: [L(1)=2, L(2)=4]
-
-assert(L.apply({{S("lane"), 3}})[0].second == 6);
-```
-{% endraw %}
-
-**When to use:**
-- Warp-level tiling where lanes map to strided tensor indices
-- Combining with `identity1D` on another axis to form 2D or 3D tiles
-
-**Tip:** Combine `strided1D` across multiple dimensions to build blocked patterns:
-```cpp
-auto L = LinearLayout::strided1D(4, 2, S("lane"), S("dim0")) *
-         LinearLayout::strided1D(4, 2, S("lane"), S("dim1"));
-// Maps lanes to a 2D strided grid
-```
-
-#### 5.1.3 `zeros1D` — Broadcast / Replication
+#### 5.1.2 `zeros1D` — Broadcast / Replication
 
 ```cpp
 static LinearLayout zeros1D(
