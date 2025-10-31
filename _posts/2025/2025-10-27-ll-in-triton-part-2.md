@@ -26,9 +26,12 @@ Understanding dimension names is the gateway to reading and writing `LinearLayou
 
 ### 1.1. Input Dimensions — Hardware Hierarchy
 
-Input dimensions describe **where** a value lives in hardware. The standard progression follows the GPU execution model from finest to coarsest granularity:
+Input dimensions describe **where** a value lives in hardware. The standard progression follows the GPU execution model from finest to coarsest granularity: There are two kinds of layouts.
 
-#### Distributed (Register-based) Layouts
+
+
+#### 1.  Distributed (Register-based) Layouts
+it depicts physical layout in hardware.
 ```
 "register" → Index into per-thread register slots (values held by one thread)
 "lane"     → Thread ID within a warp (0–31 on NVIDIA, 0–63 on AMD)
@@ -36,12 +39,9 @@ Input dimensions describe **where** a value lives in hardware. The standard prog
 "block"    → Block (CTA) ID within the grid/cluster
 ```
 
-**Why this order?**
-- **`register`** is the most minor dimension. It represents data you can permute cheaply inside a single thread without cross-lane communication.
-- **`lane`** is the next level. Lanes execute in lockstep within a warp, so this dimension often maps to contiguous memory strides.
-- **`warp`** and **`block`** scale the same pattern across the SM and grid. They typically control coarser-grained tiling.
 
 **Conversion example: BlockedEncodingAttr → LinearLayout**
+{% raw %}
 
 ```cpp
   SmallVector<int64_t> shape = {64, 16};
@@ -68,9 +68,8 @@ Input dimensions describe **where** a value lives in hardware. The standard prog
 // - warp=1 -> (0, 8)
 //   warp=2 -> (32, 0)
 // - block is a size 1 dimension
-
 ```
-
+{% endraw %}
 These attributes decompose into basis vectors. For a quick sanity check, evaluate `ll.apply` at a few known points:
 
 {% raw %}
@@ -84,8 +83,7 @@ assert(ll.apply({{S("register"), 1}, {S("lane"), 0}, {S("warp"), 0}})[0].second 
 {% endraw %}
 
 #### Shared Memory Layouts
-
-Shared encodings replace the fine-grained hardware axes (`register`, `lane`, `warp`) with a single `offset` dimension:
+This represents shared memory. Shared encodings replace the fine-grained hardware axes (`register`, `lane`, `warp`) with a single `offset` dimension:
 
 ```
 "offset" → Linear index in shared memory (measured in elements, not bytes)
