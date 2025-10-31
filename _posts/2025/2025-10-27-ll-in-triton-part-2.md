@@ -44,20 +44,31 @@ Input dimensions describe **where** a value lives in hardware. The standard prog
 **Conversion example: BlockedEncodingAttr → LinearLayout**
 
 ```cpp
-// sizePerThread=[4,2], threadsPerWarp=[8,4], warpsPerCTA=[2,2]
-auto blocked = BlockedEncodingAttr::get(ctx,
-  /*sizePerThread=*/{4, 2},
-  /*threadsPerWarp=*/{8, 4},
-  /*warpsPerCTA=*/{2, 2},
-  /*order=*/{1, 0},
-  CTALayoutAttr::get(/*...*/));
-auto ll = blocked.toLinearLayout(shape);
+  SmallVector<int64_t> shape = {64, 16};
+  auto cta = mlir::triton::gpu::CTALayoutAttr::getDefault(&ctx, /*rank=*/2);
+  auto blocked = mlir::triton::gpu::BlockedEncodingAttr::get(
+      &ctx,
+      /*sizePerThread=*/{4, 2},
+      /*threadsPerWarp=*/{8, 4},
+      /*warpsPerCTA=*/{2, 2},
+      /*order=*/{1, 0},
+      /*ctaLayout=*/cta);
 
-// Resulting input dimensions (ins):
-// - register: 0..7   (4×2 - 1 values per thread)
-// - lane:     0..31  (8×4 - 1 threads per warp)
-// - warp:     0..3   (2×2 - 1 warps per CTA)
-// - block:    size depends on launch grid
+  auto ll = blocked.toLinearLayout(shape);
+
+// final ll
+// - register=1 -> (0, 1)
+//   register=2 -> (1, 0)
+//   register=4 -> (2, 0)
+// - lane=1 -> (0, 2)
+//   lane=2 -> (0, 4)
+//   lane=4 -> (4, 0)
+//   lane=8 -> (8, 0)
+//   lane=16 -> (16, 0)
+// - warp=1 -> (0, 8)
+//   warp=2 -> (32, 0)
+// - block is a size 1 dimension
+
 ```
 
 These attributes decompose into basis vectors. For a quick sanity check, evaluate `ll.apply` at a few known points:
