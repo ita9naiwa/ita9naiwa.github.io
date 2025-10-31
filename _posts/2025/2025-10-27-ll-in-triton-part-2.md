@@ -785,6 +785,7 @@ applyLinearLayout(
 Consumes MLIR `Value`s (SSA values), emits LLVM IR to compute the layout function at runtime.
 
 **Example (during lowering):**
+{% raw %}
 ```cpp
 Value regId = b.i32_val(0);
 Value laneId = getLaneId(rewriter, loc);
@@ -799,6 +800,7 @@ auto offsets = applyLinearLayout(loc, rewriter, cvtLayout, {
 Value sharedOffset = offsets[0].second;  // MLIR Value representing offset
 // Use sharedOffset in a GEP or store instruction
 ```
+{% endraw %}
 
 **Critical reminder:** Always keep the dimension names in sync between `applyLinearLayout` inputs and the layout you created. Mismatched strings lead to silent wrong-code bugs!
 
