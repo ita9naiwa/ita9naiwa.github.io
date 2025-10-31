@@ -622,19 +622,64 @@ Use `compose` when the **output** of one layout feeds directly into the **input*
 **Example:**
 {% raw %}
 ```cpp
-// L1: (register) → (offset)
-auto L1 = LinearLayout::identity1D(32, S("register"), S("offset"));
+  // block_layout: (register -> (offset, block))
+  auto block_layout = LinearLayout::identity1D(256, S("register"), S("offset")) *
+                      LinearLayout::zeros1D(1, S("register"), S("block"));
 
-// L2: (offset) → (dim0, dim1)
-auto L2 = /* some swizzled shared layout */;
+  auto swizzled_attr = mlir::triton::gpu::SwizzledSharedEncodingAttr::get(
+      &ctx,
+      /*vec=*/4,
+      /*perPhase=*/2,
+      /*maxPhase=*/2,
+      /*order=*/{1, 0},
+      /*ctaLayout=*/cta);
+  SmallVector<int64_t> shape = {32, 32};
 
-// L3: (register) → (dim0, dim1)
-auto L3 = L1.compose(L2);
+  // swizzled_layout: ((offset, block) -> (dim0, dim1))
+  auto swizzled_layout = mlir::triton::gpu::toLinearLayout(shape, swizzled_attr);
 
-// Now you can map register IDs directly to tensor coordinates:
-auto coords = L3.apply({{S("register"), 5}});
-// coords = {{S("dim0"), ...}, {S("dim1"), ...}}
+  // composed: (register -> (dim0, dim1))
+  auto composed = block_layout.compose(swizzled_layout);
+
+  llvm::outs() << "block_layout: " << block_layout << "\n";
+  llvm::outs() << "swizzled_layout: " << swizzled_layout << "\n";
+  llvm::outs() << "composed: " << composed << "\n";
+
+// block_layout:
+//  - register=1 -> (1, 0)
+//    register=2 -> (2, 0)
+//    register=4 -> (4, 0)
+//    register=8 -> (8, 0)
+//    register=16 -> (16, 0)
+//    register=32 -> (32, 0)
+//    register=64 -> (64, 0)
+//    register=128 -> (128, 0)
+// where out dims are: [offset (size 256), block (size 1)]
+// swizzled_layout:
+//  - offset=1 -> (0, 1)
+//    offset=2 -> (0, 2)
+//    offset=4 -> (0, 4)
+//    offset=8 -> (0, 8)
+//    offset=16 -> (0, 16)
+//    offset=32 -> (1, 0)
+//    offset=64 -> (2, 4)
+//    offset=128 -> (4, 0)
+//    offset=256 -> (8, 0)
+//    offset=512 -> (16, 0)
+//  - block is a size 1 dimension
+// where out dims are: [dim0 (size 32), dim1 (size 32)]
+// composed:
+//  - register=1 -> (0, 1)
+//    register=2 -> (0, 2)
+//    register=4 -> (0, 4)
+//    register=8 -> (0, 8)
+//    register=16 -> (0, 16)
+//    register=32 -> (1, 0)
+//    register=64 -> (2, 4)
+//    register=128 -> (4, 0)
+// where out dims are: [dim0 (size 32), dim1 (size 32)]
 ```
+
 {% endraw %}
 
 **Why use `compose`?**
@@ -693,17 +738,7 @@ assert(cvt.apply({{S("register"),0}, {S("lane"),0}, {S("warp"),0}})
 
 **Why it works:** Both `regLayout` and `memLayout` map to the same tensor space `(dim0, dim1)`. The inversion finds the shared memory offset that corresponds to the same tensor element.
 
-### 3.6. Shape Transformations — Flatten, Reshape, Transpose
-
-Section 1.3 already stepped through these operators with code, so here’s a compact reminder that keeps them in your mental toolbox:
-
-- `flattenIns` / `flattenOuts` collapse all dims in minor-to-major order. Reach for these right before passing layouts into helpers that expect a single index (e.g., `invertAndCompose` with 1D shared memory).
-- `reshapeIns` / `reshapeOuts` first flatten, then repartition into the sizes you provide. Double-check the products match and pre-transpose if you need a different minor axis.
-- `transposeIns` / `transposeOuts` rearrange dimension priorities without touching sizes. Use them to set up the desired minor axis before flatten or reshape.
-
-Keeping the discussion concise here avoids repeating the longer walkthrough above while still flagging when each API fits.
-
-### 3.7. Evaluating Layouts — `apply` and `applyLinearLayout`
+### 3.6. Evaluating Layouts — `apply` and `applyLinearLayout`
 
 Two complementary helpers let you inspect or materialize a layout.
 
