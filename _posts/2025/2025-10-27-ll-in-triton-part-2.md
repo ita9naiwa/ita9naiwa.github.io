@@ -30,7 +30,7 @@ Input dimensions describe **where** a value lives in hardware. The standard prog
 
 
 
-#### 1.  Distributed (Register-based) Layouts
+#### 1.1.1  Distributed (Register-based) Layouts
 it depicts physical layout in hardware.
 ```
 "register" → Index into per-thread register slots (values held by one thread)
@@ -82,7 +82,7 @@ assert(ll.apply({{S("register"), 1}, {S("lane"), 0}, {S("warp"), 0}})[0].second 
 ```
 {% endraw %}
 
-#### Shared Memory Layouts
+#### 1.1.2 Shared Memory Layouts
 This represents shared memory. Shared encodings replace the fine-grained hardware axes (`register`, `lane`, `warp`) with a single `offset` dimension:
 
 ```
@@ -93,18 +93,59 @@ This represents shared memory. Shared encodings replace the fine-grained hardwar
 **Swizzled shared example**
 
 ```cpp
-auto shared = SwizzledSharedEncodingAttr::get(
-  ctx,
-  /*vec=*/8,
-  /*perPhase=*/4,
-  /*maxPhase=*/8,
-  /*order=*/{1, 0},
-  CTALayoutAttr::get(/*...*/));
-auto ll = swizzledSharedToLinearLayout(shape, shared);
+  SmallVector<int64_t> shape = {64, 16};
+  auto cta = mlir::triton::gpu::CTALayoutAttr::getDefault(&ctx, /*rank=*/2);
+  auto direct = mlir::triton::gpu::SwizzledSharedEncodingAttr::get(
+      &ctx,
+      /*vec=*/2,
+      /*perPhase=*/1,
+      /*maxPhase=*/1,
+      /*order=*/{1, 0},
+      /*ctaLayout=*/cta);
 
-// Input dimensions:  offset, block
-// Output dimensions: dim0, dim1
-// The offset → (dim0, dim1) mapping encodes the swizzle pattern to avoid bank conflicts
+  auto ll = mlir::triton::gpu::toLinearLayout(shape, direct);
+  llvm::outs() << "Non-swizzled layout: " << direct << "\n";
+  llvm::outs() << "No swizzling layout: " << ll << "\n";
+
+  auto swizzled = mlir::triton::gpu::SwizzledSharedEncodingAttr::get(
+      &ctx,
+      /*vec=*/8,
+      /*perPhase=*/2,
+      /*maxPhase=*/4,
+      /*order=*/{1, 0},
+      /*ctaLayout=*/cta);
+  llvm::outs() << "Swizzled: " << swizzled << "\n";
+  auto ll2 = mlir::triton::gpu::toLinearLayout(shape, swizzled);
+  llvm::outs() << "swizzled layout: " << ll2 << "\n";
+
+// Non-swizzled layout: #ttg.swizzled_shared<{vec = 2, perPhase = 1, maxPhase = 1, order = [1, 0]}>
+// No swizzling layout:
+//  - offset=1 -> (0, 1)
+//    offset=2 -> (0, 2)
+//    offset=4 -> (0, 4)
+//    offset=8 -> (0, 8)
+//    offset=16 -> (1, 0)
+//    offset=32 -> (2, 0)
+//    offset=64 -> (4, 0)
+//    offset=128 -> (8, 0)
+//    offset=256 -> (16, 0)
+//    offset=512 -> (32, 0)
+//  - block is a size 1 dimension
+// where out dims are: [dim0 (size 64), dim1 (size 16)]
+// Swizzled: #ttg.swizzled_shared<{vec = 8, perPhase = 2, maxPhase = 4, order = [1, 0]}>
+// 8x8 swizzled layout:
+//  - offset=1 -> (0, 1)
+//    offset=2 -> (0, 2)
+//    offset=4 -> (0, 4)
+//    offset=8 -> (0, 8)
+//    offset=16 -> (1, 0)
+//    offset=32 -> (2, 8)
+//    offset=64 -> (4, 0)
+//    offset=128 -> (8, 0)
+//    offset=256 -> (16, 0)
+//    offset=512 -> (32, 0)
+//  - block is a size 1 dimension
+
 ```
 
 Use this form when you need to reason about shared-memory bank conflicts at the IR level, before lowering to LLVM.
@@ -114,24 +155,11 @@ Use this form when you need to reason about shared-memory bank conflicts at the 
 Output dimensions always correspond to the **logical tensor axes** in their original order. The layout's `order` field controls internal memory layout (row-major vs. column-major), but the output dimension names remain canonical:
 
 ```
-"dim0" → First tensor axis
-"dim1" → Second tensor axis
-"dim2" → Third tensor axis
-...
+  "dim0" → First tensor axis
+  "dim1" → Second tensor axis
+  "dim2" → Third tensor axis
 ```
 
-**Key property:** All layouts—regardless of their internal `order`—speak the same output language. This uniformity is why `LinearLayout` composes so cleanly: every transformation operates on `dim0`, `dim1`, etc., and you never need to track multiple coordinate systems.
-
-**Example:**
-```cpp
-// Both layouts have order={1,0} (column-major), but outputs are still named dim0, dim1
-auto blocked = BlockedEncodingAttr::get(/*..., order={1,0}*/).toLinearLayout(shape);
-auto shared  = swizzledSharedToLinearLayout(shape, sharedAttr);
-
-// Both use the same output names:
-// blocked:  (register,lane,warp) → (dim0, dim1)
-// shared:   (offset) → (dim0, dim1)
-```
 
 ### 1.3. Dimension Ordering, Flattening, and Reshaping
 
@@ -144,19 +172,67 @@ This convention affects how `flattenIns`, `flattenOuts`, `reshapeIns`, and `resh
 #### Flatten Rule of Thumb
 
 ```cpp
-// Input dimensions: ["register", "lane", "warp"]
-// Minor-to-major: register is most minor, warp is most major
 
-auto flattened = layout.flattenIns();
-// Result: single dimension with size = register_size × lane_size × warp_size
-// Elements are ordered: register changes fastest, then lane, then warp
+  auto cta = mlir::triton::gpu::CTALayoutAttr::getDefault(&ctx, /*rank=*/2);
+  auto blocked = mlir::triton::gpu::BlockedEncodingAttr::get(
+      &ctx,
+      /*sizePerThread=*/{4, 2},
+      /*threadsPerWarp=*/{8, 4},
+      /*warpsPerCTA=*/{2, 2},
+      /*order=*/{1, 0},
+      /*ctaLayout=*/cta);
+  auto ll = blocked.toLinearLayout({64, 16});
+  llvm::outs() << "ll: " << ll << "\n";
+
+  auto new_layout =  ll.flattenIns();
+  llvm::outs() << "new_layout: " << new_layout << "\n";
+
+// ll:
+//  - register=1 -> (0, 1)
+//    register=2 -> (1, 0)
+//    register=4 -> (2, 0)
+//  - lane=1 -> (0, 2)
+//    lane=2 -> (0, 4)
+//    lane=4 -> (4, 0)
+//    lane=8 -> (8, 0)
+//    lane=16 -> (16, 0)
+//  - warp=1 -> (0, 8)
+//    warp=2 -> (32, 0)
+//  - block is a size 1 dimension
+// where out dims are: [dim0 (size 64), dim1 (size 16)]
+// new_layout:
+//  - register=1 -> (0, 1)
+//    register=2 -> (1, 0)
+//    register=4 -> (2, 0)
+//    register=8 -> (0, 2)
+//    register=16 -> (0, 4)
+//    register=32 -> (4, 0)
+//    register=64 -> (8, 0)
+//    register=128 -> (16, 0)
+//    register=256 -> (0, 8)
+//    register=512 -> (32, 0)
+// where out dims are: [dim0 (size 64), dim1 (size 16)]
 ```
 
 If you want a different flattening order (e.g., lane-major), transpose first:
 
 ```cpp
-auto laneMajor = layout.transposeIns({S("lane"), S("register"), S("warp")}).flattenIns();
-// Now lane changes fastest
+  auto transposed_layout = ll.transposeIns({S("lane"), S("register"), S("warp"), S("block")});
+  llvm::outs() << "transposed_layout: " << transposed_layout << "\n";
+
+// transposed_layout:
+//  - lane=1 -> (0, 2)
+//    lane=2 -> (0, 4)
+//    lane=4 -> (4, 0)
+//    lane=8 -> (8, 0)
+//    lane=16 -> (16, 0)
+//  - register=1 -> (0, 1)
+//    register=2 -> (1, 0)
+//    register=4 -> (2, 0)
+//  - warp=1 -> (0, 8)
+//    warp=2 -> (32, 0)
+//  - block is a size 1 dimension
+// where out dims are: [dim0 (size 64), dim1 (size 16)]
 ```
 
 #### Reshape Checklist
@@ -171,17 +247,42 @@ Before calling `reshapeIns` or `reshapeOuts`:
 
 {% raw %}
 ```cpp
-// Original: (register:4, lane:8, warp:2) — total size 64
-auto flat = layout.flattenIns();
-// Flat: (register:64)
+  auto ll = LinearLayout::identity1D(4, S("register"), S("dim0")) *
+          LinearLayout::identity1D(8, S("lane"), S("dim0")) *
+          LinearLayout::identity1D(2, S("warp"), S("dim0")) ;
+  llvm::outs() << "LL: " << ll << "\n";
 
-auto reshaped = flat.reshapeIns({{S("thread"), 32}, {S("block"), 2}});
-// Reshaped: (thread:32, block:2)
+  auto flat = ll.flattenIns();
+  llvm::outs() << "flat: " << flat << "\n";
 
-// If you wanted warp to be minor instead of register, do this:
-auto transposed = layout.transposeIns({S("warp"), S("lane"), S("register")});
-auto flatWarpMajor = transposed.flattenIns();
-// Now warp changes fastest
+  auto transposed = ll.transposeIns({S("lane"), S("warp"), S("register")});
+  llvm::outs() << "transposed: " << transposed << "\n";
+
+// LL:
+//  - register=1 -> (1)
+//    register=2 -> (2)
+//  - lane=1 -> (4)
+//    lane=2 -> (8)
+//    lane=4 -> (16)
+//  - warp=1 -> (32)
+// where out dims are: [dim0 (size 64)]
+// flat:
+//  - register=1 -> (1)
+//    register=2 -> (2)
+//    register=4 -> (4)
+//    register=8 -> (8)
+//    register=16 -> (16)
+//    register=32 -> (32)
+// where out dims are: [dim0 (size 64)]
+// transposed:
+//  - lane=1 -> (4)
+//    lane=2 -> (8)
+//    lane=4 -> (16)
+//  - warp=1 -> (32)
+//  - register=1 -> (1)
+//    register=2 -> (2)
+// where out dims are: [dim0 (size 64)]
+
 ```
 {% endraw %}
 
