@@ -695,74 +695,13 @@ assert(cvt.apply({{S("register"),0}, {S("lane"),0}, {S("warp"),0}})
 
 ### 3.6. Shape Transformations — Flatten, Reshape, Transpose
 
-These utilities let you reorganize the input or output dimensions without changing the underlying mapping.
+Section 1.3 already stepped through these operators with code, so here’s a compact reminder that keeps them in your mental toolbox:
 
-#### `flattenIns` / `flattenOuts`
+- `flattenIns` / `flattenOuts` collapse all dims in minor-to-major order. Reach for these right before passing layouts into helpers that expect a single index (e.g., `invertAndCompose` with 1D shared memory).
+- `reshapeIns` / `reshapeOuts` first flatten, then repartition into the sizes you provide. Double-check the products match and pre-transpose if you need a different minor axis.
+- `transposeIns` / `transposeOuts` rearrange dimension priorities without touching sizes. Use them to set up the desired minor axis before flatten or reshape.
 
-```cpp
-LinearLayout flattenIns() const;
-LinearLayout flattenOuts() const;
-```
-
-Merge all input (or output) dimensions into a single dimension. Dimensions are flattened in **minor-to-major** order.
-
-**Example:**
-```cpp
-// Input: (register:4, lane:8, warp:2)
-auto flat = layout.flattenIns();
-// Output: (register:64)  — size = 4×8×2
-// Order: register changes fastest, then lane, then warp
-```
-
-#### `reshapeIns` / `reshapeOuts`
-
-```cpp
-LinearLayout reshapeIns(
-  ArrayRef<std::pair<StringAttr, int32_t>> newInDims
-) const;
-LinearLayout reshapeOuts(
-  ArrayRef<std::pair<StringAttr, int32_t>> newOutDims
-) const;
-```
-
-Flatten all dimensions, then split into new named dimensions. The total size must remain the same.
-
-**Example:**
-```cpp
-auto reshaped = layout.reshapeIns({
-  {S("thread"), 32},
-  {S("block"), 2}
-});
-// Flattens (register:4, lane:8, warp:2) → 64 elements
-// Then splits into (thread:32, block:2)
-```
-
-#### `transposeIns` / `transposeOuts`
-
-```cpp
-LinearLayout transposeIns(ArrayRef<StringAttr> newOrder) const;
-LinearLayout transposeOuts(ArrayRef<StringAttr> newOrder) const;
-```
-
-Reorder dimensions explicitly. Typically used **before** `reshape` when you need a non-default minor axis.
-
-**Example:**
-```cpp
-// Original: (register:4, lane:8)
-auto transposed = layout.transposeIns({S("lane"), S("register")});
-// Result: (lane:8, register:4) — now lane is minor
-
-auto flat = transposed.flattenIns();
-// Flattens with lane changing fastest
-```
-
-**Workflow tip:**
-```cpp
-// If you want to flatten with warp as the minor axis:
-auto transposed = layout.transposeIns({S("warp"), S("lane"), S("register")});
-auto flat = transposed.flattenIns();
-// Now warp changes fastest, then lane, then register
-```
+Keeping the discussion concise here avoids repeating the longer walkthrough above while still flagging when each API fits.
 
 ### 3.7. Evaluating Layouts — `apply` and `applyLinearLayout`
 
