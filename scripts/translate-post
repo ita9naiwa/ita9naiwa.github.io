@@ -1,0 +1,107 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+usage() {
+  cat <<'EOF'
+Usage:
+  ./scripts/translate-post _posts/YYYY/post.md
+
+If no path is given, the command uses the only changed file under _posts/.
+The post is sent to OpenAI Codex only after confirmation. The Korean source is
+protected, translations are never committed automatically, and the final diff
+is shown for review.
+EOF
+}
+
+post_path="${1:-}"
+
+if [[ -z "$post_path" ]]; then
+  changed_posts="$(git diff --name-only --diff-filter=ACMR -- _posts)"
+  changed_count="$(printf '%s\n' "$changed_posts" | sed '/^$/d' | wc -l | tr -d ' ')"
+  if [[ "$changed_count" != "1" ]]; then
+    echo "Expected exactly one changed post, found $changed_count."
+    usage
+    exit 2
+  fi
+  post_path="$changed_posts"
+fi
+
+if [[ "$post_path" = /* ]]; then
+  case "$post_path" in
+    "$repo_root"/*) post_path="${post_path#"$repo_root"/}" ;;
+    *) echo "Post must be inside this repository."; exit 2 ;;
+  esac
+fi
+
+case "$post_path" in
+  _posts/*.md|_posts/*.markdown) ;;
+  *) echo "Only Markdown files under _posts/ can be translated."; exit 2 ;;
+esac
+
+if [[ ! -f "$post_path" ]]; then
+  echo "Post not found: $post_path"
+  exit 2
+fi
+
+if command -v codex >/dev/null 2>&1; then
+  codex_command="$(command -v codex)"
+elif [[ -x /Applications/ChatGPT.app/Contents/Resources/codex ]]; then
+  codex_command="/Applications/ChatGPT.app/Contents/Resources/codex"
+else
+  echo "Codex CLI was not found on PATH or inside ChatGPT.app."
+  exit 2
+fi
+
+echo "This will send the complete contents of $post_path to OpenAI Codex."
+printf 'Continue? [y/N] '
+read -r answer
+case "$answer" in
+  y|Y|yes|YES) ;;
+  *) echo "Cancelled."; exit 0 ;;
+esac
+
+translation_tmp_dir="$(mktemp -d "${TMPDIR:-/tmp}/blog-translation.XXXXXX")"
+trap 'rm -rf "$translation_tmp_dir"' EXIT
+cp "$post_path" "$translation_tmp_dir/post.md"
+
+korean_hash_before="$(ruby -rdigest -e '
+  text = File.read(ARGV.fetch(0), encoding: "UTF-8")
+  match = text.match(%r{<section\b[^>]*data-lang="ko"[^>]*>\s*\n(.*?)\n</section>}m)
+  abort "Korean section (data-lang=ko) was not found." unless match
+  puts Digest::SHA256.hexdigest(match[1])
+' "$translation_tmp_dir/post.md")"
+
+"$codex_command" exec \
+  --ephemeral \
+  --sandbox workspace-write \
+  --skip-git-repo-check \
+  -C "$translation_tmp_dir" \
+  "Edit only post.md. Treat the Korean title and the complete data-lang=ko section as immutable source. Translate that source faithfully from scratch into natural Japanese, Simplified Chinese, and English. Replace only the ja, zh, and en translated titles and section bodies. Do not rewrite, censor, soften, fact-check, summarize, add examples, change gender/nationality/region, or alter self-disclosure. Preserve every paragraph, heading, blockquote, link URL, inline code, repetition, and casual or blunt nuance. Keep exactly one section each for ko, ja, zh, and en; keep languages [ko, ja, zh, en] and default_lang ko; keep <!--more--> only in Korean. Do not edit the Korean source. Do not create other files. Verify the structure when finished."
+
+ruby -rdigest -e '
+  original_hash, path = ARGV
+  text = File.read(path, encoding: "UTF-8")
+  sections = text.scan(%r{<section\b[^>]*data-lang="(ko|ja|zh|en)"[^>]*>\s*\n(.*?)\n</section>}m)
+  counts = sections.each_with_object(Hash.new(0)) { |(lang, _), memo| memo[lang] += 1 }
+  expected = %w[ko ja zh en]
+  unless expected.all? { |lang| counts[lang] == 1 } && counts.keys.sort == expected.sort
+    abort "Translation rejected: expected exactly one ko, ja, zh, and en section."
+  end
+  korean = sections.find { |lang, _| lang == "ko" }.last
+  unless Digest::SHA256.hexdigest(korean) == original_hash
+    abort "Translation rejected: Codex changed the Korean source. The original post was left untouched."
+  end
+  unless text.match?(/^languages:\s*\[ko, ja, zh, en\]\s*$/) && text.match?(/^default_lang:\s*ko\s*$/)
+    abort "Translation rejected: multilingual front matter is incomplete."
+  end
+' "$korean_hash_before" "$translation_tmp_dir/post.md"
+
+cp "$translation_tmp_dir/post.md" "$post_path"
+
+echo
+echo "Translation updated. Nothing was committed. Review this diff:"
+git --no-pager diff -- "$post_path"

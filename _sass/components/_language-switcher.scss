@@ -1,0 +1,58 @@
+.language-switcher {
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  justify-content: flex-end;
+  margin: 0 0 1.5rem;
+  padding: 0 0 .8rem;
+}
+
+.language-switcher__label {
+  color: $text-color-l;
+  font-size: map-get($base, font-size-sm);
+}
+
+.language-switcher__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
+}
+
+.language-switcher__button {
+  background: transparent;
+  border: 1px solid $border-color;
+  border-radius: 999px;
+  color: $text-color;
+  cursor: pointer;
+  font-size: map-get($base, font-size-sm);
+  padding: .2rem .65rem;
+}
+
+.language-switcher__button:hover,
+.language-switcher__button:focus,
+.language-switcher__button.is-active {
+  border-color: $main-color-1;
+  color: $main-color-1;
+}
+
+.js-multilingual-content .post-translation {
+  display: none;
+}
+
+.js-multilingual-content .post-translation[data-default-language] {
+  display: block;
+}
+
+.js-multilingual-content.is-language-ready .post-translation {
+  display: block;
+}
+
+.js-multilingual-content.is-language-ready .post-translation[hidden] {
+  display: none;
+}
+
+@media print {
+  .language-switcher { display: none; }
+}

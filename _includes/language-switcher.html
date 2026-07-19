@@ -1,0 +1,19 @@
+{%- assign language_labels = "ko:한국어,ja:日本語,zh:中文,en:English" | split: "," -%}
+<nav class="language-switcher js-language-switcher"
+  aria-label="Article language"
+  data-site-title="{{ site.title | escape }}"
+  data-page-titles="{{ page.titles | jsonify | escape }}">
+  <span class="language-switcher__label">Language</span>
+  <div class="language-switcher__options">
+    {%- for language in page.languages -%}
+      {%- assign label = language -%}
+      {%- for label_pair in language_labels -%}
+        {%- assign pair = label_pair | split: ":" -%}
+        {%- if pair[0] == language -%}{%- assign label = pair[1] -%}{%- endif -%}
+      {%- endfor -%}
+      <button type="button" class="language-switcher__button" data-language="{{ language }}" aria-pressed="false">
+        {{- label -}}
+      </button>
+    {%- endfor -%}
+  </div>
+</nav>
