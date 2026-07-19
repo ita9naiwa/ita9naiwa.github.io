@@ -8,7 +8,7 @@ cd "$repo_root"
 usage() {
   cat <<'EOF'
 Usage:
-  ./scripts/translate-post _posts/YYYY/post.md
+  ./scripts/translate-post [--yes] _posts/YYYY/post.md
 
 If no path is given, the command uses the only changed file under _posts/.
 The post is sent to OpenAI Codex only after confirmation. The Korean source is
@@ -17,7 +17,23 @@ is shown for review.
 EOF
 }
 
-post_path="${1:-}"
+assume_yes=false
+post_path=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --yes) assume_yes=true ;;
+    -h|--help) usage; exit 0 ;;
+    -*) echo "Unknown option: $1"; usage; exit 2 ;;
+    *)
+      if [[ -n "$post_path" ]]; then
+        echo "Only one post can be translated at a time."
+        exit 2
+      fi
+      post_path="$1"
+      ;;
+  esac
+  shift
+done
 
 if [[ -z "$post_path" ]]; then
   changed_posts="$(git diff --name-only --diff-filter=ACMR -- _posts)"
@@ -56,34 +72,49 @@ else
   exit 2
 fi
 
-echo "This will send the complete contents of $post_path to OpenAI Codex."
-printf 'Continue? [y/N] '
-read -r answer
-case "$answer" in
-  y|Y|yes|YES) ;;
-  *) echo "Cancelled."; exit 0 ;;
-esac
+if [[ "$assume_yes" != true ]]; then
+  echo "This will send the complete contents of $post_path to OpenAI Codex."
+  printf 'Continue? [y/N] '
+  read -r answer
+  case "$answer" in
+    y|Y|yes|YES) ;;
+    *) echo "Cancelled."; exit 0 ;;
+  esac
+fi
 
 translation_tmp_dir="$(mktemp -d "${TMPDIR:-/tmp}/blog-translation.XXXXXX")"
 trap 'rm -rf "$translation_tmp_dir"' EXIT
 cp "$post_path" "$translation_tmp_dir/post.md"
 
-korean_hash_before="$(ruby -rdigest -e '
+source_info="$(ruby -rdigest -e '
   text = File.read(ARGV.fetch(0), encoding: "UTF-8")
   match = text.match(%r{<section\b[^>]*data-lang="ko"[^>]*>\s*\n(.*?)\n</section>}m)
-  abort "Korean section (data-lang=ko) was not found." unless match
-  puts Digest::SHA256.hexdigest(match[1])
+  if match
+    language = "ko"
+    source = match[1]
+  else
+    front = text.match(/\A---\s*\n.*?\n---\s*\n/m)
+    abort "Jekyll front matter was not found." unless front
+    source = text[front.end(0)..-1].to_s
+    language = source.scan(/[가-힣]/).length >= 10 ? "ko" : "en"
+  end
+  normalized = source.gsub("\r\n", "\n").strip
+  puts language
+  puts Digest::SHA256.hexdigest(normalized)
 ' "$translation_tmp_dir/post.md")"
+source_language="$(printf '%s\n' "$source_info" | sed -n '1p')"
+source_hash_before="$(printf '%s\n' "$source_info" | sed -n '2p')"
 
 "$codex_command" exec \
   --ephemeral \
   --sandbox workspace-write \
   --skip-git-repo-check \
+  -c 'model_reasoning_effort="low"' \
   -C "$translation_tmp_dir" \
-  "Edit only post.md. Treat the Korean title and the complete data-lang=ko section as immutable source. Translate that source faithfully from scratch into natural Japanese, Simplified Chinese, and English. Replace only the ja, zh, and en translated titles and section bodies. Do not rewrite, censor, soften, fact-check, summarize, add examples, change gender/nationality/region, or alter self-disclosure. Preserve every paragraph, heading, blockquote, link URL, inline code, repetition, and casual or blunt nuance. Keep exactly one section each for ko, ja, zh, and en; keep languages [ko, ja, zh, en] and default_lang ko; keep <!--more--> only in Korean. Do not edit the Korean source. Do not create other files. Verify the structure when finished."
+  "Edit only post.md. The immutable source language is $source_language. If the post is not multilingual yet, treat its complete body after the Jekyll front matter as the immutable source, place it unchanged inside the matching data-lang=$source_language section, and add the multilingual front matter and the other three language sections. If it is already multilingual, treat the complete data-lang=$source_language section as immutable. Translate faithfully into the other languages so the result has natural Korean, Japanese, Simplified Chinese, and English versions. Add or update the titles map for all four languages, while keeping the top-level title in the original source language. Do not rewrite, censor, soften, fact-check, summarize, add examples, change gender/nationality/region, or alter self-disclosure. Preserve every paragraph, heading, blockquote, image, link URL, inline code, repetition, and casual or blunt nuance. Keep exactly one section each for ko, ja, zh, and en. Every opening tag must be exactly <section class=\"post-translation\" data-lang=\"LANG\" markdown=\"1\">, except the source-language tag must also contain data-default-language before markdown=\"1\". Set languages: [ko, ja, zh, en] and default_lang: $source_language; keep <!--more--> only in the source section. Do not edit the source text. Do not create other files. Verify the structure when finished."
 
 ruby -rdigest -e '
-  original_hash, path = ARGV
+  source_language, original_hash, path = ARGV
   text = File.read(path, encoding: "UTF-8")
   sections = text.scan(%r{<section\b[^>]*data-lang="(ko|ja|zh|en)"[^>]*>\s*\n(.*?)\n</section>}m)
   counts = sections.each_with_object(Hash.new(0)) { |(lang, _), memo| memo[lang] += 1 }
@@ -91,14 +122,20 @@ ruby -rdigest -e '
   unless expected.all? { |lang| counts[lang] == 1 } && counts.keys.sort == expected.sort
     abort "Translation rejected: expected exactly one ko, ja, zh, and en section."
   end
-  korean = sections.find { |lang, _| lang == "ko" }.last
-  unless Digest::SHA256.hexdigest(korean) == original_hash
-    abort "Translation rejected: Codex changed the Korean source. The original post was left untouched."
+  expected.each do |lang|
+    default_attribute = lang == source_language ? " data-default-language" : ""
+    opening = %Q{<section class="post-translation" data-lang="#{lang}"#{default_attribute} markdown="1">}
+    abort "Translation rejected: invalid opening tag for #{lang}." unless text.scan(opening).length == 1
   end
-  unless text.match?(/^languages:\s*\[ko, ja, zh, en\]\s*$/) && text.match?(/^default_lang:\s*ko\s*$/)
+  source = sections.find { |lang, _| lang == source_language }.last
+  normalized = source.gsub("\r\n", "\n").strip
+  unless Digest::SHA256.hexdigest(normalized) == original_hash
+    abort "Translation rejected: Codex changed the source text. The original post was left untouched."
+  end
+  unless text.match?(/^languages:\s*\[ko, ja, zh, en\]\s*$/) && text.match?(/^default_lang:\s*#{Regexp.escape(source_language)}\s*$/)
     abort "Translation rejected: multilingual front matter is incomplete."
   end
-' "$korean_hash_before" "$translation_tmp_dir/post.md"
+' "$source_language" "$source_hash_before" "$translation_tmp_dir/post.md"
 
 cp "$translation_tmp_dir/post.md" "$post_path"
 

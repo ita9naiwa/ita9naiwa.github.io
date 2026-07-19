@@ -1,6 +1,13 @@
 ---
 layout: article
 title: "Productivity tools I use"
+titles:
+  ko: "Productivity tools I use"
+  ja: "私が使っている生産性向上ツール"
+  zh: "我使用的效率工具"
+  en: "Productivity tools I use"
+languages: [ko, ja, zh, en]
+default_lang: ko
 category: "productivity"
 tag: "productivity"
 comment: true
@@ -8,6 +15,8 @@ key: toolsiuse
 mathjax: true
 
 ---
+
+<section class="post-translation" data-lang="ko" data-default-language markdown="1">
 
 ### 잡담
 >일을 같은 시간동안 더 많이 할 수 있다면 얼마나 좋을까?
@@ -161,3 +170,476 @@ RescueTime은 측정 불가능한 지표중 하나였던,  "하루 중 내가 �
 
 
 > Written with [StackEdit](https://stackedit.io/).
+
+</section>
+
+<section class="post-translation" data-lang="ja" markdown="1">
+
+### Chitchat
+>How nice would it be if I could get more work done in the same amount of time?
+> Goofing off all day and then working overtime_
+
+I wanted to be efficient. I didn't want to work overtime. It's not that I have a lot of overtime only because I'm lazy, but...
+
+If I became twice as efficient—if the things that take me 10 hours took 5—then I could play games for the remaining 5 hours..!(or so I thought). Then I read a book called [Tools of Titans](http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9791158510619&orderClick=LAG&Kc=). After reading the methods mentioned there, and another blog post by this guy, [Apps I Use](https://tim.blog/apps-i-use/), and forming a few habits, I learned that there were ways to work more efficiently and improve my quality of life.
+
+Are there really ways to improve quality of life and work efficiently?...? Is this actually legit? This...? Okay? Is it okay? For real? That's what I wondered. A long time later, after an experience where I nearly died because I was truly unable to work efficiently, I somehow felt that I had to become more productive. The author and countless other people say they became more productive and efficient by using these tools. Well, I figured the writer was probably lying to sell books, but since so many people said the same thing..., I decided to try following along once.
+
+Building new habits is really hard. No matter how positive the change, a new attempt can initially cause a drop in performance because of the [J curve](https://en.wikipedia.org/wiki/J_curve). It happened to me too, as expected, as expected. But after seeing all those countless comments, I decided to keep following it for just a little longer. I gave up on a lot of things too.
+
+But, hmm... there are many tools in this world that help with good habits such as meditating, keeping a diary, or focusing on work. Now I think I've gotten more used to them than I expected. The effort to build good habits was important, but I think these tools helped me. Now I seem to have become fairly accustomed to several productivity tools, including things that are a bit of a stretch to call productivity tools.
+
+Now I feel like I've reached the point where I can't work without these tools.
+
+I think this result is because, um... **the current me routinely handles so much work that my past self couldn't have handled it**, so if I gave up these tools, I wouldn't be able to produce the same output I do now. For example, without Google Calendar I couldn't manage any of the appointments I have to keep. Without Inbox, I wouldn't be able to check the countless emails of countless kinds.
+
+In other words, haven't I gotten better than before? Hehe...
+
+>Women who wear makeup every day say their made-up face feels like their own face, and men who wear shoe lifts every day say their height with the lifts feels like their own height...
+
+
+Um... simply getting more work done isn't unconditionally good, and the absolute amount of my leisure time hasn't actually increased. The reasons are as follows.
+
+1.  I am paid by the hour, not on a project basis.
+	- When I finish one task, I have to do another.
+		- How should I rationalize this?
+The most important factor to me right now is growth rather than money. Both in the area I want to make my specialty and in becoming a good person as a human being. I like the changes I've seen in myself since I started managing things with productivity applications.
+
+2. I came to use my free time in chunks.
+	- My free time did directly increase, but I also turned little scraps of free time into solid blocks.
+		- Even when working for the same amount of time, batching work to create two hours of free time seems worlds apart from working at a so-so, low level of efficiency and creating four 30-minute breaks. Time I would have spent looking at Facebook or DC Inside can be turned into time to read a book or do a code review.
+	> As an aside, I thought this resembled [Memory Fragmentation](https://en.wikipedia.org/wiki/Fragmentation_(computing)), and that the resulting problem could be quite serious (because of context switching time), and it looks like research is being done on a similar topic ([Time Fragmentation](https://interruptions.net/literature/Tetard-HICSS00.pdf)). _Th...this is academic interconnectedness...fusion...convergence......._
+3. The effort to use time efficiently is itself pretty fun.
+	- Experiences like, "I meditated again today," or "At first I could do 4 pull-ups, but now I did 10!" or "I thought it would take all day, but I finished in five hours...!" are themselves pretty enjoyable.
+
+-----
+
+### Applications I use often
+> I originally tried to divide the applications I use often into categories like *time management* and _focus_, but it didn't work well, so I just listed them straight through.
+> For example, I use Noisli when focusing, but I also use it when meditating. I sometimes use Trello for short notes, and if I want to tell some other dude something and later get a notification from that dude again, I immediately open Inbox and send an email. Anyway, I use these applications across various layers of life, and they help me a lot.
+
+
+####  1. Trello [[link](https://trello.com/)]
+Trello was originally made as a tool for managing software development.
+
+![This is how I divide up my work...]({{ "/assets/apps/trello1.png" | absolute_url }})
+This is how I divide up my work...
+
+The author of a book called [Soft Skills](https://thebook.io/006794/) said in the book that although it was software for team projects, it was also an almost perfect tool when used for personal schedule management, so I downloaded it, and it is so, so, so effective. It is much more "visual" and convenient than Todoledo? or the various other GTD tools I used.
+
+![It's convenient if you divide tasks like this]({{ "/assets/apps/trello2.png" | absolute_url }})
+Dividing tasks this way is (at least for me) so convenient!!
+
+- Pros
+	1. I can easily see visually what I'm doing.
+	2. I can conveniently move back and forth among various categories.
+- Cons
+	1. Time-related management is inconvenient.
+	2. Sharing my work plan with other people is inconvenient.
+
+###
+#### 2. Google Calendar [[link](http://calendar.google.com)]
+Actually, **I always carried a planner.** I just never once used it well.
+I was cramming into my cockroach-memory-level head how many places I had to be and how many appointments I lived with.
+Of course, the mountain of promises and schedules I failed to keep was more than enough to grow my self-loathing. The part that made me feel even worse was that I failed to keep the promise not because I lacked the ability, but simply because I couldn't remember it.
+The other person comes to think that I "wasn't capable of doing it" or that I "don't consider promises important." In truth, I have a lot of excuses I want to make, but it is true.
+
+
+If you don't have the ability to remember, you can store it externally. Since I consider things with the other person important, I have to remember them by any means necessary. Thinking this way naturally led me to use this application.
+Oh yeah...
+
+#### 3. inbox [[link](https://www.google.com/inbox/)]
+![BLAHBLAH]({{ "/assets/apps/inbox1.png" | absolute_url }})
+I originally used Streak, and um... it was very convenient, but I switched because it showed ads. Things made directly by Google don't seem to be that high-quality at first, but when I use a Google-made application within Google services, I really love that there are no ads...! ~~So if you keep stubbornly using it, eventually the Google product (Inbox) beats its competitor (Streak). It happened every time...~~
+![The screen that appears when you've cleared all your mail]({{ "/assets/apps/inbox1
+.png" | absolute_url }})
+- Pros
+	1. There is no page navigation when checking mail.
+	2. It automatically classifies mail using statistical learning. Of course, classifications you don't like can be changed.
+	3. I really like that it uses gamification to make you want to process mail well.
+		I can finally do the hardest part of GTD: always keeping a clean inbox..!
+	4. The best part is that features can be added through various other extensions.
+- Cons
+	1. It has no convenient toolbar like Outlook's, and convenient features require keyboard shortcuts.
+	2. It forces you to use Hangouts.
+None of the organizations I belong to use Hangouts.
+
+#### 4.Noisli [[link](https://www.noisli.com/)]
+A friend often listens to something like ASMR?. I use it for a similar purpose. I usually studied while listening to music, but I'm gradually moving toward using Noisli. It seems to let me focus on work a little better. Honestly, it feels like I can't study at all unless I have something playing.
+
+Also, I recently started meditating. I use Noisli when meditating too. This application also has a timer. There are apps made for meditation, like Headspace or Calm, but um... I don't particularly want guidance while meditating, and using as few applications as possible means fewer new things to get used to, so I think it may make it easier to improve productivity.
+
+#### 5. AppBlock [[link](https://play.google.com/store/apps/details?id=cz.mobilesoft.appblock&hl=ko)]
+There are things I want to quit but can't. Going on YouTube at lunchtime, pointlessly reading news or webtoons during work hours, cigarettes, ~~cigarettes~~...
+
+What these have in common is that I regret doing them for no reason, and if I actually hold out for a few minutes, they soon disappear from my thoughts.
+[AppBlock](https://play.google.com/store/apps/details?id=cz.mobilesoft.appblock&hl=ko) is an application made to solve this problem. It is a tool that blocks specified phone applications from running during specified times.
+
+Pro tip: If you block AppBlock with AppBlock, you can block the urge to disable the blocking all at once too.
+
+#### 6. RescueTime [[link](https://www-dn.appspot.com/rescuetime)]
+You cannot improve what you cannot measure.
+> Measure everything that can be measured. Make things that are difficult to measure measurable.
+>	*Edward Deming*
+
+> If you cannot measure it, you cannot manage it, and if you cannot manage it, you cannot improve it.
+> *Peter Drucker*
+
+They say the two quotations above are the business-management version of $$F=ma$$ in physics. (I don't know if that's true.) Anyway, those two dudes were talking about companies, but a person too is (at least during working hours) a machine for achieving a goal (whether defined by oneself or someone else), and in that respect is the same as a company. I think you can manage people using the same methods used to manage companies, and improve people.
+
+RescueTime makes it possible to measure one of the indicators that used to be impossible to measure: "how productively I spend my day"
+(because I can't stand beside myself watching myself work and film the process...?)!
+It shows me in a pretty report which applications and web pages I opened on my computer or phone and how long I used them.
+You can also register whether an application or web page is productive or not (there are quite a lot of default values too) and check your approximate productivity for the day.
+
+![You can see how laazy you are]({{ "/assets/apps/rescuetime1.png" | absolute_url }})
+
+The most surprising part was that during work hours I spend more than an hour touching my phone, around 30 minutes on Facebook, and close to an hour writing and receiving emails. Of course, those things may sometimes be necessary, but I was spending much more time than I thought on useless things while spouting nonsense about being "busy." Why did I do that? Again, securing two hours and then playing for a solid two-hour chunk is much better than playing for 30 minutes four times!
+Thirty minutes is enough time to smoke a cigarette, stop at a convenience store, and buy a cup of coffee, but two hours is enough to watch a movie or carefully read one paper. ((Apologies if you're someone who can read a paper within 30 minutes...)
+
+Let's minimize miscellaneous chores during work hours, create solid blocks of time, and slack off more productively. And let's realize that time sitting at a desk =/= time spent studying, and feel self-loathing. If you don't feel it, you can't improve.
+
+Anyway, to summarize, human behavior can also be managed and improved like company behavior, most people are ignorant of how they themselves use their time, and improving this can give you a bigger time bonus than you might think.
+
+
+
+#### 7. Marinara [[link](https://chrome.google.com/webstore/detail/marinara-pomodoro%C2%AE-assist/lojgmehidjdhhbmpjfamhpkpodfcodef)]
+Pomodoro Technique [official site](https://francescocirillo.com/pages/pomodoro-technique) ([Wikipedia](https://en.wikipedia.org/wiki/Pomodoro_Technique)): A technique that encourages concentration by repeating 25 minutes of hardcore play / 5 minutes of rest.
+This method is well known, so I'll skip a detailed explanation of the technique. ~~It's. Fucking. Ef. Fec. Tive.~~
+
+**As soon as I tried** Pomodoro, I realized it was fucking great. But it was hard to begin the first round of concentration right after sitting down, so I thought it would be good to borrow the power of an application, and I discovered this application while looking. Mrinara is a Chrome web extension, and it was the best Pomodoro application I've used so far. It's a web extension, but these days almost every worker spends most of their work time with the internet, so I don't think that's much of a problem. If you don't use Chrome, well, there are tons of other similar programs, so find one that suits you!
+
+Pro tip: There is no need to forcibly apply 25 minutes / 5 minutes. I think it's good to set focus/rest times that you can sustain consistently. Adjust the hardcore-play time and rest time little by little and find the times that are most efficient for you. I use 35 minutes / 8 minutes.
+
+-----
+
+#### Conclusion
+I can't say that using many applications is necessarily helpful. Learning how to use a new application and getting used to it also takes longer than you might think. An attempt to increase productivity with a new tool can instead eat up productivity. One solution I thought of is to use one tool for multiple purposes.
+
+- Use Trello for both project management and personal schedule management.
+- Use Nosili when I need to focus, when meditating, and when I want to take a nap.
+Like this...?
+
+Even now, I can by no means call myself a productive person. I'm lazy, bad at my job, and know almost nothing.
+But I think that in life, $$f(t)$$ is important, but $$\frac{d}{dt}f(t)$$ is important too.
+In the end, I'm doing various things to become a slightly better person, so don't set your mind on anything too grand, and it's okay to give up; it's about building new habits and becoming a better person.
+Wouldn't it be nice if you, reading this, started making this kind of effort too?
+
+
+> Written with [StackEdit](https://stackedit.io/).
+
+</section>
+
+<section class="post-translation" data-lang="zh" markdown="1">
+
+### Chitchat
+>How nice would it be if I could get more work done in the same amount of time?
+> Goofing off all day and then working overtime_
+
+I wanted to be efficient. I didn't want to work overtime. It's not that I have a lot of overtime only because I'm lazy, but...
+
+If I became twice as efficient—if the things that take me 10 hours took 5—then I could play games for the remaining 5 hours..!(or so I thought). Then I read a book called [Tools of Titans](http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9791158510619&orderClick=LAG&Kc=). After reading the methods mentioned there, and another blog post by this guy, [Apps I Use](https://tim.blog/apps-i-use/), and forming a few habits, I learned that there were ways to work more efficiently and improve my quality of life.
+
+Are there really ways to improve quality of life and work efficiently?...? Is this actually legit? This...? Okay? Is it okay? For real? That's what I wondered. A long time later, after an experience where I nearly died because I was truly unable to work efficiently, I somehow felt that I had to become more productive. The author and countless other people say they became more productive and efficient by using these tools. Well, I figured the writer was probably lying to sell books, but since so many people said the same thing..., I decided to try following along once.
+
+Building new habits is really hard. No matter how positive the change, a new attempt can initially cause a drop in performance because of the [J curve](https://en.wikipedia.org/wiki/J_curve). It happened to me too, as expected, as expected. But after seeing all those countless comments, I decided to keep following it for just a little longer. I gave up on a lot of things too.
+
+But, hmm... there are many tools in this world that help with good habits such as meditating, keeping a diary, or focusing on work. Now I think I've gotten more used to them than I expected. The effort to build good habits was important, but I think these tools helped me. Now I seem to have become fairly accustomed to several productivity tools, including things that are a bit of a stretch to call productivity tools.
+
+Now I feel like I've reached the point where I can't work without these tools.
+
+I think this result is because, um... **the current me routinely handles so much work that my past self couldn't have handled it**, so if I gave up these tools, I wouldn't be able to produce the same output I do now. For example, without Google Calendar I couldn't manage any of the appointments I have to keep. Without Inbox, I wouldn't be able to check the countless emails of countless kinds.
+
+In other words, haven't I gotten better than before? Hehe...
+
+>Women who wear makeup every day say their made-up face feels like their own face, and men who wear shoe lifts every day say their height with the lifts feels like their own height...
+
+
+Um... simply getting more work done isn't unconditionally good, and the absolute amount of my leisure time hasn't actually increased. The reasons are as follows.
+
+1.  I am paid by the hour, not on a project basis.
+	- When I finish one task, I have to do another.
+		- How should I rationalize this?
+The most important factor to me right now is growth rather than money. Both in the area I want to make my specialty and in becoming a good person as a human being. I like the changes I've seen in myself since I started managing things with productivity applications.
+
+2. I came to use my free time in chunks.
+	- My free time did directly increase, but I also turned little scraps of free time into solid blocks.
+		- Even when working for the same amount of time, batching work to create two hours of free time seems worlds apart from working at a so-so, low level of efficiency and creating four 30-minute breaks. Time I would have spent looking at Facebook or DC Inside can be turned into time to read a book or do a code review.
+	> As an aside, I thought this resembled [Memory Fragmentation](https://en.wikipedia.org/wiki/Fragmentation_(computing)), and that the resulting problem could be quite serious (because of context switching time), and it looks like research is being done on a similar topic ([Time Fragmentation](https://interruptions.net/literature/Tetard-HICSS00.pdf)). _Th...this is academic interconnectedness...fusion...convergence......._
+3. The effort to use time efficiently is itself pretty fun.
+	- Experiences like, "I meditated again today," or "At first I could do 4 pull-ups, but now I did 10!" or "I thought it would take all day, but I finished in five hours...!" are themselves pretty enjoyable.
+
+-----
+
+### Applications I use often
+> I originally tried to divide the applications I use often into categories like *time management* and _focus_, but it didn't work well, so I just listed them straight through.
+> For example, I use Noisli when focusing, but I also use it when meditating. I sometimes use Trello for short notes, and if I want to tell some other dude something and later get a notification from that dude again, I immediately open Inbox and send an email. Anyway, I use these applications across various layers of life, and they help me a lot.
+
+
+####  1. Trello [[link](https://trello.com/)]
+Trello was originally made as a tool for managing software development.
+
+![This is how I divide up my work...]({{ "/assets/apps/trello1.png" | absolute_url }})
+This is how I divide up my work...
+
+The author of a book called [Soft Skills](https://thebook.io/006794/) said in the book that although it was software for team projects, it was also an almost perfect tool when used for personal schedule management, so I downloaded it, and it is so, so, so effective. It is much more "visual" and convenient than Todoledo? or the various other GTD tools I used.
+
+![It's convenient if you divide tasks like this]({{ "/assets/apps/trello2.png" | absolute_url }})
+Dividing tasks this way is (at least for me) so convenient!!
+
+- Pros
+	1. I can easily see visually what I'm doing.
+	2. I can conveniently move back and forth among various categories.
+- Cons
+	1. Time-related management is inconvenient.
+	2. Sharing my work plan with other people is inconvenient.
+
+###
+#### 2. Google Calendar [[link](http://calendar.google.com)]
+Actually, **I always carried a planner.** I just never once used it well.
+I was cramming into my cockroach-memory-level head how many places I had to be and how many appointments I lived with.
+Of course, the mountain of promises and schedules I failed to keep was more than enough to grow my self-loathing. The part that made me feel even worse was that I failed to keep the promise not because I lacked the ability, but simply because I couldn't remember it.
+The other person comes to think that I "wasn't capable of doing it" or that I "don't consider promises important." In truth, I have a lot of excuses I want to make, but it is true.
+
+
+If you don't have the ability to remember, you can store it externally. Since I consider things with the other person important, I have to remember them by any means necessary. Thinking this way naturally led me to use this application.
+Oh yeah...
+
+#### 3. inbox [[link](https://www.google.com/inbox/)]
+![BLAHBLAH]({{ "/assets/apps/inbox1.png" | absolute_url }})
+I originally used Streak, and um... it was very convenient, but I switched because it showed ads. Things made directly by Google don't seem to be that high-quality at first, but when I use a Google-made application within Google services, I really love that there are no ads...! ~~So if you keep stubbornly using it, eventually the Google product (Inbox) beats its competitor (Streak). It happened every time...~~
+![The screen that appears when you've cleared all your mail]({{ "/assets/apps/inbox1
+.png" | absolute_url }})
+- Pros
+	1. There is no page navigation when checking mail.
+	2. It automatically classifies mail using statistical learning. Of course, classifications you don't like can be changed.
+	3. I really like that it uses gamification to make you want to process mail well.
+		I can finally do the hardest part of GTD: always keeping a clean inbox..!
+	4. The best part is that features can be added through various other extensions.
+- Cons
+	1. It has no convenient toolbar like Outlook's, and convenient features require keyboard shortcuts.
+	2. It forces you to use Hangouts.
+None of the organizations I belong to use Hangouts.
+
+#### 4.Noisli [[link](https://www.noisli.com/)]
+A friend often listens to something like ASMR?. I use it for a similar purpose. I usually studied while listening to music, but I'm gradually moving toward using Noisli. It seems to let me focus on work a little better. Honestly, it feels like I can't study at all unless I have something playing.
+
+Also, I recently started meditating. I use Noisli when meditating too. This application also has a timer. There are apps made for meditation, like Headspace or Calm, but um... I don't particularly want guidance while meditating, and using as few applications as possible means fewer new things to get used to, so I think it may make it easier to improve productivity.
+
+#### 5. AppBlock [[link](https://play.google.com/store/apps/details?id=cz.mobilesoft.appblock&hl=ko)]
+There are things I want to quit but can't. Going on YouTube at lunchtime, pointlessly reading news or webtoons during work hours, cigarettes, ~~cigarettes~~...
+
+What these have in common is that I regret doing them for no reason, and if I actually hold out for a few minutes, they soon disappear from my thoughts.
+[AppBlock](https://play.google.com/store/apps/details?id=cz.mobilesoft.appblock&hl=ko) is an application made to solve this problem. It is a tool that blocks specified phone applications from running during specified times.
+
+Pro tip: If you block AppBlock with AppBlock, you can block the urge to disable the blocking all at once too.
+
+#### 6. RescueTime [[link](https://www-dn.appspot.com/rescuetime)]
+You cannot improve what you cannot measure.
+> Measure everything that can be measured. Make things that are difficult to measure measurable.
+>	*Edward Deming*
+
+> If you cannot measure it, you cannot manage it, and if you cannot manage it, you cannot improve it.
+> *Peter Drucker*
+
+They say the two quotations above are the business-management version of $$F=ma$$ in physics. (I don't know if that's true.) Anyway, those two dudes were talking about companies, but a person too is (at least during working hours) a machine for achieving a goal (whether defined by oneself or someone else), and in that respect is the same as a company. I think you can manage people using the same methods used to manage companies, and improve people.
+
+RescueTime makes it possible to measure one of the indicators that used to be impossible to measure: "how productively I spend my day"
+(because I can't stand beside myself watching myself work and film the process...?)!
+It shows me in a pretty report which applications and web pages I opened on my computer or phone and how long I used them.
+You can also register whether an application or web page is productive or not (there are quite a lot of default values too) and check your approximate productivity for the day.
+
+![You can see how laazy you are]({{ "/assets/apps/rescuetime1.png" | absolute_url }})
+
+The most surprising part was that during work hours I spend more than an hour touching my phone, around 30 minutes on Facebook, and close to an hour writing and receiving emails. Of course, those things may sometimes be necessary, but I was spending much more time than I thought on useless things while spouting nonsense about being "busy." Why did I do that? Again, securing two hours and then playing for a solid two-hour chunk is much better than playing for 30 minutes four times!
+Thirty minutes is enough time to smoke a cigarette, stop at a convenience store, and buy a cup of coffee, but two hours is enough to watch a movie or carefully read one paper. ((Apologies if you're someone who can read a paper within 30 minutes...)
+
+Let's minimize miscellaneous chores during work hours, create solid blocks of time, and slack off more productively. And let's realize that time sitting at a desk =/= time spent studying, and feel self-loathing. If you don't feel it, you can't improve.
+
+Anyway, to summarize, human behavior can also be managed and improved like company behavior, most people are ignorant of how they themselves use their time, and improving this can give you a bigger time bonus than you might think.
+
+
+
+#### 7. Marinara [[link](https://chrome.google.com/webstore/detail/marinara-pomodoro%C2%AE-assist/lojgmehidjdhhbmpjfamhpkpodfcodef)]
+Pomodoro Technique [official site](https://francescocirillo.com/pages/pomodoro-technique) ([Wikipedia](https://en.wikipedia.org/wiki/Pomodoro_Technique)): A technique that encourages concentration by repeating 25 minutes of hardcore play / 5 minutes of rest.
+This method is well known, so I'll skip a detailed explanation of the technique. ~~It's. Fucking. Ef. Fec. Tive.~~
+
+**As soon as I tried** Pomodoro, I realized it was fucking great. But it was hard to begin the first round of concentration right after sitting down, so I thought it would be good to borrow the power of an application, and I discovered this application while looking. Mrinara is a Chrome web extension, and it was the best Pomodoro application I've used so far. It's a web extension, but these days almost every worker spends most of their work time with the internet, so I don't think that's much of a problem. If you don't use Chrome, well, there are tons of other similar programs, so find one that suits you!
+
+Pro tip: There is no need to forcibly apply 25 minutes / 5 minutes. I think it's good to set focus/rest times that you can sustain consistently. Adjust the hardcore-play time and rest time little by little and find the times that are most efficient for you. I use 35 minutes / 8 minutes.
+
+-----
+
+#### Conclusion
+I can't say that using many applications is necessarily helpful. Learning how to use a new application and getting used to it also takes longer than you might think. An attempt to increase productivity with a new tool can instead eat up productivity. One solution I thought of is to use one tool for multiple purposes.
+
+- Use Trello for both project management and personal schedule management.
+- Use Nosili when I need to focus, when meditating, and when I want to take a nap.
+Like this...?
+
+Even now, I can by no means call myself a productive person. I'm lazy, bad at my job, and know almost nothing.
+But I think that in life, $$f(t)$$ is important, but $$\frac{d}{dt}f(t)$$ is important too.
+In the end, I'm doing various things to become a slightly better person, so don't set your mind on anything too grand, and it's okay to give up; it's about building new habits and becoming a better person.
+Wouldn't it be nice if you, reading this, started making this kind of effort too?
+
+
+> Written with [StackEdit](https://stackedit.io/).
+
+</section>
+
+<section class="post-translation" data-lang="en" markdown="1">
+
+### Chitchat
+>How nice would it be if I could get more work done in the same amount of time?
+> Goofing off all day and then working overtime_
+
+I wanted to be efficient. I didn't want to work overtime. It's not that I have a lot of overtime only because I'm lazy, but...
+
+If I became twice as efficient—if the things that take me 10 hours took 5—then I could play games for the remaining 5 hours..!(or so I thought). Then I read a book called [Tools of Titans](http://www.kyobobook.co.kr/product/detailViewKor.laf?ejkGb=KOR&mallGb=KOR&barcode=9791158510619&orderClick=LAG&Kc=). After reading the methods mentioned there, and another blog post by this guy, [Apps I Use](https://tim.blog/apps-i-use/), and forming a few habits, I learned that there were ways to work more efficiently and improve my quality of life.
+
+Are there really ways to improve quality of life and work efficiently?...? Is this actually legit? This...? Okay? Is it okay? For real? That's what I wondered. A long time later, after an experience where I nearly died because I was truly unable to work efficiently, I somehow felt that I had to become more productive. The author and countless other people say they became more productive and efficient by using these tools. Well, I figured the writer was probably lying to sell books, but since so many people said the same thing..., I decided to try following along once.
+
+Building new habits is really hard. No matter how positive the change, a new attempt can initially cause a drop in performance because of the [J curve](https://en.wikipedia.org/wiki/J_curve). It happened to me too, as expected, as expected. But after seeing all those countless comments, I decided to keep following it for just a little longer. I gave up on a lot of things too.
+
+But, hmm... there are many tools in this world that help with good habits such as meditating, keeping a diary, or focusing on work. Now I think I've gotten more used to them than I expected. The effort to build good habits was important, but I think these tools helped me. Now I seem to have become fairly accustomed to several productivity tools, including things that are a bit of a stretch to call productivity tools.
+
+Now I feel like I've reached the point where I can't work without these tools.
+
+I think this result is because, um... **the current me routinely handles so much work that my past self couldn't have handled it**, so if I gave up these tools, I wouldn't be able to produce the same output I do now. For example, without Google Calendar I couldn't manage any of the appointments I have to keep. Without Inbox, I wouldn't be able to check the countless emails of countless kinds.
+
+In other words, haven't I gotten better than before? Hehe...
+
+>Women who wear makeup every day say their made-up face feels like their own face, and men who wear shoe lifts every day say their height with the lifts feels like their own height...
+
+
+Um... simply getting more work done isn't unconditionally good, and the absolute amount of my leisure time hasn't actually increased. The reasons are as follows.
+
+1.  I am paid by the hour, not on a project basis.
+	- When I finish one task, I have to do another.
+		- How should I rationalize this?
+The most important factor to me right now is growth rather than money. Both in the area I want to make my specialty and in becoming a good person as a human being. I like the changes I've seen in myself since I started managing things with productivity applications.
+
+2. I came to use my free time in chunks.
+	- My free time did directly increase, but I also turned little scraps of free time into solid blocks.
+		- Even when working for the same amount of time, batching work to create two hours of free time seems worlds apart from working at a so-so, low level of efficiency and creating four 30-minute breaks. Time I would have spent looking at Facebook or DC Inside can be turned into time to read a book or do a code review.
+	> As an aside, I thought this resembled [Memory Fragmentation](https://en.wikipedia.org/wiki/Fragmentation_(computing)), and that the resulting problem could be quite serious (because of context switching time), and it looks like research is being done on a similar topic ([Time Fragmentation](https://interruptions.net/literature/Tetard-HICSS00.pdf)). _Th...this is academic interconnectedness...fusion...convergence......._
+3. The effort to use time efficiently is itself pretty fun.
+	- Experiences like, "I meditated again today," or "At first I could do 4 pull-ups, but now I did 10!" or "I thought it would take all day, but I finished in five hours...!" are themselves pretty enjoyable.
+
+-----
+
+### Applications I use often
+> I originally tried to divide the applications I use often into categories like *time management* and _focus_, but it didn't work well, so I just listed them straight through.
+> For example, I use Noisli when focusing, but I also use it when meditating. I sometimes use Trello for short notes, and if I want to tell some other dude something and later get a notification from that dude again, I immediately open Inbox and send an email. Anyway, I use these applications across various layers of life, and they help me a lot.
+
+
+####  1. Trello [[link](https://trello.com/)]
+Trello was originally made as a tool for managing software development.
+
+![This is how I divide up my work...]({{ "/assets/apps/trello1.png" | absolute_url }})
+This is how I divide up my work...
+
+The author of a book called [Soft Skills](https://thebook.io/006794/) said in the book that although it was software for team projects, it was also an almost perfect tool when used for personal schedule management, so I downloaded it, and it is so, so, so effective. It is much more "visual" and convenient than Todoledo? or the various other GTD tools I used.
+
+![It's convenient if you divide tasks like this]({{ "/assets/apps/trello2.png" | absolute_url }})
+Dividing tasks this way is (at least for me) so convenient!!
+
+- Pros
+	1. I can easily see visually what I'm doing.
+	2. I can conveniently move back and forth among various categories.
+- Cons
+	1. Time-related management is inconvenient.
+	2. Sharing my work plan with other people is inconvenient.
+
+###
+#### 2. Google Calendar [[link](http://calendar.google.com)]
+Actually, **I always carried a planner.** I just never once used it well.
+I was cramming into my cockroach-memory-level head how many places I had to be and how many appointments I lived with.
+Of course, the mountain of promises and schedules I failed to keep was more than enough to grow my self-loathing. The part that made me feel even worse was that I failed to keep the promise not because I lacked the ability, but simply because I couldn't remember it.
+The other person comes to think that I "wasn't capable of doing it" or that I "don't consider promises important." In truth, I have a lot of excuses I want to make, but it is true.
+
+
+If you don't have the ability to remember, you can store it externally. Since I consider things with the other person important, I have to remember them by any means necessary. Thinking this way naturally led me to use this application.
+Oh yeah...
+
+#### 3. inbox [[link](https://www.google.com/inbox/)]
+![BLAHBLAH]({{ "/assets/apps/inbox1.png" | absolute_url }})
+I originally used Streak, and um... it was very convenient, but I switched because it showed ads. Things made directly by Google don't seem to be that high-quality at first, but when I use a Google-made application within Google services, I really love that there are no ads...! ~~So if you keep stubbornly using it, eventually the Google product (Inbox) beats its competitor (Streak). It happened every time...~~
+![The screen that appears when you've cleared all your mail]({{ "/assets/apps/inbox1
+.png" | absolute_url }})
+- Pros
+	1. There is no page navigation when checking mail.
+	2. It automatically classifies mail using statistical learning. Of course, classifications you don't like can be changed.
+	3. I really like that it uses gamification to make you want to process mail well.
+		I can finally do the hardest part of GTD: always keeping a clean inbox..!
+	4. The best part is that features can be added through various other extensions.
+- Cons
+	1. It has no convenient toolbar like Outlook's, and convenient features require keyboard shortcuts.
+	2. It forces you to use Hangouts.
+None of the organizations I belong to use Hangouts.
+
+#### 4.Noisli [[link](https://www.noisli.com/)]
+A friend often listens to something like ASMR?. I use it for a similar purpose. I usually studied while listening to music, but I'm gradually moving toward using Noisli. It seems to let me focus on work a little better. Honestly, it feels like I can't study at all unless I have something playing.
+
+Also, I recently started meditating. I use Noisli when meditating too. This application also has a timer. There are apps made for meditation, like Headspace or Calm, but um... I don't particularly want guidance while meditating, and using as few applications as possible means fewer new things to get used to, so I think it may make it easier to improve productivity.
+
+#### 5. AppBlock [[link](https://play.google.com/store/apps/details?id=cz.mobilesoft.appblock&hl=ko)]
+There are things I want to quit but can't. Going on YouTube at lunchtime, pointlessly reading news or webtoons during work hours, cigarettes, ~~cigarettes~~...
+
+What these have in common is that I regret doing them for no reason, and if I actually hold out for a few minutes, they soon disappear from my thoughts.
+[AppBlock](https://play.google.com/store/apps/details?id=cz.mobilesoft.appblock&hl=ko) is an application made to solve this problem. It is a tool that blocks specified phone applications from running during specified times.
+
+Pro tip: If you block AppBlock with AppBlock, you can block the urge to disable the blocking all at once too.
+
+#### 6. RescueTime [[link](https://www-dn.appspot.com/rescuetime)]
+You cannot improve what you cannot measure.
+> Measure everything that can be measured. Make things that are difficult to measure measurable.
+>	*Edward Deming*
+
+> If you cannot measure it, you cannot manage it, and if you cannot manage it, you cannot improve it.
+> *Peter Drucker*
+
+They say the two quotations above are the business-management version of $$F=ma$$ in physics. (I don't know if that's true.) Anyway, those two dudes were talking about companies, but a person too is (at least during working hours) a machine for achieving a goal (whether defined by oneself or someone else), and in that respect is the same as a company. I think you can manage people using the same methods used to manage companies, and improve people.
+
+RescueTime makes it possible to measure one of the indicators that used to be impossible to measure: "how productively I spend my day"
+(because I can't stand beside myself watching myself work and film the process...?)!
+It shows me in a pretty report which applications and web pages I opened on my computer or phone and how long I used them.
+You can also register whether an application or web page is productive or not (there are quite a lot of default values too) and check your approximate productivity for the day.
+
+![You can see how laazy you are]({{ "/assets/apps/rescuetime1.png" | absolute_url }})
+
+The most surprising part was that during work hours I spend more than an hour touching my phone, around 30 minutes on Facebook, and close to an hour writing and receiving emails. Of course, those things may sometimes be necessary, but I was spending much more time than I thought on useless things while spouting nonsense about being "busy." Why did I do that? Again, securing two hours and then playing for a solid two-hour chunk is much better than playing for 30 minutes four times!
+Thirty minutes is enough time to smoke a cigarette, stop at a convenience store, and buy a cup of coffee, but two hours is enough to watch a movie or carefully read one paper. ((Apologies if you're someone who can read a paper within 30 minutes...)
+
+Let's minimize miscellaneous chores during work hours, create solid blocks of time, and slack off more productively. And let's realize that time sitting at a desk =/= time spent studying, and feel self-loathing. If you don't feel it, you can't improve.
+
+Anyway, to summarize, human behavior can also be managed and improved like company behavior, most people are ignorant of how they themselves use their time, and improving this can give you a bigger time bonus than you might think.
+
+
+
+#### 7. Marinara [[link](https://chrome.google.com/webstore/detail/marinara-pomodoro%C2%AE-assist/lojgmehidjdhhbmpjfamhpkpodfcodef)]
+Pomodoro Technique [official site](https://francescocirillo.com/pages/pomodoro-technique) ([Wikipedia](https://en.wikipedia.org/wiki/Pomodoro_Technique)): A technique that encourages concentration by repeating 25 minutes of hardcore play / 5 minutes of rest.
+This method is well known, so I'll skip a detailed explanation of the technique. ~~It's. Fucking. Ef. Fec. Tive.~~
+
+**As soon as I tried** Pomodoro, I realized it was fucking great. But it was hard to begin the first round of concentration right after sitting down, so I thought it would be good to borrow the power of an application, and I discovered this application while looking. Mrinara is a Chrome web extension, and it was the best Pomodoro application I've used so far. It's a web extension, but these days almost every worker spends most of their work time with the internet, so I don't think that's much of a problem. If you don't use Chrome, well, there are tons of other similar programs, so find one that suits you!
+
+Pro tip: There is no need to forcibly apply 25 minutes / 5 minutes. I think it's good to set focus/rest times that you can sustain consistently. Adjust the hardcore-play time and rest time little by little and find the times that are most efficient for you. I use 35 minutes / 8 minutes.
+
+-----
+
+#### Conclusion
+I can't say that using many applications is necessarily helpful. Learning how to use a new application and getting used to it also takes longer than you might think. An attempt to increase productivity with a new tool can instead eat up productivity. One solution I thought of is to use one tool for multiple purposes.
+
+- Use Trello for both project management and personal schedule management.
+- Use Nosili when I need to focus, when meditating, and when I want to take a nap.
+Like this...?
+
+Even now, I can by no means call myself a productive person. I'm lazy, bad at my job, and know almost nothing.
+But I think that in life, $$f(t)$$ is important, but $$\frac{d}{dt}f(t)$$ is important too.
+In the end, I'm doing various things to become a slightly better person, so don't set your mind on anything too grand, and it's okay to give up; it's about building new habits and becoming a better person.
+Wouldn't it be nice if you, reading this, started making this kind of effort too?
+
+
+> Written with [StackEdit](https://stackedit.io/).
+
+</section>
