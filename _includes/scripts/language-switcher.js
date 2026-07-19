@@ -14,6 +14,8 @@
   var available = sections.map(function (section) {
     return section.getAttribute('data-lang');
   });
+  var visibleTitle = document.querySelector('.main__title h1');
+  var toc = document.querySelector('.js-page-aside');
 
   function normalize(language) {
     var value = (language || '').toLowerCase();
@@ -49,14 +51,37 @@
     }
   }
 
+  function updateToc(activeSection) {
+    if (!toc) return;
+
+    var visibleHeadingIds = {};
+    Array.prototype.forEach.call(
+      activeSection.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]'),
+      function (heading) { visibleHeadingIds[heading.id] = true; }
+    );
+
+    Array.prototype.forEach.call(toc.querySelectorAll('a[href^="#"]'), function (link) {
+      var targetId;
+      try {
+        targetId = decodeURIComponent(link.getAttribute('href').slice(1));
+      } catch (error) {
+        targetId = link.getAttribute('href').slice(1);
+      }
+      var item = link.closest ? link.closest('li') : link.parentNode;
+      if (item) item.hidden = !visibleHeadingIds[targetId];
+    });
+  }
+
   function activate(language, persist) {
     var selected = available.indexOf(language) !== -1
       ? language
       : normalize(content.getAttribute('data-default-language'));
     if (available.indexOf(selected) === -1) selected = available[0];
 
+    var activeSection;
     sections.forEach(function (section) {
       var active = section.getAttribute('data-lang') === selected;
+      if (active) activeSection = section;
       section.hidden = !active;
       section.setAttribute('aria-hidden', active ? 'false' : 'true');
     });
@@ -72,9 +97,11 @@
 
     var titles = pageTitles();
     if (titles[selected]) {
+      if (visibleTitle) visibleTitle.textContent = titles[selected];
       var siteTitle = switcher.getAttribute('data-site-title');
       document.title = titles[selected] + (siteTitle ? ' - ' + siteTitle : '');
     }
+    if (activeSection) updateToc(activeSection);
 
     if (persist) {
       try { window.localStorage.setItem('blog.language', selected); } catch (error) {}
