@@ -1,0 +1,97 @@
+---
+layout: article
+title: "오랜만에 일기"
+titles:
+  ko: "오랜만에 일기"
+  ja: "久しぶりの日記"
+  zh: "久违的日记"
+  en: "A Journal Entry After a Long Break"
+category: 일기
+tag: 일기
+date: "2017-12-13 22:12"
+languages: [ko, ja, zh, en]
+default_lang: ko
+---
+
+<section class="post-translation" data-lang="ko" data-default-language markdown="1">
+
+#### 블로그 무서엉..
+인터넷에 자기 하는 일 올리는 사람들이 왜 그러는지 잘 몰랐었는데 이제 조금 알 것 같다.
+가끔 Slideshare나 블로그 보면 내 사이트에 방문했던 사람, 심지어 팔로워도 볼 수 있는데, 정말 적지만!
+내가 한 일을 보고있다는 건 무섭다. 열심히 해야 할 것 같은 생각이 들기도 하고 아닌 것 같기도 하고.
+그리고 인터넷을 ~~적당히~~ 하다 보면 나보다 잘 난 사람들을 너무나 쉽게 볼 수 있다.
+왠지 나도 열심히 해야겠다는 생각이 든다. 이런 사람들과 직접 만나서 일 할 기회는 잘 없으니까.
+으음... 내가 그런 사람이 되서 거울을 보면 ㄹㅇㄹㅇ 개꿀 해결책인 것 같지만...
+
+#### 일을 잘 한다는 건 뭘까
+생각해보니 나는 추천 시스템/데이터 사이언스에 경험이 그다지 많지도 않고 없는 것 같지도 않고 근데 뭔 일을 해야 하고
+등등...
+으음...
+으음...
+~~안짤리고 회사가 안 망하고~~ 하는 방법을 찾아봐야겠다.
+내가 빡대가리면 1/n 손해일 테니까 규모가 큰 회사에서는 별 상관이 없겠지만 규모가 작은 스타트업에서는 확실히 망할 것 같다.
+좀 더 우수한 인재가 되어버리는 것이야~~~
+
+</section>
+
+<!--more-->
+
+<section class="post-translation" data-lang="ja" markdown="1">
+
+#### ブログこわいよぉ……
+自分の仕事をインターネットに載せる人が、なぜそんなことをするのか以前はよく分からなかった。でも今は少し分かる気がする。
+Slideshareやブログを見ると、私のサイトを訪れた人や、フォロワーまで確認できることがある。本当に少ないけれど！
+誰かが自分の仕事を見ていると思うと怖い。もっと頑張らなければと思ったり、そうでもない気がしたりする。
+そしてインターネットを~~ほどほどに~~見ていると、自分より優れた人をあまりにも簡単に見つけられる。
+自分も頑張らなければ、という気持ちになる。こういう人たちと直接会って仕事をする機会は、なかなかないからだ。
+うーん……自分がそういう人になって鏡を見れば、マジで最高の解決策になる気もするけれど……。
+
+#### 仕事ができるとはどういうことだろう
+考えてみると、私は推薦システムやデータサイエンスの経験が、それほど多いわけでも、まったくないわけでもない。それで、何をするべきなのか、とか……。
+うーん……。
+うーん……。
+~~クビにならず、会社も潰れずに~~働く方法を探さなければ。
+私が馬鹿でも、大企業なら損失は1/nで済むから大した問題ではないかもしれない。でも小さなスタートアップなら、確実に会社を潰しそうだ。
+もっと優秀な人材になってしまうのだ～～～。
+
+</section>
+
+<section class="post-translation" data-lang="zh" markdown="1">
+
+#### 博客好可怕……
+以前我不太明白，为什么有人会把自己做的事情放到网上。现在似乎稍微懂了一点。
+有时在Slideshare或博客上，可以看到谁访问过我的网站，甚至还能看到关注者——虽然真的很少！
+想到有人正在看我做过的工作，还是很可怕。有时觉得自己应该更努力，有时又觉得好像也不是这样。
+而且，只要~~稍微~~上上网，就能轻易看到太多比自己厉害的人。
+这让我觉得自己也该努力一点。毕竟，平时很少有机会直接遇到这样的人并和他们一起工作。
+嗯……如果我自己变成那样的人，然后照照镜子，似乎才是真正爽到不行的解决方案……
+
+#### 工作做得好，到底是什么意思
+仔细想想，我在推荐系统和数据科学方面的经验，说不上很多，但好像也不能算没有。可我究竟应该做什么，之类的……
+嗯……
+嗯……
+还是得想办法做到~~不被开除，公司也不倒闭~~。
+如果我是个笨蛋，在大公司造成的损失大概只是1/n，或许没什么大不了；但在小型创业公司里，感觉真的会把公司搞垮。
+我要变成更加优秀的人才呀～～～
+
+</section>
+
+<section class="post-translation" data-lang="en" markdown="1">
+
+#### Blogs are scaaary...
+I never quite understood why people posted their work on the internet, but now I think I understand a little.
+On Slideshare or a blog, I can sometimes see who visited my site, or even who follows it—there are very few of them, though!
+It is frightening to know that someone is looking at my work. Sometimes it makes me feel I should work harder; sometimes I am not so sure.
+And when I spend a ~~reasonable~~ amount of time online, it is far too easy to find people who are better than I am.
+It makes me want to work harder too. I rarely get a chance to meet and work directly with people like that.
+Hmm... Becoming one of those people and then looking in the mirror would be the truly awesome solution...
+
+#### What does it mean to be good at one's job?
+Come to think of it, I do not have a great deal of experience in recommender systems or data science, but I cannot say I have none either. Then there is the question of what work I should actually do, and so on...
+Hmm...
+Hmm...
+I should figure out how to ~~avoid getting fired and keep the company from going under~~.
+If I am an idiot, a large company only loses 1/n because of me, so perhaps it does not matter much. At a small startup, though, I could definitely sink the company.
+I shall become a more excellent professional~~~
+
+</section>
