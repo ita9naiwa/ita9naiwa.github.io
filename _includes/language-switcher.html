@@ -3,8 +3,11 @@
   aria-label="Article language"
   data-site-title="{{ site.title | escape }}"
   data-page-titles="{{ page.titles | jsonify | escape }}">
-  <span class="language-switcher__label">Language</span>
+  <span class="language-switcher__label">표시 언어</span>
   <div class="language-switcher__options">
+    <button type="button" class="language-switcher__button" data-language-auto>
+      브라우저 설정
+    </button>
     {%- for language in page.languages -%}
       {%- assign label = language -%}
       {%- for label_pair in language_labels -%}

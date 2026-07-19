@@ -9,6 +9,7 @@
   var buttons = Array.prototype.slice.call(
     switcher.querySelectorAll('[data-language]')
   );
+  var autoButton = switcher.querySelector('[data-language-auto]');
   if (!sections.length) return;
 
   var available = sections.map(function (section) {
@@ -86,6 +87,13 @@
       activate(button.getAttribute('data-language'), true);
     });
   });
+
+  if (autoButton) {
+    autoButton.addEventListener('click', function () {
+      try { window.localStorage.removeItem('blog.language'); } catch (error) {}
+      activate(browserLanguage() || fallback, false);
+    });
+  }
 
   var fallback = normalize(content.getAttribute('data-default-language'));
   activate(storedLanguage() || browserLanguage() || fallback, false);
