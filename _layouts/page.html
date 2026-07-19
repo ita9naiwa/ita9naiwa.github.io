@@ -51,7 +51,17 @@ layout: base
               {%- endif-%}
 
               {%- include article-info.html -%}
-              <div class="js-article-content">{{ content }}</div>
+              {%- if page.languages -%}
+                {%- include language-switcher.html -%}
+              {%- endif -%}
+              <div class="js-article-content{% if page.languages %} js-multilingual-content{% endif %}"
+                {%- if page.languages %} data-default-language="{{ page.default_lang | default: site.default_lang | default: site.lang }}"{% endif -%}>
+                {{ content }}
+              </div>
+
+              {%- if page.languages -%}
+                <script>{%- include scripts/language-switcher.js -%}</script>
+              {%- endif -%}
 
               {%- if page.comment != false -%}
                 <section class="page__comment">{%- include comment.html -%}</section>

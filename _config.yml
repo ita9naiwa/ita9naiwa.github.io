@@ -152,6 +152,7 @@ exclude:
   - package-lock.json
   - package.json
   - /docs
+  - /일기_저장소
   - /node_modules
   - /screenshots
   - /test

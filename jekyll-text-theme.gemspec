@@ -17,7 +17,10 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "jekyll", ">= 3.5", "< 5.0"
   spec.add_runtime_dependency "jekyll-paginate", "~> 1.1"
   spec.add_runtime_dependency "jekyll-sitemap", "~> 1.0"
-  spec.add_runtime_dependency "jekyll-feed", "~> 0.9.2"
+  # GitHub Pages currently ships jekyll-feed 0.17 while this theme was
+  # originally pinned to the 0.9 series. The theme uses no version-specific
+  # feed API, so allow the Pages-supported release as well.
+  spec.add_runtime_dependency "jekyll-feed", ">= 0.9.2", "< 0.18"
   spec.add_runtime_dependency "jemoji", "~> 0.8"
 
   spec.add_development_dependency "bundler", "~> 1.12"
