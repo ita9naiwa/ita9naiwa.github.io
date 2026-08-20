@@ -21,8 +21,6 @@ Gem::Specification.new do |spec|
   # originally pinned to the 0.9 series. The theme uses no version-specific
   # feed API, so allow the Pages-supported release as well.
   spec.add_runtime_dependency "jekyll-feed", ">= 0.9.2", "< 0.18"
-  spec.add_runtime_dependency "jemoji", "~> 0.8"
-
-  spec.add_development_dependency "bundler", "~> 1.12"
-  spec.add_development_dependency "rake", "~> 12.3.3"
+  spec.add_development_dependency "bundler", ">= 2.2.33", "< 3"
+  spec.add_development_dependency "rake", "~> 13.0"
 end

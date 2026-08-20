@@ -175,7 +175,5 @@ plugins:
   - jekyll-feed
   - jekyll-paginate
   - jekyll-sitemap
-  - jemoji
-  - jekyll-gist
   - jekyll-seo-tag
 gems: [jekyll-paginate]
