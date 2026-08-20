@@ -32,11 +32,13 @@ default_lang: ko
   - 당신에게 관심 없는 사람이 오래 지켜보며 마음을 바꿔줄 가능성이 낮으므로, 다른 사람 찾는 것이 더 효율적.
 - 여유있는 사람이 인기있기도 하겠지만, 반대가 더 큼. 인기 있어서 여유가 생기는것.
   - 애초에 좆도 없는 사람이 여유를 갖춘다는 건 불가능함.
-- 외모 외엔, 성격적으로 실제로 기본적 매너 이외에 갖출 건 그다지 없음.
+- 외모 외엔, 성격적으로 실제로 기본적 매너 이외에 따로 노력해서 갖출 건 그다지 없음.
   - 센스나 유머나 그런건 어느 정도 서로 잘 맞는다의 영역임.
   - 매력적이게 보이기 위해서 다른 사람인 척 하는 게 오히려 더 매력없게 보임.
-- 인터넷에 떠도는 수상한 연애 공략을 굳이 믿을 필요는 없음.
-  - 비기가 있다기보단, 평범하게 축구같은 운동같아서, 하면서 실력이 느는 행동임.
+  - (주의) 당신이 모솔이거나 해서 당신의 매력을 전혀 보여줄 수 없거나, 그런 경우 제외.
+    - 그렇다고 해서 인터넷에 떠도는 수상한 연애 공략을 굳이 믿을 필요는 없음.
+      - 비기가 있다기보단, 축구같은 운동같아서, 하면서 실력이 느는 행동임.
+    - 연애 공략을 많이 읽는다고 연애를 잘하게 되는 건, 축구 전술서를 많이 읽는다고 축구를 잘하게 되는 것과 비슷함.
 </section>
 
 <section class="post-translation" data-lang="en" markdown="1">
@@ -60,8 +62,10 @@ Basically, you could call this a mindset for avoiding getting hurt, for people w
 - Other than appearance, there really isn't much you need personality-wise beyond basic manners.
   - Things like sense and humor are, to some extent, a matter of how well you fit together.
   - Pretending to be someone else to look attractive actually makes you look less attractive.
-- There's no need to go out of your way to believe the dubious dating tactics floating around online.
-  - Rather than there being some secret technique, it's more like an ordinary sport such as soccer: it's something you get better at by doing it.
+  - (Note) Except in cases where, for example, you've never dated anyone and can't show any of your appeal at all.
+    - Even then, there's no need to go out of your way to believe the dubious dating tactics floating around online.
+      - Rather than there being some secret technique, it's more like a sport such as soccer: it's something you get better at by doing it.
+    - Thinking that reading lots of dating guides will make you good at dating is like thinking that reading lots of soccer tactics books will make you good at soccer.
 
 </section>
 
@@ -86,18 +90,20 @@ Basically, you could call this a mindset for avoiding getting hurt, for people w
 - 除了外表，在性格方面，其实除了基本礼貌以外，并没有多少必须具备的东西。
   - 品味、幽默之类的，某种程度上属于彼此合不合得来的范畴。
   - 为了显得有魅力而假装成另一个人，反而会显得更没有魅力。
-- 没必要非得相信网上流传的可疑恋爱攻略。
-  - 与其说有什么秘诀，不如说它就像普通的足球之类的运动，是一种边做边提高水平的行为。
+  - （注意）不包括你是母胎单身之类，完全无法展现自己魅力的情况。
+    - 即便如此，也没必要非得相信网上流传的可疑恋爱攻略。
+      - 与其说有什么秘技，不如说它就像足球之类的运动，是一种边做边提高水平的行为。
+    - 读很多恋爱攻略就能变得擅长恋爱，就跟读很多足球战术书就能变得擅长踢足球差不多。
 
 </section>
 
 <section class="post-translation" data-lang="ja" markdown="1">
 
 唐突だけど、日本に住み始めてから数か月くらい、アプリや飲み会みたいなところをあれこれ覗いてみて思ったこと。
-市場に参加するときにこれくらいの心構えがあったら、もっと痛い思いも傷つくことも少なく、もっと幸せに、もっと早く終わらせられた気がする。
+市場に参加するときにこれくらいの心構えを持っていたら、もっと痛い思いも傷つくことも少なく、もっと幸せで、もっと早く終わらせられた気がする。
 基本的に、傷つかずに望む一人と付き合うことが目標の人のための、傷つかないための心構えくらいだと言える。
 
-- 外見を努力して磨いたことがないなら、やろう。少なくとも一五分位くらいは向上させられる。
+- 外見を努力して磨いたことがないなら、やろう。少なくとも一つの五分位階級くらいは上げられる。
 - ダメなものは明確にある。身長が160cmならNBAでプレーするのは（ほぼ確実に）不可能なように。
   - それを努力と改善の領域だと思うと、何度も惨めな思いをすることになる。
 - 一人の縁を探すゲームと、複数人に会って遊ぶゲームは明らかに違う。
@@ -112,7 +118,9 @@ Basically, you could call this a mindset for avoiding getting hurt, for people w
 - 外見以外では、性格面で実際に基本的なマナーのほかに身につけるべきものはそれほどない。
   - センスやユーモアとかは、ある程度お互いに相性がいいかどうかの領域。
   - 魅力的に見せるために別人のふりをするほうが、むしろ魅力がなく見える。
-- ネットに出回っている怪しい恋愛攻略法をわざわざ信じる必要はない。
-  - 秘技があるというより、普通にサッカーみたいなスポーツと同じで、やりながら上達していくものだ。
+  - （注意）あなたが恋愛経験ゼロだったりして、自分の魅力をまったく見せられないような場合は除く。
+    - だからといって、ネットに出回っている怪しい恋愛攻略法をわざわざ信じる必要はない。
+      - 秘技があるというより、サッカーみたいなスポーツのようなもので、やりながら実力が伸びる行動だ。
+    - 恋愛攻略法をたくさん読めば恋愛が上手くなるというのは、サッカーの戦術書をたくさん読めばサッカーが上手くなるというのと似ている。
 
 </section>
