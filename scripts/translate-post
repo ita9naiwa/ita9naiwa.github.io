@@ -105,13 +105,15 @@ source_info="$(ruby -rdigest -e '
 source_language="$(printf '%s\n' "$source_info" | sed -n '1p')"
 source_hash_before="$(printf '%s\n' "$source_info" | sed -n '2p')"
 
-"$codex_command" exec \
-  --ephemeral \
-  --sandbox workspace-write \
-  --skip-git-repo-check \
-  -c 'model_reasoning_effort="low"' \
-  -C "$translation_tmp_dir" \
-  "Edit only post.md. The immutable source language is $source_language. If the post is not multilingual yet, treat its complete body after the Jekyll front matter as the immutable source, place it unchanged inside the matching data-lang=$source_language section, and add the multilingual front matter and the other three language sections. If it is already multilingual, treat the complete data-lang=$source_language section as immutable. Translate faithfully into the other languages so the result has natural Korean, Japanese, Simplified Chinese, and English versions. Add or update the titles map for all four languages, while keeping the top-level title in the original source language. Do not rewrite, censor, soften, fact-check, summarize, add examples, change gender/nationality/region, or alter self-disclosure. Preserve every paragraph, heading, blockquote, image, link URL, inline code, repetition, and casual or blunt nuance. Keep exactly one section each for ko, ja, zh, and en. Every opening tag must be exactly <section class=\"post-translation\" data-lang=\"LANG\" markdown=\"1\">, except the source-language tag must also contain data-default-language before markdown=\"1\". Set languages: [ko, ja, zh, en] and default_lang: $source_language; keep <!--more--> only in the source section. Do not edit the source text. Do not create other files. Verify the structure when finished."
+for target_language in ja zh en; do
+  "$codex_command" exec \
+    --ephemeral \
+    --sandbox workspace-write \
+    --skip-git-repo-check \
+    -c 'model_reasoning_effort="low"' \
+    -C "$translation_tmp_dir" \
+    "Edit only post.md. The immutable source language is $source_language and the only target for this run is $target_language. If needed, wrap the complete source body unchanged in its source-language section. Translate the complete source section faithfully into $target_language and add or replace exactly one matching target section; preserve every other existing section byte-for-byte. Add or update only the $target_language entry in the titles map, keep the top-level title in the source language, set languages: [ko, ja, zh, en] and default_lang: $source_language. Do not rewrite, censor, soften, fact-check, summarize, add examples, change gender/nationality/region, or alter self-disclosure. Preserve every paragraph, heading, blockquote, image, link URL, inline code, repetition, and casual or blunt nuance. The target opening tag must be exactly <section class=\"post-translation\" data-lang=\"$target_language\" markdown=\"1\"> and the source opening tag must contain data-default-language before markdown=\"1\". Keep <!--more--> only in the source section. Do not edit the source text or create other files."
+done
 
 ruby -rdigest -e '
   source_language, original_hash, path = ARGV
