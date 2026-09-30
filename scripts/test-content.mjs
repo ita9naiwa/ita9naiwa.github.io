@@ -42,6 +42,14 @@ titles:
 ## Shared heading
 Body[^1] and $$x^2$$.
 
+Private investment: **$285.9 billion**, **$12.4 billion**, and **$1.8 billion**. Forecasts: **roughly $800 billion** and **roughly $139 billion**.
+
+Numeric math: $2x$.
+
+Invalid closing whitespace: $x $.
+
+Invalid closing digit: $x$2.
+
 [^1]: English footnote
 </section>
 `);
@@ -78,6 +86,12 @@ for (const language of ['ko', 'en']) assert(post.html.includes('data-lang="' + l
 assert(post.html.includes('<h2'), 'Markdown within translations should render');
 assert(post.html.includes('class="katex"'), 'Math should render');
 assert(!post.html.includes('katex-error'));
+for (const amount of ['$285.9 billion', '$12.4 billion', '$1.8 billion', 'roughly $800 billion', 'roughly $139 billion']) {
+  assert(post.html.includes('<strong>' + amount + '</strong>'), 'Currency must remain bold text, not become math');
+}
+assert.equal(post.html.split('class="katex"').length - 1, 3, 'Single-dollar, numeric, and double-dollar math must still render');
+assert(post.html.includes('Invalid closing whitespace: $x $.'));
+assert(post.html.includes('Invalid closing digit: $x$2.'));
 assert(!post.html.includes('markdown="1"'));
 assert(post.html.includes('한국어 각주') && post.html.includes('English footnote'));
 const ids = [...post.html.matchAll(/\\bid="([^"]+)"/g)].map(match => match[1]);

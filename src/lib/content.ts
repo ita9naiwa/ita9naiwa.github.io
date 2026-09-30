@@ -63,7 +63,7 @@ const renderer = (async () => {
     if (!delimiter) return false;
     let end = state.src.indexOf(delimiter, start + delimiter.length);
     while (end !== -1 && state.src[end - 1] === '\\') end = state.src.indexOf(delimiter, end + delimiter.length);
-    if (end < 0 || (delimiter === '$' && /[\s\d]/.test(state.src[end + 1] || '') && /\s/.test(state.src[end - 1]))) return false;
+    if (end < 0 || (delimiter === '$' && (/\s/.test(state.src[end - 1]) || /\d/.test(state.src[end + 1] || '')))) return false;
     if (!silent) { const token = state.push('math_inline', 'math', 0); token.content = state.src.slice(start + delimiter.length, end); }
     state.pos = end + delimiter.length;
     return true;

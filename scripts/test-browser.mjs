@@ -44,6 +44,43 @@ try {
   async function noOverflow(label) {
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${label} overflows mobile viewport`);
   }
+  async function checkTextContrast(label, selectors) {
+    const result = await page.evaluate(selectors => {
+      const canvas = document.createElement('canvas'); canvas.width = canvas.height = 1;
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      const rgba = color => {
+        context.clearRect(0, 0, 1, 1); context.fillStyle = color; context.fillRect(0, 0, 1, 1);
+        return [...context.getImageData(0, 0, 1, 1).data].map((value, i) => i === 3 ? value / 255 : value);
+      };
+      const over = (front, back) => front.slice(0, 3).map((value, i) => value * front[3] + back[i] * (1 - front[3]));
+      const luminance = rgb => rgb.map(value => value / 255).map(value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4).reduce((sum, value, i) => sum + value * [.2126, .7152, .0722][i], 0);
+      const failures = [], checked = {};
+      for (const [kind, selector] of Object.entries(selectors)) {
+        const elements = [...document.querySelectorAll(selector)].filter(element => element.getClientRects().length && element.textContent.trim());
+        checked[kind] = 0;
+        for (const element of elements.slice(0, 30)) {
+          const chain = []; for (let current = element; current; current = current.parentElement) chain.unshift(current);
+          let background = [255, 255, 255], opacity = 1;
+          for (const ancestor of chain) {
+            const style = getComputedStyle(ancestor);
+            background = over(rgba(style.backgroundColor), background);
+            opacity *= Number(style.opacity);
+          }
+          const style = getComputedStyle(element), foreground = rgba(style.color);
+          foreground[3] *= opacity;
+          const a = luminance(over(foreground, background)), b = luminance(background);
+          const ratio = (Math.max(a, b) + .05) / (Math.min(a, b) + .05);
+          const large = parseFloat(style.fontSize) >= 24 || (parseFloat(style.fontSize) >= 18.66 && Number(style.fontWeight) >= 700);
+          const minimum = large ? 3 : 4.5;
+          checked[kind]++;
+          if (ratio + .02 < minimum) failures.push({ kind, ratio: ratio.toFixed(2), minimum, color: style.color, background, text: element.textContent.trim().slice(0, 70) });
+        }
+      }
+      return { checked, failures };
+    }, selectors);
+    assert.deepEqual(result.failures, [], `Text contrast failure: ${label} (${await page.locator('html').getAttribute('data-theme')})`);
+    return result.checked;
+  }
   async function selectLanguage(language) {
     if (!(await page.locator('#site-language').isVisible())) await page.locator('#menu-btn').click();
     await page.locator('#site-language').selectOption(language);
@@ -74,6 +111,27 @@ try {
     assert.equal((await page.request.get(origin + url)).status(), 404, `Private path visible: ${url}`);
   }
   const posts = await getPosts();
+  const proseSelectors = {
+    strong: '.app-prose strong', links: '.app-prose a', headings: '.app-prose h1, .app-prose h2, .app-prose h3, .app-prose h4',
+    inlineCode: '.app-prose :not(pre) > code', blockquote: '.app-prose blockquote p', table: '.app-prose th, .app-prose td', math: '.app-prose .katex-html .mord',
+  };
+  const contrastPosts = [...new Set([/<strong[ >]/, /<a[ >]/, /<h[1-4][ >]/, /<code>/, /<blockquote[ >]/, /<table[ >]/, /class="katex/].map(pattern => posts.find(post => pattern.test(post.html))).filter(Boolean))];
+  const contrastCoverage = {};
+  for (const theme of ['light', 'dark']) {
+    await page.goto(origin);
+    if (await page.locator('html').getAttribute('data-theme') !== theme) await toggleTheme(theme);
+    await checkTextContrast('Home', { titles: '.post-card h2', excerpts: '.post-card .excerpt', dates: '.post-card time', intro: '#hero p' });
+    await page.goto(origin + '/archive.html');
+    await checkTextContrast('Archive', { titles: '.archive-list a', dates: '.archive-list time', controls: '.archive-controls label' });
+    for (const post of contrastPosts) {
+      await page.goto(origin + post.url);
+      if (post.languages.length > 1) await selectLanguage(post.defaultLang);
+      const checked = await checkTextContrast(post.url, proseSelectors);
+      for (const [kind, count] of Object.entries(checked)) contrastCoverage[kind] = (contrastCoverage[kind] || 0) + count;
+    }
+  }
+  for (const kind of Object.keys(proseSelectors)) assert(contrastCoverage[kind] > 0, `No visible real content exercised contrast for ${kind}`);
+  await toggleTheme('light');
   const sad = posts.find(post => post.id.endsWith('/2026-09-29-sad.md'));
   await page.goto(origin);
   await selectLanguage('en');
@@ -195,7 +253,7 @@ try {
   await page.goto(origin + '/temp.html');
   assert.equal(await page.locator('#method-picker').count(), 1);
   assert.deepEqual(errors, [], 'Browser runtime errors');
-  console.log(`Browser verified: ${posts.filter(post => post.languages.length > 1).length} multilingual articles, title/body/persistence, global locale + translated cards/archive/search + source fallback, pagination, archive, light/dark persistence + code colors, keyboard mobile menu + overflow, private-path 404s. Screenshots: ${screenshots}`);
+  console.log(`Browser verified: ${posts.filter(post => post.languages.length > 1).length} multilingual articles, title/body/persistence, global locale + translated cards/archive/search + source fallback, pagination, archive, light/dark persistence + code colors + prose contrast, keyboard mobile menu + overflow, private-path 404s. Screenshots: ${screenshots}`);
 } finally {
   await browser?.close();
   await new Promise(resolve => server.close(resolve));
