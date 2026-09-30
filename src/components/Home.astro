@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import PostList from './PostList.astro';
+import type { Post } from '../lib/content';
+const { posts, page = 1 } = Astro.props as { posts: Post[]; page?: number };
+const pageCount = Math.ceil(posts.length / 6);
+const pageUrl = (n: number) => n === 1 ? '/' : `/page${n}.html`;
+---
+<Base title={page > 1 ? `Blog — Page ${page}` : undefined} canonicalPath={pageUrl(page)}>
+  {page === 1 && <section id="hero" class="border-border border-b pb-8">
+    <div class="flex items-baseline gap-4">
+      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">Hyunsung Lee</h1>
+      <a href="/feed.xml" class="text-accent inline-block" aria-label="RSS Feed" data-i18n-aria-label="rssFeed" title="RSS Feed" data-i18n-title="rssFeed"><svg aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4a16 16 0 0 1 16 16M4 11a9 9 0 0 1 9 9"/><circle cx="5" cy="19" r="1" fill="currentColor"/></svg></a>
+    </div>
+    <p data-i18n="heroDescription">Notes on ML systems, recommender systems, and life.</p>
+    <nav class="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Topics" data-i18n-aria-label="topics">
+      <a class="underline decoration-dashed underline-offset-4 hover:text-accent" href="/mlsys.html" data-i18n="mlSystems">ML Systems</a>
+      <a class="underline decoration-dashed underline-offset-4 hover:text-accent" href="/ml.html" data-i18n="machineLearning">Machine Learning</a>
+      <a class="underline decoration-dashed underline-offset-4 hover:text-accent" href="/recsys.html" data-i18n="recommenderSystems">Recommender Systems</a>
+      <a class="underline decoration-dashed underline-offset-4 hover:text-accent" href="/archive.html?tag=Thoughts" data-i18n="thoughts">Thoughts</a>
+    </nav>
+  </section>}
+  <section id="recent-posts" class={page === 1 ? 'pt-10 pb-6' : 'pb-6'}>
+    <div class="home-heading flex items-baseline justify-between gap-4">
+      {page === 1 ? <h2 class="text-2xl font-semibold tracking-wide" data-i18n="recentPosts">Recent Posts</h2> : <h1 class="text-2xl font-semibold tracking-wide" data-i18n="posts">Posts</h1>}
+      <a class="text-sm underline decoration-dashed underline-offset-4 hover:text-accent" href="/archive.html"><span data-i18n="allPosts">All posts</span> →</a>
+    </div>
+    <PostList posts={posts.slice((page - 1) * 6, page * 6)} />
+  </section>
+  <nav class="pagination my-8 flex items-center justify-between gap-3 text-sm" aria-label="Pagination" data-i18n-aria-label="pagination">
+    {page > 1 ? <a class="hover:text-accent" rel="prev" href={pageUrl(page - 1)}>← <span data-i18n="newer">Newer</span></a> : <span />}
+    <span class="text-muted-foreground" data-i18n="pageCount" data-i18n-args={JSON.stringify({page, total:pageCount})}>Page {page} of {pageCount}</span>
+    {page < pageCount ? <a class="hover:text-accent" rel="next" href={pageUrl(page + 1)}><span data-i18n="older">Older</span> →</a> : <span />}
+  </nav>
+</Base>

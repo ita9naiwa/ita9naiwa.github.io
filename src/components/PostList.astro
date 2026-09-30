@@ -1,0 +1,14 @@
+---
+import type { Post } from '../lib/content';
+const { posts } = Astro.props as { posts: Post[] };
+---
+<ul class="posts">
+  {posts.map((post) => <li class="my-6"><article class="post-card">
+    <a href={post.url} class="text-accent inline-block text-lg font-medium decoration-dashed underline-offset-4 hover:underline focus-visible:no-underline"><h2 data-localized-text={JSON.stringify(post.titles)} data-default-text={post.title}>{post.title}</h2></a>
+    <div class="text-muted-foreground my-1 flex items-center gap-x-2">
+      <svg aria-hidden="true" class="size-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+      <time class="text-sm" datetime={post.date} data-localized-date={post.date}>{new Date(post.date).toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' })}</time>
+    </div>
+    <p class="excerpt leading-relaxed wrap-anywhere" data-localized-text={JSON.stringify(post.excerpts)} data-default-text={post.excerpt}>{post.excerpt}</p>
+  </article></li>)}
+</ul>

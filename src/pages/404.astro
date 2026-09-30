@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="Page not found">
+  <div class="not-found my-16 flex min-h-80 flex-col items-center justify-center text-center">
+    <h1 class="text-accent text-9xl font-bold">404</h1>
+    <p class="mt-4 text-2xl sm:text-3xl" data-i18n="notFound">Page not found</p>
+    <p class="mt-4 text-sm text-muted-foreground" data-i18n="notFoundDescription">The page may have moved or is no longer available.</p>
+    <a class="my-6 text-lg underline decoration-dashed underline-offset-8 hover:text-accent" href="/archive.html"><span data-i18n="browsePosts">Browse all posts</span> →</a>
+  </div>
+</Base>

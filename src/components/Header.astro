@@ -1,0 +1,55 @@
+---
+import IconMenuDeep from '../assets/icons/IconMenuDeep.svg';
+import IconX from '../assets/icons/IconX.svg';
+import IconMoon from '../assets/icons/IconMoon.svg';
+import IconSunHigh from '../assets/icons/IconSunHigh.svg';
+import IconSearch from '../assets/icons/IconSearch.svg';
+const path = Astro.url.pathname;
+---
+<a class="skip-link bg-background text-accent fixed -top-full left-4 z-50 px-3 py-2 focus:top-4" href="#main" data-i18n="skip">Skip to content</a>
+<header class="site-header app-layout">
+  <div class="header-inner border-border relative flex flex-wrap items-center justify-between gap-x-4 border-b py-5 sm:py-6">
+    <a class="site-title py-1 text-xl leading-8 font-semibold tracking-tight sm:text-2xl" href="/">Hyunsung Lee</a>
+    <div class="header-actions flex items-center gap-1 sm:order-3 sm:gap-2">
+      <label class="sr-only" for="site-language" data-i18n="language">Language</label>
+      <select id="site-language" data-site-language class="max-w-22 rounded border border-border bg-background px-1 py-2 text-xs text-foreground" aria-label="Language" data-i18n-aria-label="language">
+        <option value="ko">한국어</option><option value="ja">日本語</option><option value="zh">中文</option><option value="en" selected>English</option>
+      </select>
+      <a class="icon-button hover:text-accent" href="/archive.html#post-search" aria-label="Search posts" data-i18n-aria-label="search" title="Search posts" data-i18n-title="search"><IconSearch aria-hidden="true" /></a>
+      <button id="theme-btn" class="icon-button hover:text-accent" type="button" aria-label="Switch theme" title="Switch theme" hidden><IconMoon class="theme-moon" aria-hidden="true" /><IconSunHigh class="theme-sun" aria-hidden="true" /></button>
+      <button id="menu-btn" class="icon-button hover:text-accent sm:hidden" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-items" hidden><IconMenuDeep id="menu-icon" aria-hidden="true" /><IconX id="close-icon" aria-hidden="true" hidden /></button>
+    </div>
+    <nav class="header-nav w-full sm:order-2 sm:ml-auto sm:w-auto" aria-label="Main navigation" data-i18n-aria-label="mainNavigation">
+      <ul id="menu-items" class="flex flex-col items-center gap-1 pt-4 sm:flex-row sm:gap-4 sm:pt-0">
+        <li><a class:list={['nav-link', { 'active-nav': path === '/archive.html' }]} aria-current={path === '/archive.html' ? 'page' : undefined} href="/archive.html" data-i18n="posts">Posts</a></li>
+        <li><a class="nav-link" href="/archive.html#tags" data-i18n="tags">Tags</a></li>
+        <li><a class:list={['nav-link', { 'active-nav': path === '/about.html' }]} aria-current={path === '/about.html' ? 'page' : undefined} href="/about.html" data-i18n="about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('#menu-btn')!;
+  const menu = document.querySelector<HTMLElement>('#menu-items')!;
+  const setOpen = (open: boolean) => {
+    button.setAttribute('aria-expanded', String(open));
+    button.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.dataset.open = String(open);
+    document.dispatchEvent(new Event('blog:uiupdate'));
+    document.querySelector<SVGElement>('#menu-icon')!.toggleAttribute('hidden', open);
+    document.querySelector<SVGElement>('#close-icon')!.toggleAttribute('hidden', !open);
+  };
+  button.hidden = false;
+  menu.dataset.ready = 'true';
+  setOpen(false);
+  button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && button.getAttribute('aria-expanded') === 'true') {
+      setOpen(false); button.focus();
+    }
+  });
+</script>
+
+<style>
+  @media(max-width:639px) { .header-actions .icon-button { width:2rem; } .site-title { font-size:1rem; } }
+</style>

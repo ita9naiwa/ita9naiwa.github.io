@@ -86,22 +86,7 @@ translation_tmp_dir="$(mktemp -d "${TMPDIR:-/tmp}/blog-translation.XXXXXX")"
 trap 'rm -rf "$translation_tmp_dir"' EXIT
 cp "$post_path" "$translation_tmp_dir/post.md"
 
-source_info="$(ruby -rdigest -e '
-  text = File.read(ARGV.fetch(0), encoding: "UTF-8")
-  match = text.match(%r{<section\b[^>]*data-lang="ko"[^>]*>\s*\n(.*?)\n</section>}m)
-  if match
-    language = "ko"
-    source = match[1]
-  else
-    front = text.match(/\A---\s*\n.*?\n---\s*\n/m)
-    abort "Jekyll front matter was not found." unless front
-    source = text[front.end(0)..-1].to_s
-    language = source.scan(/[가-힣]/).length >= 10 ? "ko" : "en"
-  end
-  normalized = source.gsub("\r\n", "\n").strip
-  puts language
-  puts Digest::SHA256.hexdigest(normalized)
-' "$translation_tmp_dir/post.md")"
+source_info="$(node "$repo_root/scripts/translation-source.mjs" inspect "$translation_tmp_dir/post.md")"
 source_language="$(printf '%s\n' "$source_info" | sed -n '1p')"
 source_hash_before="$(printf '%s\n' "$source_info" | sed -n '2p')"
 
@@ -115,29 +100,8 @@ for target_language in ja zh en; do
     "Edit only post.md. The immutable source language is $source_language and the only target for this run is $target_language. If needed, wrap the complete source body unchanged in its source-language section. Translate the complete source section faithfully into $target_language and add or replace exactly one matching target section; preserve every other existing section byte-for-byte. Add or update only the $target_language entry in the titles map, keep the top-level title in the source language, set languages: [ko, ja, zh, en] and default_lang: $source_language. Do not rewrite, censor, soften, fact-check, summarize, add examples, change gender/nationality/region, or alter self-disclosure. Preserve every paragraph, heading, blockquote, image, link URL, inline code, repetition, and casual or blunt nuance. The target opening tag must be exactly <section class=\"post-translation\" data-lang=\"$target_language\" markdown=\"1\"> and the source opening tag must contain data-default-language before markdown=\"1\". Keep <!--more--> only in the source section. Do not edit the source text or create other files."
 done
 
-ruby -rdigest -e '
-  source_language, original_hash, path = ARGV
-  text = File.read(path, encoding: "UTF-8")
-  sections = text.scan(%r{<section\b[^>]*data-lang="(ko|ja|zh|en)"[^>]*>\s*\n(.*?)\n</section>}m)
-  counts = sections.each_with_object(Hash.new(0)) { |(lang, _), memo| memo[lang] += 1 }
-  expected = %w[ko ja zh en]
-  unless expected.all? { |lang| counts[lang] == 1 } && counts.keys.sort == expected.sort
-    abort "Translation rejected: expected exactly one ko, ja, zh, and en section."
-  end
-  expected.each do |lang|
-    default_attribute = lang == source_language ? " data-default-language" : ""
-    opening = %Q{<section class="post-translation" data-lang="#{lang}"#{default_attribute} markdown="1">}
-    abort "Translation rejected: invalid opening tag for #{lang}." unless text.scan(opening).length == 1
-  end
-  source = sections.find { |lang, _| lang == source_language }.last
-  normalized = source.gsub("\r\n", "\n").strip
-  unless Digest::SHA256.hexdigest(normalized) == original_hash
-    abort "Translation rejected: Codex changed the source text. The original post was left untouched."
-  end
-  unless text.match?(/^languages:\s*\[ko, ja, zh, en\]\s*$/) && text.match?(/^default_lang:\s*#{Regexp.escape(source_language)}\s*$/)
-    abort "Translation rejected: multilingual front matter is incomplete."
-  end
-' "$source_language" "$source_hash_before" "$translation_tmp_dir/post.md"
+node "$repo_root/scripts/translation-source.mjs" validate \
+  "$source_language" "$source_hash_before" "$translation_tmp_dir/post.md"
 
 cp "$translation_tmp_dir/post.md" "$post_path"
 

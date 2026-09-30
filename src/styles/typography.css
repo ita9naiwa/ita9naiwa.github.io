@@ -1,0 +1,59 @@
+@plugin "@tailwindcss/typography";
+
+/* Adapted from AstroPaper: retain its typography while supporting legacy post HTML. */
+@layer base {
+  .app-prose {
+    @apply prose max-w-none;
+    --tw-prose-body: var(--foreground);
+    --tw-prose-headings: var(--foreground);
+    --tw-prose-bold: var(--foreground);
+    --tw-prose-counters: var(--foreground);
+    --tw-prose-captions: var(--muted-foreground);
+    --tw-prose-links: var(--foreground);
+    --tw-prose-code: var(--foreground);
+    --tw-prose-quotes: var(--foreground);
+    --tw-prose-quote-borders: var(--accent);
+    --tw-prose-hr: var(--border);
+    --tw-prose-th-borders: var(--border);
+    --tw-prose-td-borders: var(--border);
+    h1,h2,h3,h4,th { @apply mb-3 text-foreground; }
+    h3 { @apply italic; }
+    p,strong,ol,ul,figcaption,table,code { @apply text-foreground; }
+    a { @apply text-foreground hover:text-accent wrap-break-word decoration-dashed underline-offset-4 focus-visible:no-underline; }
+    li { @apply marker:text-accent; }
+    hr { @apply border-border; }
+    img { @apply border-border mx-auto border; }
+    figcaption { @apply opacity-75; }
+    table {
+      th,td { @apply border-border border p-2; }
+      th { @apply py-1.5; }
+      [align="center"] { text-align:center; }
+      [align="right"] { text-align:right; }
+      [align="left"] { text-align:left; }
+    }
+    code { @apply bg-muted/75 text-foreground rounded p-1 wrap-break-word before:content-none after:content-none; }
+    pre code { @apply bg-transparent p-0; }
+    blockquote { @apply border-s-accent/80 wrap-break-word opacity-80; }
+    summary { @apply cursor-pointer; }
+    pre { @apply border-border border; }
+  }
+}
+
+/* Content is highlighted with Shiki at build time using both upstream theme variants. */
+html[data-theme="dark"] .shiki,
+html[data-theme="dark"] .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+.app-prose { overflow-wrap:anywhere; line-height:1.9; }
+.app-prose pre { overflow:auto; font-size:.85rem; line-height:1.65; }
+.app-prose pre code { font-size:inherit; }
+.app-prose img,.app-prose video,.app-prose iframe { max-width:100%; }
+.app-prose img { height:auto; }
+.app-prose table { display:block; width:max-content; max-width:100%; overflow:auto; }
+.app-prose .katex-display { max-width:100%; overflow-x:auto; overflow-y:hidden; padding:8px 0; }
+.app-prose .katex { font-size:1.1em; }
+.app-prose .footnotes { font-size:.85rem; }

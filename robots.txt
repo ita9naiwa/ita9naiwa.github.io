@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /drafts/
-Disallow: /tags/
-Disallow: /404.html
-
-Sitemap: https://ita9naiwa.github.io/sitemap.xml

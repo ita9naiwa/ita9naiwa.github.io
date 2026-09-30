@@ -1,0 +1,16 @@
+---
+import { getPosts, getPages } from '../lib/content';
+import Article from '../components/Article.astro';
+import Home from '../components/Home.astro';
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  const pages = await getPages();
+  return [
+    ...posts.map(entry => ({ params: { path: entry.url.replace(/^\//, '').replace(/\.html$/, '') }, props: { entry, isPost: true } })),
+    ...pages.map(entry => ({ params: { path: entry.url.replace(/^\//, '').replace(/\.html$/, '') }, props: { entry, isPost: false } })),
+    ...Array.from({ length: Math.max(0, Math.ceil(posts.length / 6) - 1) }, (_, i) => ({ params: { path: `page${i + 2}` }, props: { posts, page: i + 2 } })),
+  ];
+}
+const { entry, isPost, posts, page } = Astro.props;
+---
+{entry ? <Article entry={entry} isPost={isPost} /> : <Home posts={posts!} page={page} />}

@@ -1,0 +1,12 @@
+---
+import IconRss from '../assets/icons/IconRss.svg';
+---
+<footer class="site-footer app-layout mt-auto text-sm">
+  <div class="border-border flex flex-col gap-5 border-t py-6">
+    <nav class="flex flex-wrap justify-center gap-x-5 gap-y-2 sm:justify-start" aria-label="Topics" data-i18n-aria-label="topics"><a class="hover:text-accent" href="/mlsys.html" data-i18n="mlSystems">MlSys</a><a class="hover:text-accent" href="/ml.html" data-i18n="machineLearning">ML</a><a class="hover:text-accent" href="/recsys.html" data-i18n="recommenderSystems">Recsys</a></nav>
+    <div class="flex flex-col items-center justify-between gap-4 sm:flex-row">
+      <span>© {new Date().getFullYear()} Hyunsung Lee</span>
+      <div class="flex items-center gap-5"><a class="hover:text-accent" href="https://github.com/ita9naiwa">GitHub</a><a class="hover:text-accent" href="https://github.com/satnaing/astro-paper">AstroPaper</a><a class="icon-button hover:text-accent" href="/feed.xml" aria-label="RSS feed" data-i18n-aria-label="rssFeed" title="RSS feed" data-i18n-title="rssFeed"><IconRss aria-hidden="true" /></a></div>
+    </div>
+  </div>
+</footer>

@@ -186,3 +186,8 @@ _site/
 
 *.bat
 pushall.sh
+
+# Astro generated output
+dist/
+.astro/
+.astro-public/

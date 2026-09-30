@@ -1,0 +1,33 @@
+@import "tailwindcss" source("../");
+@import "./theme.css";
+@import "./typography.css";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+:root { --font-google-sans-code: 'Google Sans Code Variable', ui-monospace, SFMono-Regular, Consolas, 'Noto Sans', monospace; color-scheme:light; }
+html[data-theme="dark"] { color-scheme:dark; }
+@layer base {
+  * { @apply border-border outline-accent/75; scrollbar-width:auto; scrollbar-color:var(--color-muted) transparent; }
+  a,button,input,summary,#main { @apply outline-accent outline-offset-2 focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed; }
+  button:not(:disabled),[role="button"]:not(:disabled) { cursor:pointer; }
+  [hidden] { display:none !important; }
+  a,button,input,summary { touch-action:manipulation; }
+}
+@utility max-w-app { @apply max-w-3xl; }
+@utility app-layout { @apply max-w-app mx-auto w-full px-4; }
+@utility active-nav { @apply underline decoration-wavy decoration-2 underline-offset-8; }
+:target { scroll-margin-block:1rem; }
+.icon-button { display:inline-flex; align-items:center; justify-content:center; width:2.5rem; height:2.5rem; flex-shrink:0; }
+.icon-button svg { width:1.5rem; height:1.5rem; }
+@media(min-width:640px) { #menu-btn { display:none; } }
+.nav-link { display:block; padding:.5rem; font-weight:500; }
+.nav-link:hover { color:var(--accent); }
+.theme-sun { display:none; }
+html[data-theme="dark"] .theme-sun { display:block; }
+html[data-theme="dark"] .theme-moon { display:none; }
+@media(max-width:639px) {
+  #menu-items[data-ready="true"][data-open="false"] { display:none; }
+  .header-inner { column-gap:.25rem; }
+  .site-title { font-size:1.125rem; }
+}
+@media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; transition:none !important; } }

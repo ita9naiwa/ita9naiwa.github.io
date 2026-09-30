@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import 'katex/dist/katex.min.css';
+import { getPosts } from '../lib/content';
+const { entry, isPost = false } = Astro.props;
+const posts = isPost ? await getPosts() : [];
+const index = posts.findIndex(post => post.url === entry.url);
+const newer = posts[index - 1];
+const older = posts[index + 1];
+const headings = (entry.headings || []).filter((heading: {depth: number}) => heading.depth <= 4);
+---
+<Base title={entry.title} description={entry.excerpt || undefined} date={isPost ? entry.date : undefined} language={entry.defaultLang || 'en'} canonicalPath={entry.url}>
+  <a href="/archive.html" class="mb-8 inline-block text-sm hover:text-accent">← <span data-i18n="allPosts">All posts</span></a>
+  <article class="article">
+    <header class="article-header main__title mb-8">
+      <h1 lang={entry.defaultLang || 'en'} class="text-accent inline-block text-2xl font-bold leading-snug wrap-anywhere sm:text-3xl">{entry.title}</h1>
+      {isPost && <><div class="tags my-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">{entry.tags.map((tag: string) => <a class="text-accent underline decoration-dashed underline-offset-4" href={`/archive.html?tag=${encodeURIComponent(tag)}`}>{tag}</a>)}</div><time class="text-muted-foreground text-sm" datetime={entry.date} data-localized-date={entry.date}>{new Date(entry.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric', timeZone: 'UTC' })}</time></>}
+    </header>
+    {headings.length > 2 && <details class="table-of-contents js-page-aside mb-8 border border-border p-4 text-sm"><summary class="cursor-pointer font-medium" data-i18n="contents">Contents</summary><ol class="mt-3 space-y-2">{headings.map((heading: {depth: number; slug: string; text: string}) => <li class={`depth-${heading.depth}`}><a class="hover:text-accent" href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></details>}
+    <div lang={entry.defaultLang || 'en'} class="prose app-prose max-w-none js-multilingual-content" data-page-titles={JSON.stringify(entry.titles || {})} data-site-title="Hyunsung Lee's Blog" data-default-language={entry.defaultLang || 'en'} set:html={entry.html} />
+    {isPost && entry.license !== false && <footer class="article-license mt-10 border-t border-dashed border-border pt-6 text-sm leading-relaxed text-muted-foreground"><p><span data-i18n="licenseIntro">This work is licensed under</span> <a class="underline decoration-dashed underline-offset-4 hover:text-accent" rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>.</p><a class="mt-2 inline-block underline decoration-dashed underline-offset-4 hover:text-accent" href={`https://github.com/ita9naiwa/ita9naiwa.github.io/blob/master/${entry.id}`} data-i18n="viewSource">View source on GitHub</a></footer>}
+    {isPost && <nav class="article-neighbors my-8 grid grid-cols-1 gap-6 border-t border-dashed border-border pt-8 sm:grid-cols-2" aria-label="Adjacent posts" data-i18n-aria-label="adjacentPosts"><div>{newer && <a class="block text-sm text-accent hover:opacity-75" href={newer.url}><span class="mb-1 block text-base text-foreground">← <span data-i18n="newerPost">Newer post</span></span><span data-localized-text={JSON.stringify(newer.titles)} data-default-text={newer.title}>{newer.title}</span></a>}</div><div class="text-right sm:col-start-2">{older && <a class="block text-sm text-accent hover:opacity-75" href={older.url}><span class="mb-1 block text-base text-foreground"><span data-i18n="olderPost">Older post</span> →</span><span data-localized-text={JSON.stringify(older.titles)} data-default-text={older.title}>{older.title}</span></a>}</div></nav>}
+    {entry.comment !== false && <section class="comments mt-10 border-t border-dashed border-border pt-8" aria-label="Comments" data-i18n-aria-label="comments"><h2 class="mb-4 text-xl font-semibold" data-i18n="comments">Comments</h2><script is:inline>
+      (() => {
+        const script = document.createElement('script');
+        script.src = 'https://utteranc.es/client.js';
+        script.setAttribute('repo', 'ita9naiwa/ita9naiwa.github.io');
+        script.setAttribute('issue-term', 'pathname');
+        script.setAttribute('label', '💬 comment');
+        script.setAttribute('theme', document.documentElement.dataset.theme === 'dark' ? 'github-dark' : 'github-light');
+        script.crossOrigin = 'anonymous';
+        script.async = true;
+        document.currentScript.parentElement.appendChild(script);
+      })();
+    </script></section>}
+  </article>
+</Base>
+<script>import '../scripts/language-switcher.js';</script>
+
+<style>
+  .table-of-contents .depth-3 { padding-inline-start: 1rem; }
+  .table-of-contents .depth-4 { padding-inline-start: 2rem; }
+</style>
