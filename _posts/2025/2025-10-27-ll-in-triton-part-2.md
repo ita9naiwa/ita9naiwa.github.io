@@ -341,7 +341,7 @@ dim0 = (lane % 4) + ((register % 8) << 2)
 
 **Scenario:** A CTA cooperatively computes a 32×32 accumulator tile. Each warp handles a 16×8 MMA fragment (`m16n8k16`), and each lane packs two accumulator values in registers. We want a `LinearLayout` that maps `(register, lane)` coordinates back to logical `(row, col)` indices while respecting the register packing and warp tiling order used by NVIDIA's `nvidiaMmaTile`.
 
-![mma_fig86]({{ "/assets/mma_fig86.png" | absolute_url }})
+![mma_fig86]({{ "/assets/images/mma_fig86.png" | absolute_url }})
 Image brought from https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#mma-16816-c-i8
 
 

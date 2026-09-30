@@ -81,7 +81,6 @@ I implemented these losses based on https://github.com/kuangliu/pytorch-cifar an
 https://gist.github.com/ita9naiwa/49ab8279d3277ab5d8b0795e1eb0ea1d
 
 
-|--------------|
 |Loss Function|Accuracy on Test set|
 |---|-----------|
 |CE | 92.67|

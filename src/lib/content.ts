@@ -19,6 +19,16 @@ const root = process.cwd();
 const strings = (value: unknown): string[] => value == null ? [] : Array.isArray(value) ? value.map(String) : [String(value)];
 const escape = (value: string) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const plain = (html: string) => html.replace(/<[^>]*>/g, ' ').replace(/&(?:nbsp|amp|quot|lt|gt);/g, ' ').replace(/\s+/g, ' ').trim();
+function excerptText(html: string): string {
+  const text = plain(html.split('<!--more-->')[0]);
+  const characters = Array.from(text);
+  if (characters.length <= 240) return text;
+  let excerpt = characters.slice(0, 239).join('');
+  const boundary = excerpt.lastIndexOf(' ');
+  if (boundary >= 200 && !/\s/.test(characters[239])) excerpt = excerpt.slice(0, boundary);
+  return excerpt.trimEnd() + '…';
+}
+
 const slugify = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}\s_-]/gu, '').trim().replace(/\s+/g, '-') || 'section';
 
 async function files(directory: string): Promise<string[]> {
@@ -132,10 +142,10 @@ async function render(item: Source, all: Source[]): Promise<Post> {
   }
   html += item.file.endsWith('.html') ? body.slice(previous).replace(/<!DOCTYPE[^>]*>|<\/?(?:html|head|body)\b[^>]*>/gi, '') : markdown(body.slice(previous));
   const firstSection = html.match(/<section[^>]*data-default-language[^>]*>([\s\S]*?)<\/section>/)?.[1] || html;
-  const excerpt = plain(firstSection.split('<!--more-->')[0]).slice(0, 240);
+  const excerpt = excerptText(firstSection);
   const excerpts: Record<string, string> = { [item.defaultLang]: excerpt };
   for (const section of html.matchAll(/<section\b[^>]*\bdata-lang=["']([^"']+)["'][^>]*>([\s\S]*?)<\/section>/g)) {
-    excerpts[section[1]] = plain(section[2].split('<!--more-->')[0]).slice(0, 240);
+    excerpts[section[1]] = excerptText(section[2]);
   }
   const { file, data, body: original, ...post } = item;
   return { ...post, html, excerpt, excerpts, headings };

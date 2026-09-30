@@ -21,6 +21,8 @@ try {
   write('1.md', 'Unfrontmattered personal notes must not become a page.');
   write('_posts/guide.md', 'Unfrontmattered writing guide must not become a post.');
   write('about.md', '---\ntitle: About fixture\n---\nPublic page.\n');
+  write('long-en.md', '---\ntitle: Long English\n---\n' + 'complete '.repeat(35));
+  write('long-zh.md', '---\ntitle: Long Chinese\nlang: zh\n---\n' + '界'.repeat(260));
   write('topic.md', '---\ntitle: Topic fixture\n---\n<ul>\n{% for post in site.tags["fixture"] %}{{ post.title }}{% endfor %}\n</ul>\n');
   write('_posts/2026-09-30-public post.md', `---
 title: Public fixture
@@ -62,7 +64,7 @@ const { getPosts, getPages } = await import(${JSON.stringify(contentModule)});
 const posts = await getPosts();
 const pages = await getPages();
 assert.equal(posts.length, 1, 'Only the public fixture post should load');
-assert.equal(pages.length, 2, 'Only public fixture pages should load');
+assert.equal(pages.length, 4, 'Only public fixture pages should load');
 const about = pages.find(page => page.url === '/about.html');
 assert(about);
 assert.equal(about.defaultLang, 'en', 'Keep the original site language for pages without explicit metadata');
@@ -77,6 +79,11 @@ assert(post.excerpts.en.includes('Body') && !post.excerpts.en.includes('본문')
 assert.equal(post.excerpts.ja, undefined, 'Missing excerpts must remain absent for consumer fallback');
 assert(Object.values(post.excerpts).every(text => text.length <= 240 && !text.includes('<')));
 assert.equal(about.excerpts.en, about.excerpt);
+assert.equal(about.excerpt, 'Public page.', 'Short excerpts must not gain an ellipsis');
+const longEnglish = pages.find(page => page.url === '/long-en.html');
+assert(longEnglish.excerpt.endsWith('complete…'), 'Long excerpts should end at a complete word');
+assert(longEnglish.excerpt.length <= 240);
+assert.equal(pages.find(page => page.url === '/long-zh.html').excerpt, '界'.repeat(239) + '…', 'CJK without spaces must retain its full preview budget');
 const topic = pages.find(page => page.url === '/topic.html');
 assert(topic.html.includes('data-default-text="Public fixture"'));
 const localizedTitles = topic.html.match(/data-localized-text="([^"]*)"/)[1].replaceAll('&quot;', '"').replaceAll('&amp;', '&');
