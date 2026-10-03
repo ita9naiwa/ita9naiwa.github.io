@@ -15,6 +15,10 @@ export async function preparePublic() {
       filter: source => !path.relative(root, source).split(path.sep).some(part => /^_?drafts?$/i.test(part) || part.startsWith('.')),
     });
   }
+  await cp(path.join(root, 'public/itascanner'), path.join(output, 'itascanner'), {
+    recursive: true,
+    filter: source => !path.basename(source).startsWith('.'),
+  });
   await writeFile(path.join(output, '.nojekyll'), '');
   await writeFile(path.join(output, 'robots.txt'), 'User-agent: *\nAllow: /\nDisallow: /404.html\n\nSitemap: https://ita9naiwa.github.io/sitemap.xml\n');
 }
