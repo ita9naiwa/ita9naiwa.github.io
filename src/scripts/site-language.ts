@@ -1,7 +1,7 @@
 const labels = {
   en: {
     posts:'Posts', tags:'Tags', about:'About', search:'Search', searchPosts:'Search posts', skip:'Skip to content', language:'Language',
-    recentPosts:'Recent Posts', allPosts:'All posts', heroDescription:'Notes on ML systems, recommender systems, and life.', topics:'Topics',
+    recentPosts:'Recent Posts', allPosts:'All posts', heroDescription:'With the rise of AI, writing about technology feels less meaningful to me, so these days I write more about my thoughts.', topics:'Topics',
     mlSystems:'ML Systems', machineLearning:'Machine Learning', recommenderSystems:'Recommender Systems', thoughts:'Thoughts',
     newer:'Newer', older:'Older', contents:'Contents', comments:'Comments', viewSource:'View source on GitHub',
     licenseIntro:'This work is licensed under', newerPost:'Newer post', olderPost:'Older post', searchPlaceholder:'Title or tag…',
@@ -11,7 +11,7 @@ const labels = {
   },
   ko: {
     posts:'글', tags:'태그', about:'소개', search:'검색', searchPosts:'글 검색', skip:'본문으로 건너뛰기', language:'언어',
-    recentPosts:'최근 글', allPosts:'전체 글', heroDescription:'머신러닝 시스템, 추천 시스템, 그리고 삶에 관한 기록.', topics:'주제',
+    recentPosts:'최근 글', allPosts:'전체 글', heroDescription:'AI의 등장으로 기술 글을 쓰는 의미가 예전 같지 않아, 요즘은 생각을 더 많이 적습니다.', topics:'주제',
     mlSystems:'ML 시스템', machineLearning:'머신러닝', recommenderSystems:'추천 시스템', thoughts:'생각',
     newer:'최신 글', older:'이전 글', contents:'목차', comments:'댓글', viewSource:'GitHub에서 원문 보기',
     licenseIntro:'이 글의 이용 조건:', newerPost:'다음 글', olderPost:'이전 글', searchPlaceholder:'제목 또는 태그…',
@@ -21,7 +21,7 @@ const labels = {
   },
   ja: {
     posts:'記事', tags:'タグ', about:'プロフィール', search:'検索', searchPosts:'記事を検索', skip:'本文へスキップ', language:'言語',
-    recentPosts:'最近の記事', allPosts:'すべての記事', heroDescription:'機械学習システム、推薦システム、そして日々の記録。', topics:'トピック',
+    recentPosts:'最近の記事', allPosts:'すべての記事', heroDescription:'AIの登場で技術について書く意義を以前ほど感じなくなり、最近は考えたことを多く綴っています。', topics:'トピック',
     mlSystems:'MLシステム', machineLearning:'機械学習', recommenderSystems:'推薦システム', thoughts:'雑記',
     newer:'新しい記事', older:'以前の記事', contents:'目次', comments:'コメント', viewSource:'GitHubで原文を見る',
     licenseIntro:'この記事のライセンス：', newerPost:'次の記事', olderPost:'前の記事', searchPlaceholder:'タイトルまたはタグ…',
@@ -31,7 +31,7 @@ const labels = {
   },
   zh: {
     posts:'文章', tags:'标签', about:'关于', search:'搜索', searchPosts:'搜索文章', skip:'跳转到正文', language:'语言',
-    recentPosts:'最新文章', allPosts:'全部文章', heroDescription:'关于机器学习系统、推荐系统与生活的记录。', topics:'主题',
+    recentPosts:'最新文章', allPosts:'全部文章', heroDescription:'随着AI的兴起，我觉得写技术文章不再像以前那样有意义，所以最近更多地记录自己的思考。', topics:'主题',
     mlSystems:'ML系统', machineLearning:'机器学习', recommenderSystems:'推荐系统', thoughts:'随想',
     newer:'较新文章', older:'较早文章', contents:'目录', comments:'评论', viewSource:'在GitHub查看原文',
     licenseIntro:'本文采用以下许可：', newerPost:'下一篇', olderPost:'上一篇', searchPlaceholder:'标题或标签…',
