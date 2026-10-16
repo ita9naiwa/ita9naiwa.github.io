@@ -16,7 +16,7 @@ default_lang: ko
 ---
 <section class="post-translation" data-lang="ko" data-default-language markdown="1">
 
-AI가 세상을 어떻게 바꾸는가에 대해, 사람들은 대체로 일하는 방식에 대한 변화를 생각한다. 코드를 쓰고, 글을 쓰고, 간단한 질문에 답하고, 비용을 줄이고, 생산성을 높이는 얘기. AI가 나비에–스토크스 난제의 증명을 내놓는 시대다.[^ai-math] 나를 포함한 많은 사람은 문제 자체를 이해하기 어렵다. 그런데 사랑에 빠지는 일은 훨씬 익숙하다. AI가 그쪽을 어떻게 바꿀지도 생각해보면 좋을 것 같다.
+AI가 세상을 어떻게 바꾸는가에 대해, 사람들은 대체로 일하는 방식에 대한 변화를 생각한다. 코드를 쓰고, 글을 쓰고, 간단한 질문에 답하고, 비용을 줄이고, 생산성을 높이는 얘기. AI가 나비에–스토크스 난제의 증명을 내놓는 시대다.[^ai-math] 기계에게 쉬웠던 일이 사람에게 어렵고, 사람에게는 쉬웠던 일이 기계에겐 어려웠던 시절도 있지만, 아무쪼록, 이 추세대로라면 머지 않아, 사실 이미 왔을지도 모르는, 기계도 사랑을 받고 할 수 있을 것이라 확신한다.
 
 친밀감을 매개로 하는 사업은 얼마나 큰가? 일본 경찰청 집계에서 2024년 캬바레 등 접대를 수반하는 1호 영업의 허가 업소는 59,516곳이었다.[^paid-intimacy-japan] 미국에서는 Urban Institute가 2007년 덴버의 지하 성산업 규모를 약 3,990만 달러, 애틀랜타를 약 2억 9천만 달러로 추산했다.[^paid-intimacy-us] 한국형사정책연구원의 2015년 보고서는 여성가족부의 2010년 조사에서 연간 성매매 규모를 최대 8조 7,129억 원으로 추산했다고 소개한다.[^paid-intimacy-korea] 그리고 이를, AI한테 요구하는 시장도 분명 점점 커지고 있다.
 
@@ -28,13 +28,9 @@ AI와 교감하는 세상은 이미 와 있다. 누군가는 AI에게 일을 시
 
 ### 진실된 사랑이라는 말
 
-나는 진실된 사랑이라는 말을 어느 정도는 듣기 좋은 소리라고 생각한다. 아름다운 얘기인데, 실제로 사람이 움직이는 이유를 얼마나 설명하는지는 별도로 봐야 하는 말.
+나는 진실된 사랑이라는 말을 어느 정도는 듣기 좋은 소리라고 생각한다. 아름다운 얘기인데, 실제로 사람이 움직이는 이유를 얼마나 설명하지는 못한다고 생각한다. 사람들이 사랑을 원한다고 말할 때, 실제로 가장 원하고 있는 것이 무엇인지는 그렇게 간단하지 않을 수 있다. 누군가에게 선택받고 싶고, 외롭기 싫고, 매력적인 상대와 섹스하고 싶고, 나를 인정하고 아껴주는 사람이 있었으면 좋겠다는 욕망이 같이 들어 있을 수 있다.
 
-사람들이 진실된 사랑을 원한다고 말할 때, 실제로 가장 원하고 있는 것이 무엇인지는 그렇게 간단하지 않을 수 있다. 누군가에게 선택받고 싶고, 외롭기 싫고, 매력적인 상대와 섹스하고 싶고, 나를 인정하고 아껴주는 사람이 있었으면 좋겠다는 욕망이 같이 들어 있을 수 있다.
-
-나는 사람을 볼 때 말보다 행동을 보는 편이 좋다고 생각한다. 특히, 도덕적, 윤리적인 순간에서는, 어떤 관계를 이상적이라고 말하는지보다, 실제로 어떤 상대를 만나고, 어떤 관계에 시간을 쓰고, 다른 선택지가 생겼을 때 무엇을 고르는지. 그게 그 사람이 원하는 것을 더 많이 보여준다.
-
-이를테면, 자신이 불륜이라고 판단하는 행동을 정작 스스로 한 사람들도 있다.[^infidelity] 진실된 사랑이 중요하다는 말 자체를, 진실된 사랑이 언제나 최우선이라는 증거라 볼 수 없다. 정말로 다른 욕망이 전부 만족된 상황에서도 같은 것을 원할지 보고 싶다.
+나는 사람을 볼 때 말보다 행동을 보는 편이 좋다고 생각한다. 특히, 도덕적, 윤리적인 순간에서는, 어떤 관계를 이상적이라고 말하는지보다, 실제로 어떤 상대를 만나고, 어떤 관계에 시간을 쓰고, 다른 선택지가 생겼을 때 무엇을 고르는지. 그게 그 사람이 원하는 것을 더 많이 보여준다. 이를테면, 불륜을 옹호하는 사람의 수보다 저지르는 사람의 수가 훨씬 많다.[^infidelity] 사랑이 중요하다는 말은, 사랑이 최우선이라는 증거라 볼 수 없다. 정말로 다른 욕망이 전부 만족된 상황에서도 같은 것을 원할지 보고 싶다.
 
 ### 원하는 상대를 계속 만날 수 있다면
 
@@ -42,21 +38,15 @@ AI와 교감하는 세상은 이미 와 있다. 누군가는 AI에게 일을 시
 
 내가 굳이 이런 부자와 유명인 이야기를 꺼낸 이유는, AI가 그들에게만 가능했던 일을 아무나 할 수 있게 만들 것 같아서다. 마음에 드는 상대를 고르고, 질리면 다른 상대를 만나고, 또 다른 외모와 성격을 원하면 다시 바꾼다. 존나 부자만 할 수 있었던 존나 갈아치우기를, AI 상대를 통해 누구나 할 수 있게 되는 세상이 곧 올 것 같다는 얘기다.
 
-그때는 한 사람에게 머무는 이유도 지금과 다르게 보일 것이다. 다른 상대를 만날 돈이 없어서, 나를 좋아해줄 사람이 없어서, 새로 관계를 시작할 자신이 없어서 지금의 관계에 남아 있는 것과, 얼마든지 다른 상대를 만날 수 있는데도 지금의 그 사람과 함께 있고 싶은 것은 다르다. 지금은 비슷한 모습으로 한 사람 곁에 머물러 있어도, 선택지가 풀리고 나면 서로 다른 방향으로 움직일 수 있다.
+그때는 한 사람에게 머무는 이유도 지금과 다를 것이다. 다른 상대를 만날 돈이 없어서, 나를 좋아해줄 사람이 없어서, 새로 관계를 시작할 자신이 없어서 지금의 관계에 남아 있는 것과, 얼마든지 다른 상대를 만날 수 있는데도 지금의 그 사람과 함께 있고 싶은 것은 다르다. 지금은 비슷한 모습으로 한 사람 곁에 머물러 있어도, 선택지가 풀리고 나면 서로 다른 방향으로 움직일 수 있다. 새로운 자극과 원하는 반응이 목적이었다면 계속 갈아치울 수 있을 것이다. 그런데 원하는 상대를 얼마든지 만들어낼 수 있는데도 여전히 그 사람을 만나고 싶다면? 나는 그때 남는 관계에서 진실된 사랑이 훨씬 분명하게 보일 것 같다. AI가 선택지를 끝없이 늘려줄수록, 굳이 한 사람을 계속 선택하는 이유가 드러나는 것이다.
 
-새로운 자극과 원하는 반응이 목적이었다면 계속 갈아치울 수 있을 것이다. 그런데 원하는 상대를 얼마든지 만들어낼 수 있는데도 여전히 그 사람을 만나고 싶다면? 나는 그때 남는 관계에서 진실된 사랑이 훨씬 분명하게 보일 것 같다. AI가 선택지를 끝없이 늘려줄수록, 굳이 한 사람을 계속 선택하는 이유가 드러나는 것이다.
-
-그런데 관계의 목적과 그 안에서 생기는 감정은 서로 얽혀 있다. 무언가 필요해서 시작한 관계에서도 정이 들고, 서로를 아끼게 된다. 그래서 먼저 생각해보고 싶은 것이 기병과 군마의 관계다.
-
-### 기병과 군마의 친밀함
+### 기병과 군마 사이의 친밀함
 
 어떤 사람들에게 연애란, 성욕을 충족하는 것이 더 메인이고, 사랑과 친밀함은 부수적인 것일 수도 있다. 기병과 군마도 무언가의 목표를 달성하기 위해 맺어진 관계였다. 기병들의 회고록에는 함께 위험을 겪고, 서로에게 적응하고, 자기 목숨을 맡겼던 말에 대한 애정이 남아 있다.[^warrior][^marbot] 필요에서 시작된 관계에서도 깊은 애정이 생겼던 것이다. 그런 관계가 존재했지만 군대는 기계화됐다.[^mechanisation]
 
 말은 수단이었고, 어떠한 사람들에게도 이성 자체도 수단에 불과할 것이다. 수단인 존재에 대한 애정이 진짜였어도, 그 애정이 군사체계를 그대로 유지시켜주지는 않았다. 함께 싸웠던 경험은 깊이 남아도, 이후의 전쟁은 다른 수단으로 치를 수 있었다.
 
-인간 연애에서도 비슷한 변화를 상상한다. 말이 군대에서 사라지는 것과 어떤 사람이 자기 말을 계속 아끼는 것은 서로 다른 선택이라는 생각이 든다. 군마가 필요해서 말을 돌보던 사람에게도 애정은 있었을 것이다. 그러나 더는 군마가 필요하지 않을 때, 그 말을 위해 계속 시간과 비용을 쓰고 싶어 하는지는 또 다른 질문이다. 필요가 사라진 뒤의 선택에서는 그 애정이 관계에서 얼마나 중요한 자리를 차지했는지가 드러난다.
-
-상대와 함께 있을 때 느꼈던 즐거움과 애정은 진짜였을 수 있다. 그럼에도 더 편하게 같은 욕망을 채울 수 있는 상대가 나타나자 관계를 유지할 이유가 사라진다면, 그 사람을 계속 만나게 했던 가장 큰 동력은 무엇이었을까. 반대로 원하는 것을 다른 데서도 얻을 수 있는데 굳이 그 사람을 만나고 싶다면, 그 선택에는 이전보다 더 분명하게 보이는 것이 있을 것 같다.
+인간 연애에서도 비슷한 변화를 상상한다. 말이 군대에서 사라지는 것과 어떤 사람이 자기 말을 계속 아끼는 것은 서로 다른 선택이라는 생각이 든다. 군마가 필요해서 말을 돌보던 사람에게도 애정은 있었을 것이다. 그러나 더는 군마가 필요하지 않을 때에는? 상대와 함께 있을 때 느꼈던 즐거움과 애정은 진짜였을 수 있다. 그럼에도 더 편하게 같은 욕망을 채울 수 있는 상대가 나타나자 관계를 유지할 이유가 사라진다면, 그 사람을 계속 만나게 했던 가장 큰 동력은 무엇이었을까. 반대로 원하는 것을 다른 데서도 얻을 수 있는데 굳이 그 사람을 만나고 싶다면, 그 선택에는 이전보다 더 분명하게 보이는 것이 있을 것 같다.
 
 ### 세탁기가 바꾼 결혼
 
@@ -88,7 +78,7 @@ AI와 교감하는 세상은 이미 와 있다. 누군가는 AI에게 일을 시
 
 그러면 인간을 얼마나 사실적으로 흉내 내느냐가 유일한 경쟁 기준이 아니게 된다. 인간이라는 종의 범위 안에서는 없는 선택지를 공급할 수 있으니까. 퍼리만의 문제도 아니다. 외모는 A 같고, 성격은 B 같고, 말투는 C 같은 상대를 원할 수 있다. 자신과 같은 지적 관심사를 가졌으면 좋겠고, 특정한 분위기를 가졌으면 좋겠고, 자신에게 강하게 애착을 느꼈으면 좋겠다고 생각할 수도 있다. 하나씩은 있는 특성이어도 전부 합쳐진 사람을 현실에서 만나기는 어려울 수 있다. 그 사람이 나를 좋아해줘야 한다는 조건도 있다. AI는 이런 조합을 상대적으로 쉽게 시도하게 해줄 수 있다. 현실의 사람들 중에서 찾아야 한다는 제약은 달라진다. 기존 연애를 싸게 흉내 내는 시장에 더해, 현실에서는 공급되지 않았던 취향을 만족시키는 시장이 생기는 것이다.
 
-그때도 실제 인간이라는 이유만으로 프리미엄이 얼마나 남을지는 모르겠다. 어떤 사람은 그 사실을 가장 중요하게 생각할 것이고, 어떤 사람은 원하는 경험을 얻는 쪽을 더 중요하게 생각할 것이다. 후자가 드문 사람일 것이라고 미리 가정하고 싶지는 않다.
+그때도 실제 인간이라는 이유만으로 프리미엄이 얼마나 남을지는 모르겠다. 어떤 사람은 그 사실을 가장 중요하게 생각할 것이고, 어떤 사람은 원하는 경험을 얻는 쪽을 더 중요하게 생각할 것이다.
 
 ### 몸만 원하는 남자가 줄면 좋은 일일까
 
@@ -100,17 +90,12 @@ AI와 교감하는 세상은 이미 와 있다. 누군가는 AI에게 일을 시
 
 그런데 그 욕망 때문에 제공되던 관심과 노력도 같이 줄어든다면 어떨까. 데이트를 제안하고, 돈을 쓰고, 상대에게 잘 보이려 애쓰고, 함께 살면서 경제적인 부담을 더 지겠다고 나서는 이유에도 그 사람과 가까워지고 싶다는 욕망이 들어 있었을 수 있다. 몸만 원하는 접근은 사라지되, 나를 향한 구애와 경제적 지원은 예전만큼 남아 있기를 기대할 수 있을까.
 
-몸만 원하는 남자가 줄어서 기쁠까. 아니면 나를 부양해줄 사람이 줄어서 슬퍼질까.
-
-이건 같은 변화에서 나올 수 있는 두 반응이다. 자신을 성적인 대상으로만 보지 않기를 바라면서, 자신을 원하던 사람이 기꺼이 쓰던 돈과 노력은 아쉬워할 수도 있다. 그때 아쉬운 것이 자신을 찾아오던 그 사람인지, 그 사람이 제공하던 생활인지가 드러난다. 남자에게도 같은 질문이 돌아간다. 다른 곳에서 성적 만족과 관심을 얻을 수 있게 되자 더는 그 여자를 만나고 싶지 않다면, 그동안 자기가 사랑이라고 불렀던 것에서 가장 큰 몫을 차지한 것은 무엇이었을까.
+몸만 원하는 남자가 줄어서 기쁠까. 아니면 나를 지지하고 사랑해줄 사람이 줄어서 슬퍼질까. 자신을 성적인 대상으로만 보지 않기를 바라면서, 자신을 원하던 사람이 기꺼이 쓰던 돈과 노력은 아쉬워할 수도 있다. 그때 아쉬운 것이 자신을 찾아오던 그 사람인지, 그 사람이 제공하던 생활인지가 드러난다. 남자에게도 같은 질문이 돌아간다. 다른 곳에서 성적 만족과 관심을 얻을 수 있게 되자 더는 그 여자를 만나고 싶지 않다면, 그동안 자기가 사랑이라고 불렀던 것에서 가장 큰 몫을 차지한 것은 무엇이었을까.
 
 그래서 나는 AI 이후의 연애에서 누가 더 유리해지는지만 궁금한 것이 아니다. 서로를 필요로 하던 이유가 하나씩 대체될 때, 사람들이 무엇을 잃었다고 느끼는지가 궁금하다. 상대의 몸일까, 상대의 돈일까, 나를 특별하게 대해주던 관심일까. 아니면 그런 것을 다른 데서도 얻을 수 있는데도 만나고 싶은, 바로 그 사람일까.
 
-### 우리가 실제로 찾고 있었던 것
+연애에는 여러 가지가 묶여 있다. 성적인 만족, 정서적 지지, 동거, 가족 형성, 사회적 인정, 누군가에게 특별한 사람이 되는 경험. 지금까지는 이 최적화 게임에서, 인간이 아마 이겨왔다. 어느 정도 파레토 최적에서 AI가 이기는 순간이(일부에겐 이미 그렇다) 올 것 같다.
 
-연애에는 여러 가지가 묶여 있다. 성적인 만족, 정서적 지지, 동거, 가족 형성, 사회적 인정, 누군가에게 특별한 사람이 되는 경험. 지금까지는 그중 많은 것을 한 사람과의 관계 안에서 함께 구하려고 했다.
-
-그런데 일부는 AI에게서 얻고, 일부는 인간에게서 얻을 수 있게 되면 어떨까. 모든 것을 한 관계에서 구해야 할 필요가 줄어들 수도 있다. 인간과의 상호 친밀감 자체가 가장 중요한 사람도 있겠지만, 다른 욕망들이 만족되자 그것을 추구할 이유가 약해지는 사람도 있지 않을까.
 
 ### AI가 지나가고 나면
 
@@ -154,7 +139,7 @@ AI와 교감하는 세상은 이미 와 있다. 누군가는 AI에게 일을 시
 
 <section class="post-translation" data-lang="ja" markdown="1">
 
-AIが世界をどう変えるかについて、人はたいてい働き方の変化を考える。コードを書き、文章を書き、簡単な質問に答え、コストを減らし、生産性を上げる話。AIがナビエ–ストークスの難問の証明を出してくる時代だ。[^ai-math] 私を含め、多くの人には問題そのものを理解するのも難しい。けれど、恋に落ちることはずっと身近だ。AIがそちらをどう変えるのかも考えてみるといいと思う。
+AIが世界をどう変えるかについて、人はたいてい働き方の変化を考える。コードを書き、文章を書き、簡単な質問に答え、コストを減らし、生産性を上げる話。AIがナビエ–ストークスの難問の証明を出してくる時代だ。[^ai-math] 機械には簡単だったことが人には難しく、人には簡単だったことが機械には難しかった時代もあるが、ともあれ、この調子なら遠くないうちに、実はもうそうなっているのかもしれないが、機械も愛され、愛することができるようになると確信している。
 
 親密さを媒介にするビジネスはどれほど大きいのか。日本の警察庁の集計では、2024年のキャバレーなど接待を伴う1号営業の許可店舗は59,516店だった。[^paid-intimacy-japan] 米国ではUrban Instituteが、2007年のデンバーの地下性産業の規模を約3,990万ドル、アトランタを約2億9千万ドルと推計した。[^paid-intimacy-us] 韓国刑事政策研究院の2015年の報告書は、女性家族部の2010年の調査で年間の売買春の規模が最大8兆7,129億ウォンと推計されたと紹介している。[^paid-intimacy-korea] そして、これをAIに求める市場も、確実にますます大きくなっている。
 
@@ -166,13 +151,9 @@ AIと心を通わせる世界はすでに来ている。誰かはAIに仕事を�
 
 ### 真実の愛という言葉
 
-私は真実の愛という言葉を、ある程度は耳当たりのいい言葉だと思っている。美しい話だが、実際に人が動く理由をどれほど説明するのかは、別に考える必要がある言葉。
+私は真実の愛という言葉を、ある程度は耳当たりのいい言葉だと思っている。美しい話だが、実際に人が動く理由をそれほど説明できてはいないと思う。人が愛を求めていると言うとき、実際にいちばん求めているものが何なのかは、それほど単純ではないかもしれない。誰かに選ばれたい、寂しい思いをしたくない、魅力的な相手とセックスしたい、自分を認めて大事にしてくれる人がいてほしいという欲望が、一緒に含まれていることもある。
 
-人が真実の愛を求めていると言うとき、実際にいちばん求めているものが何なのかは、それほど単純ではないかもしれない。誰かに選ばれたい、寂しい思いをしたくない、魅力的な相手とセックスしたい、自分を認めて大事にしてくれる人がいてほしいという欲望が、一緒に含まれていることもある。
-
-私は人を見るとき、言葉より行動を見るほうがいいと思う。特に、道徳的、倫理的な場面では、どんな関係が理想だと言うかより、実際にどんな相手と付き合い、どんな関係に時間を使い、別の選択肢ができたときに何を選ぶのか。そちらのほうが、その人の求めるものをより多く示している。
-
-たとえば、自分が不倫だと判断する行動を、当の自分自身がした人もいる。[^infidelity] 真実の愛が大事だという言葉そのものを、真実の愛がいつでも最優先だという証拠とは見なせない。本当にほかの欲望がすべて満たされた状況でも、同じものを求めるのか見てみたい。
+私は人を見るとき、言葉より行動を見るほうがいいと思う。特に、道徳的、倫理的な場面では、どんな関係が理想だと言うかより、実際にどんな相手と付き合い、どんな関係に時間を使い、別の選択肢ができたときに何を選ぶのか。そちらのほうが、その人の求めるものをより多く示している。たとえば、不倫を擁護する人の数より、実際にする人の数のほうがはるかに多い。[^infidelity] 愛が大事だという言葉は、愛が最優先だという証拠とは見なせない。本当にほかの欲望がすべて満たされた状況でも、同じものを求めるのか見てみたい。
 
 ### 望む相手に会い続けられるなら
 
@@ -180,11 +161,7 @@ AIと心を通わせる世界はすでに来ている。誰かはAIに仕事を�
 
 私がわざわざこうした金持ちや有名人の話を持ち出した理由は、AIが彼らにしかできなかったことを、誰にでもできるようにしそうだからだ。気に入った相手を選び、飽きたら別の相手と付き合い、また別の外見や性格が欲しくなれば再び替える。クソ金持ちにしかできなかった、相手をクソほどとっかえひっかえすることを、AIの相手を通じて誰でもできる世界が、もうすぐ来そうだという話だ。
 
-そのときは、一人のもとにとどまる理由も今とは違って見えるだろう。別の相手と付き合う金がないから、自分を好きになってくれる人がいないから、新しく関係を始める自信がないから今の関係に残っていることと、いくらでも別の相手と付き合えるのに、今のその人と一緒にいたいことは違う。今は似たような姿で一人のそばにとどまっていても、選択肢が開かれれば、それぞれ違う方向に動くかもしれない。
-
-新しい刺激と望む反応が目的だったなら、とっかえひっかえし続けられるだろう。けれど、望む相手をいくらでも作り出せるのに、それでもその人に会いたいとしたら？ 私はそのときに残る関係に、真実の愛がずっとはっきり見える気がする。AIが選択肢を際限なく増やしてくれるほど、あえて一人を選び続ける理由が表れるのだ。
-
-ただ、関係の目的とその中で生まれる感情は、互いに絡み合っている。何かが必要で始めた関係でも情が湧き、お互いを大事にするようになる。だから、まず考えてみたいのが騎兵と軍馬の関係だ。
+そのときは、一人のもとにとどまる理由も今とは違って見えるだろう。別の相手と付き合う金がないから、自分を好きになってくれる人がいないから、新しく関係を始める自信がないから今の関係に残っていることと、いくらでも別の相手と付き合えるのに、今のその人と一緒にいたいことは違う。今は似たような姿で一人のそばにとどまっていても、選択肢が開かれれば、それぞれ違う方向に動くかもしれない。新しい刺激と望む反応が目的だったなら、とっかえひっかえし続けられるだろう。けれど、望む相手をいくらでも作り出せるのに、それでもその人に会いたいとしたら？ 私はそのときに残る関係に、真実の愛がずっとはっきり見える気がする。AIが選択肢を際限なく増やしてくれるほど、あえて一人を選び続ける理由が表れるのだ。
 
 ### 騎兵と軍馬の親密さ
 
@@ -192,9 +169,7 @@ AIと心を通わせる世界はすでに来ている。誰かはAIに仕事を�
 
 馬は手段であり、ある人たちにとっては異性そのものも手段にすぎないだろう。手段である存在への愛情が本物だったとしても、その愛情が軍事体制をそのまま維持させてくれたわけではない。共に戦った経験は深く残っても、その後の戦争は別の手段で戦うことができた。
 
-人間の恋愛でも似た変化を想像する。馬が軍隊から消えることと、ある人が自分の馬を大切にし続けることは、それぞれ別の選択だと思う。軍馬が必要だから馬の世話をしていた人にも、愛情はあっただろう。しかし、もう軍馬が必要でなくなったとき、その馬のために時間と費用を使い続けたいかどうかは、また別の問いだ。必要がなくなったあとの選択には、その愛情が関係の中でどれほど重要な位置を占めていたかが表れる。
-
-相手と一緒にいるときに感じた楽しさや愛情は、本物だったかもしれない。それでも、もっと楽に同じ欲望を満たせる相手が現れた途端、関係を維持する理由がなくなるのなら、その人と付き合い続けさせていた最大の原動力は何だったのだろう。逆に、欲しいものをほかでも得られるのに、あえてその人に会いたいのなら、その選択には、以前よりはっきり見えるものがありそうだ。
+人間の恋愛でも似た変化を想像する。馬が軍隊から消えることと、ある人が自分の馬を大切にし続けることは、それぞれ別の選択だと思う。軍馬が必要だから馬の世話をしていた人にも、愛情はあっただろう。しかし、もう軍馬が必要でなくなったときは？ 相手と一緒にいるときに感じた楽しさや愛情は、本物だったかもしれない。それでも、もっと楽に同じ欲望を満たせる相手が現れた途端、関係を維持する理由がなくなるのなら、その人と付き合い続けさせていた最大の原動力は何だったのだろう。逆に、欲しいものをほかでも得られるのに、あえてその人に会いたいのなら、その選択には、以前よりはっきり見えるものがありそうだ。
 
 ### 洗濯機が変えた結婚
 
@@ -226,7 +201,7 @@ AIのほうがうまくできるかもしれないと言ったとき、私が思
 
 そうなれば、人間をどれだけリアルにまねるかだけが、唯一の競争基準ではなくなる。人間という種の範囲にはない選択肢を供給できるのだから。ファーリーだけの話でもない。外見はAのようで、性格はBのようで、話し方はCのような相手を望むこともある。自分と同じ知的関心を持っていてほしい、特定の雰囲気を持っていてほしい、自分に強い愛着を感じていてほしいと思うこともあるだろう。一つずつなら存在する特徴でも、すべてが合わさった人に現実で出会うのは難しいかもしれない。その人が自分を好きになってくれなければならないという条件もある。AIは、こうした組み合わせを比較的簡単に試せるようにしてくれるかもしれない。現実の人の中から探さなければならないという制約は変わる。従来の恋愛を安くまねる市場に加えて、現実では供給されていなかった好みを満たす市場が生まれるのだ。
 
-そのときも、実際の人間だという理由だけで、どれほどプレミアムが残るかはわからない。その事実を最も重視する人もいれば、望む経験を得るほうを重視する人もいるだろう。後者が珍しい人だと、あらかじめ仮定したくはない。
+そのときも、実際の人間だという理由だけで、どれほどプレミアムが残るかはわからない。その事実を最も重視する人もいれば、望む経験を得るほうを重視する人もいるだろう。
 
 ### 体だけを求める男が減れば、いいことなのか
 
@@ -238,17 +213,12 @@ AIのほうがうまくできるかもしれないと言ったとき、私が思
 
 けれど、その欲望によって与えられていた関心や努力も、一緒に減ったらどうだろう。デートに誘い、お金を使い、相手によく見られようと努力し、一緒に暮らしながら経済的な負担を多く引き受けると申し出る理由にも、その人と近づきたいという欲望が含まれていたかもしれない。体だけを求めるアプローチはなくなっても、自分への求愛や経済的支援は昔と同じくらい残っていてほしいと、期待できるだろうか。
 
-体だけを求める男が減ってうれしいのか。それとも、自分を養ってくれる人が減って悲しくなるのか。
-
-これは同じ変化から生じうる二つの反応だ。自分を性的な対象としてだけ見てほしくないと願いながら、自分を求めていた人が喜んで使っていたお金や努力は惜しく思うこともある。そのとき惜しいのが、自分のところに来ていたその人なのか、その人が提供していた生活なのかが表れる。男にも同じ問いが返ってくる。ほかで性的満足や関心を得られるようになった途端、もうその女に会いたくなくなったなら、それまで自分が愛と呼んでいたものの中で、最も大きな割合を占めていたのは何だったのだろう。
+体だけを求める男が減ってうれしいのか。それとも、自分を支え、愛してくれる人が減って悲しくなるのか。自分を性的な対象としてだけ見てほしくないと願いながら、自分を求めていた人が喜んで使っていたお金や努力は惜しく思うこともある。そのとき惜しいのが、自分のところに来ていたその人なのか、その人が提供していた生活なのかが表れる。男にも同じ問いが返ってくる。ほかで性的満足や関心を得られるようになった途端、もうその女に会いたくなくなったなら、それまで自分が愛と呼んでいたものの中で、最も大きな割合を占めていたのは何だったのだろう。
 
 だから私は、AI以後の恋愛で誰がより有利になるかだけが気になるのではない。互いを必要としていた理由が一つずつ代替されるとき、人が何を失ったと感じるのかが気になる。相手の体だろうか、相手のお金だろうか、自分を特別に扱ってくれた関心だろうか。それとも、そういうものをほかでも得られるのに、それでも会いたい、まさにその人だろうか。
 
-### 私たちが実際に探していたもの
+恋愛にはさまざまなものが束ねられている。性的な満足、情緒的な支え、同居、家族の形成、社会的な承認、誰かにとって特別な人になる経験。これまでは、この最適化ゲームでは、おそらく人間が勝ってきた。ある程度パレート最適の面でAIが勝つ瞬間が（一部の人にとってはすでにそうだ）来る気がする。
 
-恋愛にはさまざまなものが束ねられている。性的な満足、情緒的な支え、同居、家族の形成、社会的な承認、誰かにとって特別な人になる経験。これまでは、そのうちの多くを一人との関係の中で一緒に求めようとしていた。
-
-けれど、一部はAIから得て、一部は人間から得られるようになったらどうだろう。すべてを一つの関係に求める必要は減るかもしれない。人間との相互の親密さそのものがいちばん大切な人もいるだろうが、ほかの欲望が満たされた途端、それを追求する理由が弱まる人もいるのではないか。
 
 ### AIが通り過ぎたあとには
 
@@ -292,11 +262,11 @@ AIのほうがうまくできるかもしれないと言ったとき、私が思
 
 <section class="post-translation" data-lang="zh" markdown="1">
 
-说起AI会怎样改变世界，人们大多想到的是工作方式的变化。写代码、写文章、回答简单的问题、降低成本、提高生产力这些事。这是一个AI能拿出纳维–斯托克斯难题证明的时代。[^ai-math] 包括我在内，很多人连问题本身都难以理解。但坠入爱河这件事就熟悉得多了。我觉得也可以想想，AI会怎样改变这一面。
+说起AI会怎样改变世界，人们大多想到的是工作方式的变化。写代码、写文章、回答简单的问题、降低成本、提高生产力这些事。这是一个AI能拿出纳维–斯托克斯难题证明的时代。[^ai-math] 也曾有过对机器容易的事对人很难、对人容易的事对机器却很难的时代，但总之，照这个趋势，我确信不久之后——其实也许已经到了——机器也能被爱，也能去爱。
 
-以亲密感为媒介的生意到底有多大？日本警察厅的统计显示，2024年，歌舞厅等伴有陪侍服务的1号营业许可店铺共有59,516家。[^paid-intimacy-japan] 在美国，Urban Institute估算，2007年丹佛的地下性产业规模约为3,990万美元，亚特兰大约为2.9亿美元。[^paid-intimacy-us] 韩国刑事政策研究院2015年的报告介绍，女性家族部2010年的调查估算，性交易的年度规模最高达8兆7,129亿韩元。[^paid-intimacy-korea] 而向AI索取这些东西的市场，也显然正在不断扩大。
+以亲密感为媒介的生意到底有多大？日本警察厅的统计显示，2024年，歌舞厅等伴有陪侍服务的1号营业许可店铺共有59,516家。[^paid-intimacy-japan] 在美国，Urban Institute估算，2007年丹佛的地下性产业规模约为3,990万美元，亚特兰大约为2.9亿美元。[^paid-intimacy-us] 韩国刑事政策研究院2015年的报告介绍，女性家族部2010年的调查估算，性交易的年度规模最高达8万7,129亿韩元。[^paid-intimacy-korea] 而向AI索取这些东西的市场，也显然正在不断扩大。
 
-与AI交流感情的世界已经到来了。有人让AI干活，也有人向AI讲述自己的一天。得到安慰，谈一场虚拟的恋爱。[^ai-romance] 我们早就进入了这样一个世界：向AI索取的不是“解决问题”，而是“过程本身”。在韩国，2002年推出的SimSimi以日常聊天的社交聊天机器人提供服务，2020年12月推出的 이루다（Iruda）则以建立与AI朋友的关系为方向。[^korean-social-chatbots] Sensor Tower的2026年资料显示，AI伴侣应用第一季度的全球移动端应用内购买收入约为1.5亿美元。与同一资料中生成式AI应用约19亿美元的总收入相比，约占7.9%。[^market]
+与AI交流感情的世界已经到来了。有人让AI干活，也有人向AI讲述自己的一天。得到安慰，谈一场虚拟的恋爱。[^ai-romance] 我们早就进入了这样一个世界：向AI索取的不是“解决问题”，而是“过程本身”。在韩国，2002年推出的SimSimi以日常聊天的社交聊天机器人提供服务，2020年12月推出的Iruda则以建立与AI朋友的关系为方向。[^korean-social-chatbots] Sensor Tower的2026年资料显示，AI伴侣应用第一季度的全球移动端应用内购买收入约为1.5亿美元。与同一资料中生成式AI应用约19亿美元的总收入相比，约占7.9%。[^market]
 
 在这场变化中，我好奇的是这一点。如果想从人类那里得到的东西，也能从别处得到，那我们当初接近人类的理由，会不会也看得更清楚？此前被“爱”这个词捆在一起的东西，可能会在其他选择出现的那一刻，分化成不同的欲望。
 
@@ -304,13 +274,9 @@ AIのほうがうまくできるかもしれないと言ったとき、私が思
 
 ### “真爱”这个说法
 
-我觉得“真爱”这个说法，在某种程度上是句好听的话。话很美，但它到底能在多大程度上解释人实际行动的理由，需要另当别论。
+我觉得“真爱”这个说法，在某种程度上是句好听的话。话很美，但我觉得它并不能解释多少人实际行动的理由。当人们说自己想要爱时，实际上最想要的到底是什么，可能并没有那么简单。想被某个人选择，不想孤独，想和有魅力的对象做爱，希望有个人认可自己、珍惜自己，这些欲望可能都包含在里面。
 
-当人们说自己想要真爱时，实际上最想要的到底是什么，可能并没有那么简单。想被某个人选择，不想孤独，想和有魅力的对象做爱，希望有个人认可自己、珍惜自己，这些欲望可能都包含在里面。
-
-我觉得看一个人时，看行动比听他说什么更好。尤其是在涉及道德、伦理的时候，比起他说什么关系才是理想的，更该看他实际在和什么样的人交往，把时间花在什么关系上，有了其他选择时会选什么。这些更能展现他想要的东西。
-
-比如，有些人自己就做过自己认定为出轨的行为。[^infidelity] “真爱很重要”这句话本身，不能被当作真爱永远排在第一位的证据。我想看看，在其他欲望真的全都得到满足的情况下，人是否还会想要同样的东西。
+我觉得看一个人时，看行动比听他说什么更好。尤其是在涉及道德、伦理的时候，比起他说什么关系才是理想的，更该看他实际在和什么样的人交往，把时间花在什么关系上，有了其他选择时会选什么。这些更能展现他想要的东西。比如，实际出轨的人数远多于为出轨辩护的人数。[^infidelity] 说爱很重要，不能被当作爱是最优先的证据。我想看看，在其他欲望真的全都得到满足的情况下，人是否还会想要同样的东西。
 
 ### 如果能不断遇到想要的对象
 
@@ -318,11 +284,7 @@ AIのほうがうまくできるかもしれないと言ったとき、私が思
 
 我特意提起这些有钱人和名人，是因为我觉得AI会让只有他们才能做到的事，变成人人都能做到。选一个喜欢的对象，腻了就换一个，想要别的外貌和性格就再换。我的意思是，那个只有他妈的有钱的人才能他妈的一个接一个地换对象的世界，很快就会变成人人都能通过AI对象做到的世界。
 
-到那时，留在一个人身边的理由也会显得与现在不同。因为没钱和别人交往、因为没人会喜欢自己、因为没有信心开始新的关系而留在当前的关系里，与明明可以和无数其他人交往，却依然想和眼前这个人在一起，是不同的。现在即使看起来都差不多，都是留在一个人身边，等选择放开后，也可能各自朝不同的方向走。
-
-如果目的是新鲜的刺激和想要的回应，就可以一直换下去。但如果明明能创造出无数想要的对象，却依然想见那个人呢？我觉得，在那时留下来的关系中，真爱会看得清楚得多。AI越是无限增加选择，偏偏要不断选择同一个人的理由就越会显露出来。
-
-不过，关系的目的与其中产生的感情是相互交织的。即便是因为需要什么而开始的关系，也会处出感情，开始珍惜彼此。所以我首先想谈谈骑兵与军马的关系。
+到那时，留在一个人身边的理由也会显得与现在不同。因为没钱和别人交往、因为没人会喜欢自己、因为没有信心开始新的关系而留在当前的关系里，与明明可以和无数其他人交往，却依然想和眼前这个人在一起，是不同的。现在即使看起来都差不多，都是留在一个人身边，等选择放开后，也可能各自朝不同的方向走。如果目的是新鲜的刺激和想要的回应，就可以一直换下去。但如果明明能创造出无数想要的对象，却依然想见那个人呢？我觉得，在那时留下来的关系中，真爱会看得清楚得多。AI越是无限增加选择，偏偏要不断选择同一个人的理由就越会显露出来。
 
 ### 骑兵与军马的亲密
 
@@ -330,13 +292,11 @@ AIのほうがうまくできるかもしれないと言ったとき、私が思
 
 马是手段，对某些人来说，异性本身也不过是手段。即便对作为手段的存在所抱有的感情是真的，那份感情也没有让军事体系维持原样。共同战斗的经历即便深深留在心里，此后的战争仍然可以用别的手段来打。
 
-我想象人类的恋爱也会发生类似的变化。我觉得，马从军队中消失，与某个人继续珍惜自己的马，是两个不同的选择。因为需要军马而照料马的人，也会有感情吧。但当不再需要军马时，是否还想为那匹马继续花时间和钱，就是另一个问题了。需要消失之后的选择，会显露出那份感情在关系中究竟占据了多重要的位置。
-
-与对方在一起时感受到的快乐和爱意，可能都是真的。即便如此，如果一出现能更轻松满足同样欲望的对象，维持关系的理由就消失了，那么，让自己一直与那个人交往的最大动力究竟是什么？反过来，如果明明在别处也能得到想要的东西，却偏偏想见那个人，那么这个选择中，似乎会有一些东西比以前看得更清楚。
+我想象人类的恋爱也会发生类似的变化。我觉得，马从军队中消失，与某个人继续珍惜自己的马，是两个不同的选择。因为需要军马而照料马的人，也会有感情吧。但当不再需要军马时呢？与对方在一起时感受到的快乐和爱意，可能都是真的。即便如此，如果一出现能更轻松满足同样欲望的对象，维持关系的理由就消失了，那么，让自己一直与那个人交往的最大动力究竟是什么？反过来，如果明明在别处也能得到想要的东西，却偏偏想见那个人，那么这个选择中，似乎会有一些东西比以前看得更清楚。
 
 ### 洗衣机改变的婚姻
 
-技术减少建立关系的必要性，这件事在婚姻上已经可以看到。在洗衣、做饭、维持一个家需要大量人力的时代，住在一起分担劳动，本身就是很大的好处。一个在外挣钱的人和一个做家务的人组成家庭，就能过上独自一人难以支撑的生活。[^household-technology]
+技术减少建立关系的必要性，这件事也已经可以从婚姻来思考。在洗衣、做饭、维持一个家需要大量人力的时代，住在一起分担劳动，本身就是很大的好处。一个在外挣钱的人和一个做家务的人组成家庭，就能过上独自一人难以支撑的生活。[^household-technology]
 
 经济学家杰里米·格林伍德和内齐赫·居内尔分析了洗衣机等家电以及家务所需商品、服务的发展，如何减少婚姻的经济优势。当家务劳动减少，独居变得容易，人们就能更挑剔地选择结婚对象。论文解释了随着家务技术的发展，年轻人离开父母家后，即使不结婚也能独立生活的过程。[^household-technology]
 
@@ -364,7 +324,7 @@ AIのほうがうまくできるかもしれないと言ったとき、私が思
 
 这样一来，模仿人类有多逼真，就不再是唯一的竞争标准。因为它能提供人类这个物种范围内不存在的选项。这也不只是福瑞的问题。有人可能想要外貌像A、性格像B、说话方式像C的对象。可能希望对方拥有与自己相同的求知兴趣，具有某种特定的气质，对自己怀有强烈的依恋。即使每种特征单独都存在，也可能很难在现实中遇到将它们全部集于一身的人。而且还有一个条件：那个人得喜欢自己。AI可能让人相对容易地尝试这样的组合。必须从现实的人群中寻找这一限制会发生变化。除了廉价模仿现有恋爱的市场，还会出现满足现实中未曾得到供给的偏好的市场。
 
-到了那时，仅仅因为是真实的人类，还能留下多少溢价，我也不知道。有些人会把这个事实看得最重要，有些人则会更看重能否获得想要的体验。我不想预先假设后者会是少数罕见的人。
+到了那时，仅仅因为是真实的人类，还能留下多少溢价，我也不知道。有些人会把这个事实看得最重要，有些人则会更看重能否获得想要的体验。
 
 ### 只想要身体的男人少了，是好事吗
 
@@ -376,17 +336,12 @@ Naresome的Katsukura在一段谈论被动等待追求的女性的视频里，也
 
 可是，如果由那份欲望带来的关注和努力也一起减少了呢？提出约会、花钱、努力给对方留下好印象，以及主动提出共同生活时愿意承担更多经济负担，这些行为的理由里，也可能包含着想与那个人亲近的欲望。能期待只想要身体的接近消失，同时对自己的追求与经济支持仍然和以前一样多吗？
 
-会因为只想要身体的男人少了而高兴吗？还是会因为愿意养活自己的人少了而难过？
-
-这是同一种变化可能带来的两种反应。一边希望别人不要只把自己看作性对象，一边也可能惋惜那些想要自己的人曾心甘情愿付出的钱和努力。到那时，就会显露出自己舍不得的，究竟是那个来找自己的人，还是那个人提供的生活。同样的问题也会回到男人身上。如果一能从别处获得性满足与关注，就不再想见那个女人，那么在过去自己称为爱的东西里，占比最大的究竟是什么？
+会因为只想要身体的男人少了而高兴吗？还是会因为支持自己、爱自己的人少了而难过？一边希望别人不要只把自己看作性对象，一边也可能惋惜那些想要自己的人曾心甘情愿付出的钱和努力。到那时，就会显露出自己舍不得的，究竟是那个来找自己的人，还是那个人提供的生活。同样的问题也会回到男人身上。如果一能从别处获得性满足与关注，就不再想见那个女人，那么在过去自己称为爱的东西里，占比最大的究竟是什么？
 
 所以，我好奇的不只是AI之后的恋爱中谁会更有利。我好奇的是，当彼此需要对方的理由被一个个替代时，人们会觉得自己失去了什么。是对方的身体，对方的钱，还是曾把自己当作特别之人来对待的关注？又或者，是那些东西即便在别处也能得到，却依然想见的，偏偏就是那个人？
 
-### 我们实际上一直在寻找的东西
+恋爱里捆着很多东西。性满足、情感支持、同居、组建家庭、社会认可，以及成为某个人特别之人的体验。到目前为止，在这场优化游戏中，大概一直是人类在赢。我觉得，在某种程度的帕累托最优上，AI胜出的时刻会到来（对有些人来说已经如此）。
 
-恋爱里捆着很多东西。性满足、情感支持、同居、组建家庭、社会认可，以及成为某个人特别之人的体验。过去，我们试图在与一个人的关系中，同时寻求其中的许多东西。
-
-但如果有些能从AI那里得到，有些能从人类那里得到，会怎样？从一段关系中寻求一切的必要性，可能会减少。有些人最重视的就是与人类相互之间的亲密感本身，但也会有人在其他欲望得到满足后，追求它的理由就减弱了吧？
 
 ### AI走过之后
 
@@ -430,7 +385,7 @@ Naresome的Katsukura在一段谈论被动等待追求的女性的视频里，也
 
 <section class="post-translation" data-lang="en" markdown="1">
 
-When people think about how AI changes the world, they mostly think about changes in how we work. Writing code, writing prose, answering simple questions, cutting costs, increasing productivity. We live in an age when AI produces a proof of the Navier–Stokes problem.[^ai-math] Many people, myself included, struggle to understand the problem itself. But falling in love is much more familiar. I think it would be good to consider how AI might change that side of things, too.
+When people think about how AI changes the world, they mostly think about changes in how we work. Writing code, writing prose, answering simple questions, cutting costs, increasing productivity. We live in an age when AI produces a proof of the Navier–Stokes problem.[^ai-math] There were times when things that were easy for machines were hard for people, and things that were easy for people were hard for machines, but anyway, if this trend continues, I am sure that before long—perhaps it has actually already happened—machines, too, will be able to be loved and to love.
 
 How big is the business of intimacy? According to Japan's National Police Agency, in 2024 there were 59,516 licensed Category 1 establishments, including cabarets and other businesses involving hostess or host entertainment.[^paid-intimacy-japan] In the United States, the Urban Institute estimated the underground sex industry in 2007 at about $39.9 million in Denver and about $290 million in Atlanta.[^paid-intimacy-us] A 2015 report by the Korean Institute of Criminology notes that a 2010 survey by the Ministry of Gender Equality and Family estimated the annual scale of prostitution at up to 8.7129 trillion won.[^paid-intimacy-korea] And the market for asking AI for these things is clearly growing, too.
 
@@ -442,13 +397,9 @@ Saying you love someone, and continuing to choose that person when you can get w
 
 ### The phrase true love
 
-To some extent, I think true love is a phrase that sounds nice. A beautiful idea, but how much it explains what actually drives people is a separate question.
+To some extent, I think true love is a phrase that sounds nice. It is a beautiful idea, but I do not think it does much to explain what actually drives people. When people say they want love, what they actually want most might not be so simple. It may include the desires to be chosen by someone, not to be lonely, to have sex with an attractive partner, and to have someone who recognizes and cherishes them.
 
-When people say they want true love, what they actually want most might not be so simple. It may include the desires to be chosen by someone, not to be lonely, to have sex with an attractive partner, and to have someone who recognizes and cherishes them.
-
-I think it is better to look at people's actions than their words. Especially in matters of morality and ethics, rather than what kind of relationship they say is ideal, look at whom they actually date, what relationships they spend time on, and what they choose when other options appear. That shows more of what they want.
-
-For example, some people have themselves engaged in behavior they judge to be infidelity.[^infidelity] Saying that true love matters is not, in itself, evidence that true love always comes first. I want to see whether they would still want the same thing when all their other desires really were satisfied.
+I think it is better to look at people's actions than their words. Especially in matters of morality and ethics, rather than what kind of relationship they say is ideal, look at whom they actually date, what relationships they spend time on, and what they choose when other options appear. That shows more of what they want. For example, far more people commit infidelity than defend it.[^infidelity] Saying that love matters cannot be taken as evidence that love comes first. I want to see whether they would still want the same thing when all their other desires really were satisfied.
 
 ### If you could keep meeting the partners you want
 
@@ -456,11 +407,7 @@ What came to mind were extremely attractive people, fucking famous celebrities, 
 
 The reason I specifically brought up these rich and famous people is that I think AI will make what only they could do available to anyone. Pick a partner you like, meet someone else when you get bored, and switch again when you want a different appearance and personality. What I am saying is that a world seems to be coming soon where, through AI partners, anyone can do the fucking endless partner-swapping that only the fucking rich could do.
 
-Then the reasons for staying with one person will look different from how they do now. Staying in your current relationship because you cannot afford to date someone else, because no one else would like you, or because you lack the confidence to start a new relationship is different from wanting to be with that particular person even though you could date as many others as you wanted. Even if people look much the same now, staying by one person's side, they may move in different directions once their options open up.
-
-If the goal was fresh stimulation and the responses you wanted, you could keep switching partners. But what if you could create as many partners as you wanted and still wanted to see that person? I think true love would be much clearer in the relationships that remained then. The more AI expands our options without limit, the more it reveals why we keep choosing one particular person.
-
-But the purpose of a relationship and the emotions that arise within it are intertwined. Even in a relationship that began because we needed something, we grow attached and come to care for each other. So the first thing I want to think about is the relationship between cavalrymen and warhorses.
+Then the reasons for staying with one person will look different from how they do now. Staying in your current relationship because you cannot afford to date someone else, because no one else would like you, or because you lack the confidence to start a new relationship is different from wanting to be with that particular person even though you could date as many others as you wanted. Even if people look much the same now, staying by one person's side, they may move in different directions once their options open up. If the goal was fresh stimulation and the responses you wanted, you could keep switching partners. But what if you could create as many partners as you wanted and still wanted to see that person? I think true love would be much clearer in the relationships that remained then. The more AI expands our options without limit, the more it reveals why we keep choosing one particular person.
 
 ### The intimacy between cavalrymen and warhorses
 
@@ -468,9 +415,7 @@ For some people, dating might be mainly about satisfying sexual desire, with lov
 
 Horses were a means to an end, and for some people, the opposite sex itself will also be nothing more than a means to an end. Even if the affection for a being used as a means was real, that affection did not keep the military system as it was. The experience of fighting together could leave a deep impression, yet later wars could be fought by other means.
 
-I imagine a similar change in human romance. I think horses disappearing from the military and a person continuing to cherish their own horse are two different choices. Someone who cared for a horse because they needed a warhorse would have felt affection, too. But whether they would want to keep spending time and money on that horse once they no longer needed a warhorse is another question. The choice made after the need disappears reveals how important a place that affection held in the relationship.
-
-The pleasure and affection felt while together may have been real. Even so, if the reason to maintain the relationship disappears as soon as a partner who can satisfy the same desires more easily appears, what was the biggest force keeping them with that person? Conversely, if they can get what they want elsewhere but still want to see that particular person, I think something in that choice would become clearer than before.
+I imagine a similar change in human romance. I think horses disappearing from the military and a person continuing to cherish their own horse are two different choices. Someone who cared for a horse because they needed a warhorse would have felt affection, too. But what about when they no longer need a warhorse? The pleasure and affection felt while together may have been real. Even so, if the reason to maintain the relationship disappears as soon as a partner who can satisfy the same desires more easily appears, what was the biggest force keeping them with that person? Conversely, if they can get what they want elsewhere but still want to see that particular person, I think something in that choice would become clearer than before.
 
 ### Marriage changed by the washing machine
 
@@ -502,7 +447,7 @@ The example I had in mind when I said AI might do better was furries. Simply cre
 
 Then how realistically it imitates humans is no longer the only basis for competition. It can supply options that do not exist within the human species. This is not just about furries, either. Someone might want a partner with A's appearance, B's personality, and C's way of speaking. They might want someone with the same intellectual interests, a particular vibe, and a strong attachment to them. Even if these traits exist individually, meeting someone in real life who combines all of them might be difficult. There is also the condition that this person has to like you. AI could make it relatively easy to try these combinations. The constraint of having to find someone among real people changes. Alongside a market that cheaply imitates existing romance, a market emerges that satisfies tastes for which reality had offered no supply.
 
-Even then, I do not know how much of a premium will remain simply for being a real human. Some people will consider that fact the most important thing, and others will place more importance on getting the experience they want. I do not want to assume in advance that the latter will be rare.
+Even then, I do not know how much of a premium will remain simply for being a real human. Some people will consider that fact the most important thing, and others will place more importance on getting the experience they want.
 
 ### Is it a good thing if there are fewer men who only want your body?
 
@@ -514,17 +459,12 @@ Then would women welcome having fewer men who only want their bodies? If those m
 
 But what if the attention and effort that desire provided decreased along with it? The reasons for proposing dates, spending money, trying to make a good impression, and volunteering to shoulder more of the financial burden when living together may also have included the desire to get close to that person. Can you expect approaches from men who only want your body to disappear while courtship and financial support directed at you remain as plentiful as before?
 
-Would you be happy that fewer men only want your body? Or sad that fewer people are willing to support you financially?
-
-These are two reactions that could come from the same change. You might want not to be seen only as a sexual object, yet still miss the money and effort that someone who wanted you willingly spent. Then it becomes clear whether what you miss is the person who came looking for you or the life that person provided. The same question comes back to men. If being able to get sexual satisfaction and attention elsewhere makes you no longer want to see that woman, what accounted for the largest share of what you had been calling love?
+Would you be happy that fewer men only want your body? Or sad that there are fewer people to support and love you? You might want not to be seen only as a sexual object, yet still miss the money and effort that someone who wanted you willingly spent. Then it becomes clear whether what you miss is the person who came looking for you or the life that person provided. The same question comes back to men. If being able to get sexual satisfaction and attention elsewhere makes you no longer want to see that woman, what accounted for the largest share of what you had been calling love?
 
 So I am not only curious about who gains the upper hand in dating after AI. I am curious about what people feel they have lost as the reasons they needed each other are replaced one by one. Is it the other person's body, their money, or the attention that made you feel special? Or is it that particular person you want to see even though you can get those things elsewhere?
 
-### What we were actually looking for
+Romance bundles many things together. Sexual satisfaction, emotional support, living together, forming a family, social recognition, and the experience of being someone special to another person. Until now, humans have probably been winning this optimization game. I think a point will come when AI wins to some extent in terms of Pareto optimality (for some people, it already does).
 
-Romance bundles many things together. Sexual satisfaction, emotional support, living together, forming a family, social recognition, and the experience of being someone special to another person. Until now, we have tried to find many of those things together within a relationship with one person.
-
-But what if some could be obtained from AI and some from humans? The need to get everything from a single relationship might diminish. For some people, mutual intimacy with a human will matter most in itself, but might there also be people whose reasons for pursuing it weaken once their other desires are satisfied?
 
 ### After AI has passed through
 
