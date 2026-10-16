@@ -14,9 +14,9 @@ const path = Astro.url.pathname;
       <div class="flex flex-col gap-1">
         <label class="flex items-center gap-1 text-xs" for="site-language">
           <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9" /><ellipse cx="12" cy="12" rx="4" ry="9" /><path d="M3 12h18" /></svg>
-          <span data-i18n="language">Language</span>
+          <span lang="en">Language</span>
         </label>
-        <select id="site-language" data-site-language class="max-w-22 rounded border border-border bg-background px-1 py-2 text-xs text-foreground" aria-label="Language" data-i18n-aria-label="language">
+        <select id="site-language" data-site-language class="max-w-22 rounded border border-border bg-background px-1 py-2 text-xs text-foreground" aria-label="Language">
           <option value="ko">한국어</option><option value="ja">日本語</option><option value="zh">中文</option><option value="en" selected>English</option>
         </select>
       </div>

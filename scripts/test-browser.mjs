@@ -87,6 +87,8 @@ try {
     await page.waitForFunction(value => localStorage.getItem('blog.language') === value && document.querySelector('#site-language')?.value === value, language);
   }
   async function expectLanguage(language) {
+    assert.equal((await page.locator('label[for="site-language"]').innerText()).trim(), 'Language', 'Language label stays readable in every locale');
+    assert.equal(await page.locator('#site-language').getAttribute('aria-label'), 'Language');
     assert.equal(await page.locator('#site-language').inputValue(), language, 'Global language selector reflects persisted choice');
     assert.equal(await page.evaluate(() => localStorage.getItem('blog.language')), language, 'Global language preference persists');
   }
