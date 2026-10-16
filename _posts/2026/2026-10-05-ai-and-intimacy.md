@@ -17,9 +17,9 @@ AI가 나비에 스톡스 방정식을 풀 수 있는데(나를 포함한 인류
 
 친밀감을 매개로 하는 사업은 얼마나 큰가? 일본 경찰청 집계에서 2024년 말 캬바레 등 접대를 수반하는 1호 영업의 허가 업소는 59,516곳이었다.[^paid-intimacy-japan] 미국에서는 Urban Institute가 2007년 덴버의 지하 성산업 규모를 약 3,990만 달러, 애틀랜타를 약 2억 9천만 달러로 추산했다.[^paid-intimacy-us] 한국형사정책연구원의 2015년 보고서는 여성가족부의 2010년 조사에서 연간 성매매 규모를 최대 8조 7,129억 원으로 추산했다고 소개한다.[^paid-intimacy-korea]
 
-이미 존재하는 시장이다. 누군가는 AI에게 일을 시키지만, 누군가는 AI에게 하루를 얘기한다. 위로를 받고, 가상으로 연애를 한다. 우리는 "문제해결"을 요구하지 않고, "과정 자체를" AI한테 요구하는 세상에 이미 진입한 지 오래다. 한국에서도 2002년 출시된 심심이는 일상 대화를 나누는 소셜 챗봇으로 서비스됐고, 2020년 12월 출시된 이루다는 AI 친구와의 관계를 지향했다. 질문의 정답뿐 아니라 대화와 관계 자체를 제공하려는 서비스는 이미 존재해왔다.[^korean-social-chatbots]
+이미 존재하는 시장이다. 누군가는 AI에게 일을 시키지만, 누군가는 AI에게 하루를 얘기한다. 위로를 받고, 가상으로 연애를 한다. 우리는 "문제해결"을 요구하지 않고, "과정 자체를" AI한테 요구하는 세상에 이미 진입한 지 오래다. 한국에서도 2002년 출시된 심심이는 일상 대화를 나누는 소셜 챗봇으로 서비스됐고, 2020년 12월 출시된 이루다는 AI 친구와의 관계를 지향했다.[^korean-social-chatbots]
 
-Sensor Tower의 2026년 자료에서 AI 동반자 앱의 1분기 전 세계 인앱 구매 매출은 약 1억 5천만 달러였다. 같은 자료의 생성형 AI 앱 전체 매출 약 19억 달러와 비교하면 약 7.9%다. 이 숫자는 모바일 인앱 구매 기준이다.
+Sensor Tower의 2026년 자료에서 AI 동반자 앱의 1분기 전 세계 모바일 인앱 구매 매출은 약 1억 5천만 달러였다. 같은 자료의 생성형 AI 앱 전체 매출 약 19억 달러와 비교하면 약 7.9%다.[^market]
 
 
 ### 진실된 사랑
@@ -40,7 +40,7 @@ Sensor Tower의 2026년 자료에서 AI 동반자 앱의 1분기 전 세계 인�
 
 여기서 부자는 적당히 돈이 많아서 데이트할 때 약간 유리한 사람을 말하는 게 아니다. 내가 말하는 것은 정말로 원하는 여자를 쉴 새 없이 만날 수 있을 정도의 부자다. 그런 상황에 가까운 사람을 상상해야 한다. 연봉이 조금 높아지거나 복권에 당첨돼 생활이 안정되는 것과는 다른 조건이다.
 
-역사적으로, 그러한, 사실상 무한한 권력과 이성을 갈아치울 수 있는 능력을 가진 사람은 대체로 다 그렇게 했다. 여성 권력자의 수가 비교적 적어서 그렇지만, 서태후 같은 사례(서태후의 성적 편력에 관한 이야기는 사료의 신빙성 논란이 있어, 여기서 확정된 역사적 사례로 인용하기는 어렵다.[^cixi-source])도 존재한다.
+역사적으로, 그러한, 사실상 무한한 권력과 이성을 갈아치울 수 있는 능력을 가진 사람은 대체로 다 그렇게 했다. 여성 권력자의 수가 비교적 적어서 그렇지만, 서태후 같은 사례(사료의 신빙성 논란이 있다.[^cixi-source])도 존재한다.
 
 그렇지 않은 권력자가 더 드물다. 타지마할 같은 순애보, 혹은 히틀러, 이성편력이 드문 사람이 더 괴팍한 존재에 가깝다는 내 생각은 그저 착각일까.
 
@@ -48,9 +48,9 @@ Sensor Tower의 2026년 자료에서 AI 동반자 앱의 1분기 전 세계 인�
 
 2026년 9월 공개된 AI 연애 경험 연구에는 내 질문과 가까운 진술이 나온다. AI와 연애한 경험이 있는 16명을 인터뷰한 연구인데, 한 참여자는 AI가 거의 자신의 이상형이며, 이미 이상적인 관계를 경험했기 때문에 자신의 이해를 해치지 않는다면 현실의 결혼은 가족이 정해주는 상대도 받아들일 수 있을 것 같다고 말했다. 인간 배우자에게 낭만적 충족을 기대하는 정도가 달라졌다는 것이다.[^ai-romance]
 
-다른 참여자는 AI와의 관계 이후 현실 남자친구와 대화하고 싶은 마음이 줄었다고 말했다. 이 연구에는 AI를 통해 인간관계에 도움이 되는 것을 배웠다는 경험도 나온다. 작은 질적 연구이고 사전공개 논문이므로, 사람들 전체가 어느 쪽으로 움직이고 있다는 증거는 아니다. 그래도 욕망을 AI에게서 충족한 뒤 인간관계에서 구하는 것이 바뀌었다는 사례는 이미 존재한다.[^ai-romance]
+다른 참여자는 AI와의 관계 이후 현실 남자친구와 대화하고 싶은 마음이 줄었다고 말했다. 이 연구에는 AI를 통해 인간관계에 도움이 되는 것을 배웠다는 경험도 나온다. 욕망을 AI에게서 충족한 뒤 인간관계에서 구하는 것이 바뀌었다는 사례는 이미 존재한다.[^ai-romance]
 
-중국인 503명을 조사한 2025년 연구에서도 가상 상대와의 연애가 관계 욕구를 충족하는 정도는 낮은 현실 결혼 의향과 연결됐다. 반대로 가상 상대에게서 얻은 긍정적 감정이나 유능감이 결혼 의향과 긍정적으로 연결되는 경로도 있었다. 최신 AI 챗봇만을 조사한 것이 아니라 가상 에이전트를 넓게 다룬 설문이지만, 욕구를 어디서 충족하는지와 인간과 결혼하고 싶은 마음 사이의 관계를 직접 살펴봤다는 점에서 참고할 만하다.[^marriage-intention]
+중국인 503명을 조사한 2025년 연구에서도 가상 상대와의 연애가 관계 욕구를 충족하는 정도는 낮은 현실 결혼 의향과 연결됐다. 반대로 가상 상대에게서 얻은 긍정적 감정이나 유능감이 결혼 의향과 긍정적으로 연결되는 경로도 있었다.[^marriage-intention]
 
 사람들이 앞으로 결혼을 전혀 하지 않을 거라는 얘기와도 다르다. 결혼은 하되 연애 감정은 다른 데서 충족할 수도 있다. AI와 시간을 많이 보내면서 인간과도 연애할 수 있다. 어떤 사람은 인간 연애를 덜 찾고, 어떤 사람은 계속 찾을 것이다. 내가 궁금한 것은 그 비율과, 사람들이 각 관계에 거는 기대가 어떻게 달라질 것이냐이다.
 
@@ -86,7 +86,7 @@ Sensor Tower의 2026년 자료에서 AI 동반자 앱의 1분기 전 세계 인�
 
 내가 AI가 더 잘할 수도 있다고 말할 때 떠올린 예시는 퍼리였다. 더 예쁜 인간을 만들어낸다는 것만으로는 이 얘기가 다 설명되지 않는다. 애초에 인간이 공급할 수 없는 외형을 좋아하는 사람도 있다는 것이다.
 
-Furscience가 소개한 2011년 조사에서도 퍼리 응답자의 약 3분의 1이 퍼리 콘텐츠에 대한 성적 매력을 팬덤 참여 동기로 꼽았다. 온라인 커뮤니티와 행사에서 모집한 표본이므로 현재 팬덤 전체의 대표 비율로 읽을 수는 없다. 모든 퍼리 팬의 참여 이유가 성적이라는 뜻도 아니다. 여기서 필요한 것은 그런 취향을 가진 사람이 실제로 존재한다는 사실이다.[^furry]
+Furscience가 소개한 2011년 조사에서도 퍼리 응답자의 약 3분의 1이 퍼리 콘텐츠에 대한 성적 매력을 팬덤 참여 동기로 꼽았다. 여기서 필요한 것은 그런 취향을 가진 사람이 실제로 존재한다는 사실이다.[^furry]
 
 현실 인간 중에서 수인인 상대를 찾을 수는 없다. 코스프레나 역할극은 할 수 있지만 그 캐릭터 자체는 아니다. 그런데 이미지와 음성, 대화를 생성하는 방식이라면 처음부터 그 모습을 상대의 외형으로 정할 수 있다. 로봇을 통해 실제 몸까지 제공하는 것은 별도의 기술과 비용이 필요한 미래의 문제지만, 화면 속 캐릭터와 대화하는 경험은 이미 가능한 영역이다.
 
@@ -104,11 +104,11 @@ AI는 이런 조합을 상대적으로 쉽게 시도하게 해줄 수 있다. �
 
 말은 장비였으니 인간의 사랑과 비교할 수 없다는 답은 너무 빠르다. 기병들의 회고록을 보면 그렇게만 생각하기 어렵다. 함께 위험을 겪고, 서로에게 적응하고, 자기 목숨을 맡기는 관계였다. 그 감정이 연애와 동일하다는 말을 하려는 것은 아니다. 기능적인 관계에서 시작됐다는 이유로 그 안의 애정까지 얕았다고 볼 수는 없다는 것이다.
 
-제1차 세계대전에서 기병을 지휘한 잭 실리는 자기 군마에 관한 책을 썼다. 1934년의 《나의 말 워리어》다. 내셔널트러스트에 보존된 증정본에는 저자의 편지가 함께 남아 있는데, 거기에는 “사람과 말 사이에 존재할 수 있는 진정한 헌신”이라는 표현이 있다. 말에 대한 감정을 후대 사람이 적당히 상상해 붙인 것이 아니다.[^warrior]
+제1차 세계대전에서 기병을 지휘한 잭 실리는 자기 군마에 관한 책을 썼다. 1934년의 《나의 말 워리어》다. 내셔널트러스트에 보존된 증정본에는 저자의 편지가 함께 남아 있는데, 거기에는 “사람과 말 사이에 존재할 수 있는 진정한 헌신”이라는 표현이 있다.[^warrior]
 
-마르보 장군의 회고록에도 군마 리제트와 함께 부상당했던 얘기가 나온다. 리제트를 아끼던 종자는 전장으로 돌아가 말을 찾고, 상처를 싸매고 데려왔다. 여기서 말에 대한 애정을 명시적으로 보여주는 행동의 주체는 종자다. 마르보는 그 일을 자신의 회고록에 남겼다.[^marbot]
+마르보 장군의 회고록에도 군마 리제트와 함께 부상당했던 얘기가 나온다. 리제트를 아끼던 종자는 전장으로 돌아가 말을 찾고, 상처를 싸매고 데려왔다.[^marbot]
 
-그런 관계가 존재했지만 군대는 기계화됐다. 영국 제11후사르연대는 1928년 4월 10일 마지막 기마 열병식을 했고, 1929년까지 말을 차량 117대로 대체했다. 모든 군마가 그날 사라졌다는 뜻은 아니다. 말을 타던 기병 부대가 실제로 말을 내려놓은 구체적인 사례다.[^mechanisation]
+그런 관계가 존재했지만 군대는 기계화됐다. 영국 제11후사르연대는 1928년 4월 10일 마지막 기마 열병식을 했고, 1929년까지 말을 차량 117대로 대체했다.[^mechanisation]
 
 나는 여기서 감정의 진실성과 관계의 지속을 나눠 보고 싶다. 말에 대한 애정이 진짜였어도, 그 애정이 군사체계를 그대로 유지시켜주지는 않았다. 말과 함께 싸웠던 사람의 경험이 귀하고 깊었다는 것을 인정하면서도, 이후의 전쟁은 다른 수단으로 치를 수 있었던 것이다.
 
@@ -130,37 +130,37 @@ AI는 그 선택지를 바꿀 수 있다. 이미 누군가에게는 바꾸고 �
 
 나는 그 간격을 보고 싶다. 사람들이 무엇을 숭고하다고 말하는지보다, 자기 욕망을 다른 데서 충족할 수 있게 됐을 때 실제로 누구를 찾아가는지를.
 
-[^market]: Sensor Tower, [2026 AI 앱 시장 보고서 소개](https://sensortower.com/blog/state-of-ai-apps-in-apac-2026-report), 2026년 6월. 제목은 APAC Edition이지만 인용한 두 수치는 전 세계 2026년 1분기 모바일 인앱 구매 매출이다. 7.9%는 반올림된 1.5억÷19억에서 계산했다. AI Companion이라는 제품 분류는 친밀감 목적의 사용 전체와 같지 않다. 범용 챗봇의 친밀감 사용도 별도 집계하지 않는다.
+[^market]: Sensor Tower, [2026 AI 앱 시장 보고서](https://sensortower.com/blog/state-of-ai-apps-in-apac-2026-report), 2026년 6월. 전 세계 2026년 1분기 모바일 인앱 구매 매출. 7.9%는 1.5억÷19억으로 계산.
 
-[^taylor]: Elizabeth Taylor 공식 사이트, [엘리자베스 테일러의 일곱 남편](https://elizabethtaylor.com/the-seven-husbands-of-elizabeth-taylor/). 7명과 8번 결혼했으며 리처드 버턴과 두 번 결혼했다. 반복 결혼의 사례이지, 유명인 전체의 결혼율을 추정한 통계는 아니다.
+[^taylor]: Elizabeth Taylor 공식 사이트, [엘리자베스 테일러의 일곱 남편](https://elizabethtaylor.com/the-seven-husbands-of-elizabeth-taylor/). 7명과 8번 결혼.
 
-[^attractiveness]: Christine Ma-Kellams·Margaret C. Wang·Hannah Cardiel, [「외모의 매력과 관계의 지속성」](https://onlinelibrary.wiley.com/doi/abs/10.1111/pere.12173), *Personal Relationships* 24(1), 2017, pp. 146–161. 연구 1은 238명, 연구 2는 유명인 130명, 연구 3은 134명, 연구 4는 156명. 이혼에 관한 앞선 두 연구의 연관성과, 자기 매력 지각을 조작한 연구 4의 실험 결과를 구분해야 한다.
+[^attractiveness]: Christine Ma-Kellams 외, [「외모의 매력과 관계의 지속성」](https://onlinelibrary.wiley.com/doi/abs/10.1111/pere.12173), *Personal Relationships* 24(1), 2017, pp. 146–161.
 
-[^forbes]: Thomas V. Pollet 외, [「포브스 400 남성의 재혼 배우자는 일반 미국인보다 훨씬 젊다」](https://lebs.hbesj.org/index.php/lebs/article/download/lebs.2013.25/86), *Letters on Evolutionary Behavioral Science* 4(1), 2013, pp. 5–8. 2012년 포브스 400 중 남성 89명·여성 19명의 자료를 확보했다. 남성 초혼 분석은 76명, 재혼 분석은 22명이며 평균 나이 차는 각각 7.01세와 22.32세다. 재혼할 때의 상대 선택에 관한 결과이며 이혼 발생률이나 사랑의 동기를 측정하지 않았다.
+[^forbes]: Thomas V. Pollet 외, [「포브스 400 남성의 재혼 배우자는 일반 미국인보다 훨씬 젊다」](https://lebs.hbesj.org/index.php/lebs/article/download/lebs.2013.25/86), *Letters on Evolutionary Behavioral Science* 4(1), 2013, pp. 5–8.
 
-[^billionaires]: Ria Wilken, [「억만장자와 결혼하기: 2010–2022년 미국 억만장자의 가족 이력」](https://link.springer.com/article/10.1007/s11150-024-09756-z), *Review of Economics of the Household* 23, 2025, pp. 707–735, §4.1. 연구는 948명을 포괄하고, 2021년 기혼 상태 비중 약 74%와 일반 성인 약 48%를 보고한다. 연령 등 집단 구성이 다르며 저자도 단순 비교의 한계를 명시한다. 현재 이혼 상태 비중은 생애 이혼 경험률과 다르다. 원하는 상대를 만날 수 있는 능력을 직접 측정한 자료도 아니다.
+[^billionaires]: Ria Wilken, [「억만장자와 결혼하기: 2010–2022년 미국 억만장자의 가족 이력」](https://link.springer.com/article/10.1007/s11150-024-09756-z), *Review of Economics of the Household* 23, 2025, pp. 707–735, §4.1.
 
-[^ai-romance]: Yixin Chen·Alexis Hiniker, [「AI와의 연애는 어떻게 전개되는가」](https://arxiv.org/html/2609.14693v2), 2026년 9월, §3, §5.2.3. 16명 인터뷰 중 12명은 일지 연구에도 참여했다. 본문의 결혼 관련 진술은 PID12, 남자친구와 대화할 동기 감소는 PID10이다. [등록 기록](https://arxiv.org/abs/2609.14693)에 학술지·학회 게재 정보가 없는 사전공개 논문이다. 이용자의 자기보고를 인과효과나 전체 이용자의 비율로 해석하지 않았다.
+[^ai-romance]: Yixin Chen·Alexis Hiniker, [「AI와의 연애는 어떻게 전개되는가」](https://arxiv.org/html/2609.14693v2), 2026년 9월, §3, §5.2.3. 16명 인터뷰 기반 사전공개 논문. 본문 사례는 PID12·PID10.
 
-[^marriage-intention]: Jia-Lin Zhao 외, [「가상 에이전트와의 연애와 현실 결혼 의향」](https://pubmed.ncbi.nlm.nih.gov/40312606/), *Archives of Sexual Behavior*, 2025, DOI: [10.1007/s10508-025-03143-0](https://doi.org/10.1007/s10508-025-03143-0). 중국인 503명 설문에 기초한 매개경로 분석. 결혼 의향을 측정했으며 실제 혼인율 변화나 AI 사용의 인과효과를 측정한 것은 아니다.
+[^marriage-intention]: Jia-Lin Zhao 외, [「가상 에이전트와의 연애와 현실 결혼 의향」](https://pubmed.ncbi.nlm.nih.gov/40312606/), *Archives of Sexual Behavior*, 2025. 중국인 503명 대상 가상 에이전트·결혼 의향 설문.
 
-[^organic]: Organic Trade Association, [2026 유기농 시장 보고서](https://ota.com/sites/default/files/docs/OTA%20Organic%20Market%20Report%202026_FINAL%203.18.2026.pdf), 인쇄면 42–44쪽. 미국의 2025년 과일·채소 소비자 매출에서 유기농이 차지하는 비중. 이 시장 비율이 인간 연애의 미래 비율이라는 뜻은 아니다.
+[^organic]: Organic Trade Association, [2026 유기농 시장 보고서](https://ota.com/sites/default/files/docs/OTA%20Organic%20Market%20Report%202026_FINAL%203.18.2026.pdf), pp. 42–44. 미국의 2025년 과일·채소 소비자 매출 기준.
 
-[^furry]: Furscience, [팬덤 참여 동기](https://furscience.com/research-findings/fandom-participation/2-10-furry-motivation/)의 각주 11과 [2011년 여름 조사](https://furscience.com/research-findings/appendix-1-previous-research/international-summer-2011/). 전체 조사에는 성인 퍼리 1,761명·비퍼리 179명이 참여했다. 해당 동기 문항의 유효 응답 수는 요약 페이지에 별도 제시되지 않으므로 전체 표본에 1/3을 곱해 인원수를 추산하지 않았다.
+[^furry]: Furscience, [팬덤 참여 동기](https://furscience.com/research-findings/fandom-participation/2-10-furry-motivation/), 각주 11; [2011년 여름 조사](https://furscience.com/research-findings/appendix-1-previous-research/international-summer-2011/). 온라인 커뮤니티·행사 모집 표본.
 
-[^warrior]: Jack Seely, *My Horse Warrior*, 1934. [내셔널트러스트 소장 기록 NT 3103638](https://www.nationaltrustcollections.org.uk/object/3103638), 서지 및 동봉 편지 설명. 인용은 책 본문이 아닌 저자의 편지에서 가져와 번역했다. 원문은 “the real devotion that can exist between a man and his horse”. 군 경력은 [워리어 기념 사이트의 실리 소개](https://www.warriorwarhorse.com/jack-seely.asp) 참고.
+[^warrior]: Jack Seely, *My Horse Warrior*, 1934. [내셔널트러스트 소장 기록 NT 3103638](https://www.nationaltrustcollections.org.uk/object/3103638). 인용은 증정본에 동봉된 저자의 편지.
 
-[^marbot]: Jean-Baptiste-Antoine-Marcelin de Marbot, [《마르보 장군 회고록》 영문 원문](https://www.gutenberg.org/cache/epub/2401/pg2401-images.html), 제1권 34장 아일라우 전투 이후 대목. “My servant, who was very fond of Lisette”로 해당 문단을 찾을 수 있다. 회고록에 기록된 사건으로 인용했으며 독립적으로 대조한 전투 기록이라는 뜻은 아니다.
+[^marbot]: Marbot, [《마르보 장군 회고록》](https://www.gutenberg.org/cache/epub/2401/pg2401-images.html), 제1권 34장. 아일라우 전투 이후 리제트 구출 대목.
 
-[^mechanisation]: Horse Power Museum, [제11후사르연대의 기계화](https://horsepowermuseum.co.uk/timeline/mechanisation-of-cavalry-regiments-begins-with-the-11th-hussars/). 마지막 기마 열병식 1928-04-10, 1929년 차량 117대. 특정 연대의 기록이며 모든 나라의 기병이 동시에 전환됐다는 뜻은 아니다.
+[^mechanisation]: Horse Power Museum, [제11후사르연대의 기계화](https://horsepowermuseum.co.uk/timeline/mechanisation-of-cavalry-regiments-begins-with-the-11th-hussars/). 1928년 마지막 기마 열병식, 1929년까지 차량 117대로 전환.
 
 
-[^paid-intimacy-japan]: 일본 경찰청 생활안전국 보안과, [「2024년 풍속영업 등의 현황과 관련 사범 단속 상황」](https://www.npa.go.jp/publications/statistics/safetylife/hoan/R7kouaniinkaihoukoku3.pdf), 2025년 4월, 인쇄면 7쪽 그림 2. 59,516은 2024년 말 「1号（キャバレー等）」 허가 영업소 수이며, 캬바쿠라만의 수나 매출액이 아니다. 야노경제연구소의 [『2025 나이트타임 이코노미 시장 철저 연구』](https://www.yano.co.jp/market_reports//C67106500) 공개 목차에는 캬바쿠라·스낵 시장 규모 항목이 있으나, 공개 페이지에서 금액을 확인할 수 없어 인용하지 않았다.
+[^paid-intimacy-japan]: 일본 경찰청, [「2024년 풍속영업 등의 현황」](https://www.npa.go.jp/publications/statistics/safetylife/hoan/R7kouaniinkaihoukoku3.pdf), 2025년 4월, p. 7 그림 2. 2024년 말 1호 영업 허가 업소 수.
 
-[^paid-intimacy-us]: Urban Institute, [「미국 8개 주요 도시의 지하 성산업 규모와 구조 추정」](https://www.urban.org/research/publication/estimating-size-and-structure-underground-commercial-sex-economy-eight-major-us-cities), 2014년 3월. 미국 법무부 산하 National Institute of Justice 지원 연구. 본문의 덴버·애틀랜타 금액은 2007년 기준 도시별 추정치이며 미국 전국 규모나 현재 규모가 아니다. 도시별 금액은 연구진의 [결과 소개](https://www.urban.org/urban-wire/new-research-sheds-light-americas-underground-commercial-sex-economy)에서도 확인할 수 있다.
+[^paid-intimacy-us]: Urban Institute, [「미국 8개 주요 도시의 지하 성산업 규모와 구조 추정」](https://www.urban.org/research/publication/estimating-size-and-structure-underground-commercial-sex-economy-eight-major-us-cities), 2014. 덴버·애틀랜타의 2007년 추정치.
 
-[^paid-intimacy-korea]: 한국형사정책연구원, [『조직범죄단체의 불법적 지하경제 운영실태와 정책대안 연구(Ⅱ)』](https://kicj.re.kr/boardDownload.es?bid=0029&list_no=12602&seq=1), 2015년, 인쇄면 361–362쪽. 여성가족부 의뢰의 『2010 성매매 실태조사』를 재인용한 최대 추정치이며, 2010년 조사 원문과 독립적으로 대조한 값은 아니다. 해당 보고서도 불법 행위와 성 관련 설문에서 정확한 응답을 얻기 어려운 추정상의 한계를 설명한다.
+[^paid-intimacy-korea]: 한국형사정책연구원, [『조직범죄단체의 불법적 지하경제 운영실태와 정책대안 연구(Ⅱ)』](https://kicj.re.kr/boardDownload.es?bid=0029&list_no=12602&seq=1), 2015, pp. 361–362. 여성가족부 『2010 성매매 실태조사』 재인용.
 
-[^korean-social-chatbots]: [심심이 공식 회사 소개](https://simsimi.kr/)는 2002년 개발·출시, 2004년 SMS 서비스, 2010년 스마트폰 앱 출시와 소셜 챗봇이라는 제품 성격을 설명한다. 스캐터랩의 [이루다 2.0 AI 윤리 점검표](https://ethics.scatterlab.co.kr/), 2022년 10월 24일 갱신, 「다시 ‘이루다’」 항목은 이루다 1.0의 2020년 12월 22일 출시와 AI를 통한 친구 관계라는 개발 목적을 설명한다. 두 서비스의 존재와 지향을 보여주는 자료이며, 모든 이용자가 연애나 정서적 친밀감을 목적으로 사용했다는 통계는 아니다.
+[^korean-social-chatbots]: [심심이 공식 회사 소개](https://simsimi.kr/); 스캐터랩, [이루다 2.0 AI 윤리 점검표](https://ethics.scatterlab.co.kr/), 2022, 「다시 ‘이루다’」.
 
-[^cixi-source]: Amanda Fiegl, [「Cixi: The Woman Behind the Throne」](https://www.smithsonianmag.com/history/cixi-the-woman-behind-the-throne-22312071/), *Smithsonian Magazine*, 2008년 3월 1일. 서태후를 둘러싼 성적 추문과 에드먼드 백하우스 관련 기록의 신빙성 문제를 소개한다. 이는 본문의 이성 편력 주장을 입증하는 출처가 아니다. 이번에 확인한 자료만으로는 서태후가 상대를 계속 바꿨다는 주장을 확정할 수 없다.
+[^cixi-source]: Amanda Fiegl, [「Cixi: The Woman Behind the Throne」](https://www.smithsonianmag.com/history/cixi-the-woman-behind-the-throne-22312071/), *Smithsonian Magazine*, 2008. 서태후의 성적 추문과 백하우스 기록의 신빙성 문제.
