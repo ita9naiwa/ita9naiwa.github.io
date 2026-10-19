@@ -8,9 +8,9 @@ key: page-about
 
 I'm Hyunsung Lee.
 
-I now work as a System Software Engineer at NVIDIA. This field is completely new to me, and I’m excited!
+Now it is very hard to describe what I do, anyway, I work at Spellbrush, making Anime real.
 
-Previously, I worked at OctoAI optimizing LLM inference and at Kakao on recommender systems.
+Previously, I worked at NVIDIA as a system software engineer, OctoAI optimizing LLM inference and at Kakao on recommender systems.
 
 
 ### Contact
