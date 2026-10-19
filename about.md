@@ -13,11 +13,4 @@ Now it is very hard to describe what I do, anyway, I work at Spellbrush, making 
 Previously, I worked at NVIDIA as a system software engineer, OctoAI optimizing LLM inference and at Kakao on recommender systems.
 
 
-### Contact
-Please feel free to reach out!
-
-![afsdjfasji]({{ "/assets/my-email.png" | absolute_url }})
-
-
-### Some Links
 - [AstroPaper](https://github.com/satnaing/astro-paper)
